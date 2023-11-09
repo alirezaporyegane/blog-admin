@@ -1,73 +1,118 @@
-import { ReactNode } from "react";
+import { Fragment, ReactNode, useState } from 'react'
 
 export interface IHead {
-  key: string;
-  label: string;
-  classes?: string;
+  key: string
+  label: string
+  classes?: string
 }
 
 interface IProps<T> {
-  heads: IHead[];
-  bodyClass?: string;
-  headClasses?: string;
-  items: T[];
-  cellProps?: (key: string, value: T) => ReactNode;
+  heads: IHead[]
+  bodyClass?: string
+  headClasses?: string
+  items: T[]
+  collapseItem?: (item: T) => ReactNode
+  cellProps?: (
+    key: string,
+    value: T,
+    index: number,
+    collapse?: boolean,
+    tableIndex?: number,
+    collapsing?: (index: number) => void
+  ) => ReactNode
+  expanded?: boolean
 }
 
-const Table = <T extends object>(props: IProps<T>) => {
+interface IItems {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any
+}
+
+const Table = <T extends IItems>({
+  heads,
+  headClasses,
+  items,
+  bodyClass,
+  cellProps,
+  expanded = false,
+  collapseItem
+}: IProps<T>) => {
+  const [collapse, setCollapse] = useState<boolean>(false)
+  const [tableIndex, setTableIndex] = useState<number>(0)
+
+  function collapsing(index: number) {
+    setCollapse((preCollapse: boolean) => {
+      preCollapse = !collapse
+      return preCollapse
+    })
+
+    setTableIndex(index)
+  }
+
   return (
     <div className="border bg-white rounded-xl overflow-hidden">
       <table className="table-auto border-collapse w-full text-sm">
-        {props?.heads?.length && (
+        {heads?.length && (
           <>
-            <thead
-              className={`${
-                props.headClasses ? props.headClasses : ""
-              }bg-gray-50`}
-            >
+            <thead className={`${headClasses ? headClasses : ''}bg-gray-50`}>
               <tr>
-                {props.heads.map((head: IHead) => {
+                {heads.map((head: IHead) => {
                   return (
                     <th
                       key={head.key}
                       className={`${
-                        head.classes ? head.classes : ""
-                      }border-b dark:border-slate-600 font-medium pe-8 ps-4 py-3 text-gray-600 dark:text-slate-200 text-right`}
+                        head.classes ? head.classes : ''
+                      }border-b border-gray-200 font-medium px-4 py-3 text-gray-600 dark:text-slate-200 text-right`}
                     >
                       {head.label}
                     </th>
-                  );
+                  )
                 })}
               </tr>
             </thead>
 
-            <tbody className={props.bodyClass}>
-              {props.items.map((item, index) => {
+            <tbody className={bodyClass}>
+              {items.map((item, index) => {
                 return (
-                  <tr
-                    key={index}
-                    className={
-                      index !== props.items.length - 1 ? "border-b" : ""
-                    }
-                  >
-                    {Object.keys(item).map((key) => {
-                      return (
-                        <td key={key} className="py-3 ps-4 pe-8">
-                          {props.cellProps
-                            ? props.cellProps(key, item)
-                            : item[key as keyof item]}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                );
+                  <Fragment key={index}>
+                    <tr
+                      className={
+                        index !== items.length - 1
+                          ? index === tableIndex && collapse
+                            ? ''
+                            : 'border-b'
+                          : ''
+                      }
+                    >
+                      {heads.map((head) => {
+                        return (
+                          <td key={head.key} className="py-3 px-4">
+                            {cellProps
+                              ? cellProps(head.key, item, index, collapse, tableIndex, () =>
+                                  collapsing(index)
+                                )
+                              : item[head.key]}
+                          </td>
+                        )
+                      })}
+                    </tr>
+
+                    {expanded && collapse && index === tableIndex && (
+                      <tr
+                        className={index !== items.length - 1 ? 'border-b' : ''}
+                      >
+                        {collapseItem && collapseItem(item)}
+                      </tr>
+                    )}
+                  </Fragment>
+                )
               })}
             </tbody>
           </>
         )}
       </table>
     </div>
-  );
-};
+  )
+}
 
-export default Table;
+export default Table
