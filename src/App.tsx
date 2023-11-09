@@ -1,41 +1,69 @@
-import { MdAdd } from "react-icons/md";
-import Button from "./module/shared/components/Button";
-import Card from "./module/shared/components/Card";
-import Table, { IHead } from "./module/shared/components/Table";
+import { MdAdd, MdRemove } from 'react-icons/md'
+import Button from '@/module/shared/components/Button'
+import Card from '@/module/shared/components/Card'
+import Table, { IHead } from '@/module/shared/components/Table'
 
 function App() {
   interface IItems {
-    id: number;
-    name: string;
+    id: number
+    name: string
   }
   function handleClick(e: Element | null) {
-    console.log(e);
+    console.log(e)
   }
 
   const head: IHead[] = [
     {
-      key: "id",
-      label: "id",
+      key: 'id',
+      label: 'id'
     },
     {
-      key: "name",
-      label: "name",
+      key: 'name',
+      label: 'name'
     },
-  ];
+    {
+      key: 'action',
+      label: ''
+    }
+  ]
 
   const items: IItems[] = [
     {
       id: 1,
-      name: "ali",
+      name: 'ali'
     },
     {
       id: 2,
-      name: "ahmad",
-    },
-  ];
+      name: 'ahmad'
+    }
+  ]
 
-  function cellProps(key: string, value: IItems) {
-    return <div key={key}>{value.name}</div>;
+  function cellProps(
+    key: string,
+    value: IItems,
+    index: number,
+    collapse?: boolean,
+    tableIndex?: number,
+    collapsing?: (index: number) => void
+  ) {
+    if (key === 'id') return <span className="text-red-600">{value[key]}</span>
+
+    if (key === 'action')
+      return (
+        <div className="flex justify-end">
+          <Button
+            icon={collapse && index === tableIndex ? <MdRemove /> : <MdAdd />}
+            clicked={() => collapsing && collapsing(index)}
+            color="primary"
+          ></Button>
+        </div>
+      )
+
+    return <div key={key}>{value[key as keyof IItems]}</div>
+  }
+
+  function collapseItem(item: IItems) {
+    return <div>{item.name}</div>
   }
 
   return (
@@ -52,9 +80,15 @@ function App() {
 
       <Card classes="mb-10">test</Card>
 
-      <Table items={items} heads={head} cellProps={cellProps} />
+      <Table
+        expanded
+        items={items}
+        heads={head}
+        cellProps={cellProps}
+        collapseItem={collapseItem}
+      />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
