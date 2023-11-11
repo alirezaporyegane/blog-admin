@@ -10,6 +10,7 @@ interface IProps<T> {
   heads: IHead[]
   bodyClass?: string
   headClasses?: string
+  classes?: string
   items: T[]
   collapseItem?: (item: T) => ReactNode
   cellProps?: (
@@ -32,6 +33,7 @@ const Table = <T extends IItems>({
   heads,
   headClasses,
   items,
+  classes,
   bodyClass,
   cellProps,
   expanded = false,
@@ -50,7 +52,7 @@ const Table = <T extends IItems>({
   }
 
   return (
-    <div className="border bg-white rounded-xl overflow-hidden">
+    <div className={`${classes ? `${classes} `: ''}border bg-white rounded-xl overflow-hidden`}>
       <table className="table-auto border-collapse w-full text-sm">
         {heads?.length && (
           <>

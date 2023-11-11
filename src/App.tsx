@@ -1,7 +1,8 @@
+import Badge from 'components/shared/ui/Badge'
+import Button from 'components/shared/ui/Button'
+import Card from 'components/shared/ui/Card'
+import Table, { IHead } from 'components/shared/ui/Table'
 import { MdAdd, MdRemove } from 'react-icons/md'
-import Button from '@/module/shared/components/Button'
-import Card from '@/module/shared/components/Card'
-import Table, { IHead } from '@/module/shared/components/Table'
 
 function App() {
   interface IItems {
@@ -82,11 +83,16 @@ function App() {
 
       <Table
         expanded
+        classes="mb-10"
         items={items}
         heads={head}
         cellProps={cellProps}
         collapseItem={collapseItem}
       />
+
+      <div className="flex items-center">
+        <Badge label="عنوان" color='success' />
+      </div>
     </div>
   )
 }
