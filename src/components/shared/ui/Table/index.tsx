@@ -1,15 +1,24 @@
 import { Fragment, ReactNode, useState } from 'react'
+import { MdArrowDownward, MdArrowUpward } from 'react-icons/md'
 
 export interface IHead {
   key: string
   label: string
   classes?: string
+  sortable?: boolean
+  activeSort?: boolean
+}
+
+enum Sort {
+  ASCENDING = 'ascending',
+  DESCENDING = 'descending'
 }
 
 interface IProps<T> {
   heads: IHead[]
   bodyClass?: string
   headClasses?: string
+  striped?: boolean
   classes?: string
   items: T[]
   collapseItem?: (item: T) => ReactNode
@@ -22,6 +31,7 @@ interface IProps<T> {
     collapsing?: (index: number) => void
   ) => ReactNode
   expanded?: boolean
+  emitSortableKey?: (key: string, sort: Sort) => void
 }
 
 interface IItems {
@@ -37,10 +47,13 @@ const Table = <T extends IItems>({
   bodyClass,
   cellProps,
   expanded = false,
-  collapseItem
+  striped = false,
+  collapseItem,
+  emitSortableKey
 }: IProps<T>) => {
   const [collapse, setCollapse] = useState<boolean>(false)
   const [tableIndex, setTableIndex] = useState<number>(0)
+  const [headItems, setHeadItems] = useState(heads)
 
   function collapsing(index: number) {
     setCollapse((preCollapse: boolean) => {
@@ -51,6 +64,29 @@ const Table = <T extends IItems>({
     setTableIndex(index)
   }
 
+  function isEven(striped: boolean, index: number) {
+    return striped && index % 2 == 0
+  }
+
+  function emitSortable(head: IHead) {
+    if (head.sortable) {
+      setHeadItems(
+        headItems.map((item) => {
+          if (item.key === head.key) {
+            item.activeSort = !item.activeSort
+            emitSortableKey &&
+              emitSortableKey(
+                item.key,
+                item.activeSort ? Sort.DESCENDING : Sort.ASCENDING
+              )
+          } else item.activeSort = false
+
+          return item
+        })
+      )
+    }
+  }
+
   return (
     <div
       className={`${
@@ -58,19 +94,35 @@ const Table = <T extends IItems>({
       }border bg-white rounded-xl overflow-hidden`}
     >
       <table className="table-auto border-collapse w-full text-sm">
-        {heads?.length && (
+        {headItems?.length && (
           <>
-            <thead className={`${headClasses ? headClasses : ''}bg-gray-50`}>
+            <thead className={`${headClasses ? headClasses : ''}bg-gray-100`}>
               <tr>
-                {heads.map((head: IHead) => {
+                {headItems.map((head) => {
                   return (
                     <th
                       key={head.key}
                       className={`${
                         head.classes ? head.classes : ''
-                      }border-b border-gray-200 font-medium px-4 py-3 text-gray-600 dark:text-slate-200 text-right`}
+                      }border-b border-gray-200 font-medium px-4 py-3 text-gray-600 dark:text-slate-200 text-right ${
+                        head.sortable ? 'cursor-pointer' : ''
+                      }`}
+                      onClick={() => emitSortable(head)}
                     >
-                      {head.label}
+                      <span className="flex">
+                        {head.label}
+                        {head.activeSort}
+
+                        {head.sortable ? (
+                          head.activeSort ? (
+                            <MdArrowUpward className="ms-1" />
+                          ) : (
+                            <MdArrowDownward className="ms-1" />
+                          )
+                        ) : (
+                          ''
+                        )}
+                      </span>
                     </th>
                   )
                 })}
@@ -82,13 +134,13 @@ const Table = <T extends IItems>({
                 return (
                   <Fragment key={index}>
                     <tr
-                      className={
+                      className={`${
                         index !== items.length - 1
                           ? index === tableIndex && collapse
                             ? ''
                             : 'border-b'
                           : ''
-                      }
+                      } ${isEven(striped, index) ? 'bg-gray-50' : ''}`}
                     >
                       {heads.map((head) => {
                         return (
