@@ -1,0 +1,6 @@
+.breadcrumbs-item {
+  &::after {
+    content: '/';
+    margin-right: 8px;
+  }
+}

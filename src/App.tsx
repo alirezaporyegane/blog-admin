@@ -1,8 +1,13 @@
-import Badge from 'components/shared/ui/Badge'
-import Button from 'components/shared/ui/Button'
-import Card from 'components/shared/ui/Card'
-import Table, { IHead } from 'components/shared/ui/Table'
-import { MdAdd, MdRemove } from 'react-icons/md'
+import {
+  Badge,
+  Breadcrumbs,
+  Button,
+  Card,
+  Table,
+  type IHead,
+  type IOption
+} from 'components/shared/ui'
+import { MdAdd, MdHome, MdRemove } from 'react-icons/md'
 
 function App() {
   interface IItems {
@@ -60,12 +65,30 @@ function App() {
         </div>
       )
 
-    return <div key={key}>{value[key as keyof IItems]}</div>
+    return <span key={key}>{value[key as keyof IItems]}</span>
   }
 
   function collapseItem(item: IItems) {
-    return <div>{item.name}</div>
+    return item.name
   }
+
+  const breadcrumbsOption: IOption[] = [
+    {
+      key: '1',
+      label: 'خانه',
+      path: '/test1',
+      icon: <MdHome />
+    },
+    {
+      key: '2',
+      label: 'وبلاگ',
+      path: '/test2'
+    },
+    {
+      key: '3',
+      label: 'تست'
+    }
+  ]
 
   return (
     <div className="container mx-auto px-4 mt-5 bg-white dark:bg-black">
@@ -90,9 +113,11 @@ function App() {
         collapseItem={collapseItem}
       />
 
-      <div className="flex items-center">
-        <Badge label="عنوان" color='success' />
+      <div className="flex items-center mb-10">
+        <Badge label="عنوان" color="success" />
       </div>
+
+      <Breadcrumbs options={breadcrumbsOption} />
     </div>
   )
 }

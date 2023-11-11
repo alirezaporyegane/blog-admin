@@ -52,7 +52,11 @@ const Table = <T extends IItems>({
   }
 
   return (
-    <div className={`${classes ? `${classes} `: ''}border bg-white rounded-xl overflow-hidden`}>
+    <div
+      className={`${
+        classes ? `${classes} ` : ''
+      }border bg-white rounded-xl overflow-hidden`}
+    >
       <table className="table-auto border-collapse w-full text-sm">
         {heads?.length && (
           <>
@@ -90,8 +94,13 @@ const Table = <T extends IItems>({
                         return (
                           <td key={head.key} className="py-3 px-4">
                             {cellProps
-                              ? cellProps(head.key, item, index, collapse, tableIndex, () =>
-                                  collapsing(index)
+                              ? cellProps(
+                                  head.key,
+                                  item,
+                                  index,
+                                  collapse,
+                                  tableIndex,
+                                  () => collapsing(index)
                                 )
                               : item[head.key]}
                           </td>
@@ -103,7 +112,9 @@ const Table = <T extends IItems>({
                       <tr
                         className={index !== items.length - 1 ? 'border-b' : ''}
                       >
-                        {collapseItem && collapseItem(item)}
+                        <td colSpan={100}>
+                          {collapseItem && collapseItem(item)}
+                        </td>
                       </tr>
                     )}
                   </Fragment>
