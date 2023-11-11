@@ -25,7 +25,8 @@ function App() {
     },
     {
       key: 'name',
-      label: 'name'
+      label: 'name',
+      sortable: true
     },
     {
       key: 'action',
@@ -41,6 +42,10 @@ function App() {
     {
       id: 2,
       name: 'ahmad'
+    },
+    {
+      id: 3,
+      name: 'reza'
     }
   ]
 
@@ -70,6 +75,10 @@ function App() {
 
   function collapseItem(item: IItems) {
     return item.name
+  }
+
+  function emitSortableKey(key: string, sort: string) {
+    console.log(key, sort)
   }
 
   const breadcrumbsOption: IOption[] = [
@@ -106,11 +115,13 @@ function App() {
 
       <Table
         expanded
+        striped
         classes="mb-10"
         items={items}
         heads={head}
         cellProps={cellProps}
         collapseItem={collapseItem}
+        emitSortableKey={emitSortableKey}
       />
 
       <div className="flex items-center mb-10">
