@@ -1,3 +1,4 @@
+import axios from 'axios'
 import {
   Badge,
   Breadcrumbs,
@@ -7,24 +8,32 @@ import {
   type IHead,
   type IOption
 } from 'components/shared/ui'
+import { useEffect, useState } from 'react'
 import { MdAdd, MdHome, MdRemove } from 'react-icons/md'
 
 function App() {
   interface IItems {
     id: number
-    name: string
+    title: string
   }
+
+  enum Sort {
+    ASCENDING = 'ascending',
+    DESCENDING = 'descending'
+  }
+
   function handleClick(e: Element | null) {
     console.log(e)
   }
 
   const head: IHead[] = [
     {
-      key: 'id',
-      label: 'id'
+      key: '_id',
+      label: 'id',
+      sortable: true
     },
     {
-      key: 'name',
+      key: 'title',
       label: 'name',
       sortable: true
     },
@@ -34,20 +43,33 @@ function App() {
     }
   ]
 
-  const items: IItems[] = [
-    {
-      id: 1,
-      name: 'ali'
-    },
-    {
-      id: 2,
-      name: 'ahmad'
-    },
-    {
-      id: 3,
-      name: 'reza'
-    }
-  ]
+  console.log("object");
+
+  const [items, setItems] = useState<IItems[]>()
+  const [loading, setLoading] = useState<boolean>(true)
+
+  useEffect(() => filter('name', Sort.ASCENDING), [])
+
+  function filter(key: string, sort: string) {
+    const sortKey = `sort=${key}:${sort === Sort.ASCENDING ? 1 : -1}`
+
+    getPosts(sortKey)
+  }
+
+  async function getPosts(sort: string) {
+    const posts: { data: IItems[] } = await axios.get(
+      `http://localhost:4000/api/admin/brands?${sort}`,
+      {
+        headers: {
+          Authorization:
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmEzMmMxZDNiYTk4NTJjZDRmNGJiNjgiLCJwaG9uZU51bWJlciI6IjA5MDMzMTU5NTcwIiwiZW1haWwiOiJhbGlyZXphcG9yeWVnYW5lQGdtYWlsLmNvbSIsInVzZXJOYW1lIjoicm9vdCIsImZpcnN0TmFtZSI6Iti52YTbjNix2LbYpyIsImxhc3ROYW1lIjoi2b7ZiNix24zar9in2YbZhyIsInJvbGUiOlsicm9vdCJdLCJjb25maXJtRW1haWwiOnRydWUsImNvbmZpcm1QaG9uZU51bWJlciI6dHJ1ZSwidW5pcXVlSWQiOiJzdHJpbmciLCJpYXQiOjE2OTk3NzIwMzMsImV4cCI6MTY5OTk0NDgzM30.IN280U02vu6zhhuF-918ValWbsdX5TmCOImf-S7NCis'
+        }
+      }
+    )
+
+    setItems(posts.data)
+    setLoading(false)
+  }
 
   function cellProps(
     key: string,
@@ -74,11 +96,11 @@ function App() {
   }
 
   function collapseItem(item: IItems) {
-    return item.name
+    return item.title
   }
 
   function emitSortableKey(key: string, sort: string) {
-    console.log(key, sort)
+    filter(key, sort)
   }
 
   const breadcrumbsOption: IOption[] = [
@@ -113,16 +135,20 @@ function App() {
 
       <Card classes="mb-10">test</Card>
 
-      <Table
-        expanded
-        striped
-        classes="mb-10"
-        items={items}
-        heads={head}
-        cellProps={cellProps}
-        collapseItem={collapseItem}
-        emitSortableKey={emitSortableKey}
-      />
+      {loading ? (
+        <div>loading</div>
+      ) : (
+        <Table
+          expanded
+          striped
+          classes="mb-10"
+          items={items}
+          heads={head}
+          cellProps={cellProps}
+          collapseItem={collapseItem}
+          emitSortableKey={emitSortableKey}
+        />
+      )}
 
       <div className="flex items-center mb-10">
         <Badge label="عنوان" color="success" />

@@ -20,7 +20,7 @@ interface IProps<T> {
   headClasses?: string
   striped?: boolean
   classes?: string
-  items: T[]
+  items: T[] | undefined
   collapseItem?: (item: T) => ReactNode
   cellProps?: (
     key: string,
@@ -42,7 +42,7 @@ interface IItems {
 const Table = <T extends IItems>({
   heads,
   headClasses,
-  items,
+  items = [],
   classes,
   bodyClass,
   cellProps,
@@ -96,82 +96,99 @@ const Table = <T extends IItems>({
       <table className="table-auto border-collapse w-full text-sm">
         {headItems?.length && (
           <>
-            <thead className={`${headClasses ? headClasses : ''}bg-gray-100`}>
-              <tr>
-                {headItems.map((head) => {
-                  return (
-                    <th
-                      key={head.key}
-                      className={`${
-                        head.classes ? head.classes : ''
-                      }border-b border-gray-200 font-medium px-4 py-3 text-gray-600 dark:text-slate-200 text-right ${
-                        head.sortable ? 'cursor-pointer' : ''
-                      }`}
-                      onClick={() => emitSortable(head)}
-                    >
-                      <span className="flex">
-                        {head.label}
-                        {head.activeSort}
+            {items?.length ? (
+              <thead className={`${headClasses ? headClasses : ''}bg-gray-100`}>
+                <tr>
+                  {headItems.map((head) => {
+                    return (
+                      <th
+                        key={head.key}
+                        className={`${
+                          head.classes ? head.classes : ''
+                        }border-b border-gray-200 font-medium px-4 py-3 text-gray-600 dark:text-slate-200 text-right ${
+                          head.sortable ? 'cursor-pointer' : ''
+                        }`}
+                        onClick={() => emitSortable(head)}
+                      >
+                        <span className="flex">
+                          {head.label}
+                          {head.activeSort}
 
-                        {head.sortable ? (
-                          head.activeSort ? (
-                            <MdArrowUpward className="ms-1" />
+                          {head.sortable ? (
+                            head.activeSort ? (
+                              <MdArrowUpward className="ms-1" />
+                            ) : (
+                              <MdArrowDownward className="ms-1" />
+                            )
                           ) : (
-                            <MdArrowDownward className="ms-1" />
-                          )
-                        ) : (
-                          ''
-                        )}
-                      </span>
-                    </th>
-                  )
-                })}
-              </tr>
-            </thead>
+                            ''
+                          )}
+                        </span>
+                      </th>
+                    )
+                  })}
+                </tr>
+              </thead>
+            ) : null}
 
             <tbody className={bodyClass}>
-              {items.map((item, index) => {
-                return (
-                  <Fragment key={index}>
-                    <tr
-                      className={`${
-                        index !== items.length - 1
-                          ? index === tableIndex && collapse
-                            ? ''
-                            : 'border-b'
-                          : ''
-                      } ${isEven(striped, index) ? 'bg-gray-50' : ''}`}
-                    >
-                      {heads.map((head) => {
-                        return (
-                          <td key={head.key} className="py-3 px-4">
-                            {cellProps
-                              ? cellProps(
-                                  head.key,
-                                  item,
-                                  index,
-                                  collapse,
-                                  tableIndex,
-                                  () => collapsing(index)
-                                )
-                              : item[head.key]}
-                          </td>
-                        )
-                      })}
-                    </tr>
-
-                    {expanded && collapse && index === tableIndex && (
+              {items?.length ? (
+                items.map((item, index) => {
+                  return (
+                    <Fragment key={index}>
                       <tr
-                        className={index !== items.length - 1 ? 'border-b' : ''}
+                        className={`${
+                          index !== items.length - 1
+                            ? index === tableIndex && collapse
+                              ? ''
+                              : 'border-b'
+                            : ''
+                        } ${isEven(striped, index) ? 'bg-gray-50' : ''}`}
                       >
-                        <td colSpan={100}>
-                          {collapseItem && collapseItem(item)}
-                        </td>
+                        {heads.map((head) => {
+                          return (
+                            <td key={head.key} className="py-3 px-4">
+                              {cellProps
+                                ? cellProps(
+                                    head.key,
+                                    item,
+                                    index,
+                                    collapse,
+                                    tableIndex,
+                                    () => collapsing(index)
+                                  )
+                                : item[head.key]}
+                            </td>
+                          )
+                        })}
                       </tr>
-                    )}
-                  </Fragment>
-                )
-              })}
+
+                      {expanded && collapse && index === tableIndex && (
+                        <tr
+                          className={
+                            index !== items.length - 1 ? 'border-b' : ''
+                          }
+                        >
+                          <td
+                            className={
+                              isEven(striped, index) ? 'bg-gray-50' : ''
+                            }
+                            colSpan={100}
+                          >
+                            {collapseItem && collapseItem(item)}
+                          </td>
+                        </tr>
+                      )}
+                    </Fragment>
+                  )
+                })
+              ) : (
+                <tr>
+                  <td className="py-3 px-4 text-center" colSpan={100}>
+                    موردی برای نمایش وجود ندارد
+                  </td>
+                </tr>
+              )}
             </tbody>
           </>
         )}
