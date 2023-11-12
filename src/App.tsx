@@ -5,6 +5,7 @@ import {
   Button,
   Card,
   Table,
+  TextField,
   type IHead,
   type IOption
 } from 'components/shared/ui'
@@ -43,10 +44,9 @@ function App() {
     }
   ]
 
-  console.log("object");
-
   const [items, setItems] = useState<IItems[]>()
   const [loading, setLoading] = useState<boolean>(true)
+  const [textField, setTextField] = useState<string>('')
 
   useEffect(() => filter('name', Sort.ASCENDING), [])
 
@@ -154,7 +154,14 @@ function App() {
         <Badge label="عنوان" color="success" />
       </div>
 
-      <Breadcrumbs options={breadcrumbsOption} />
+      <Breadcrumbs classes="mb-10" options={breadcrumbsOption} />
+
+      <TextField
+        label="عنوان"
+        value={textField}
+        classes="mb-10"
+        changed={(e) => setTextField(e.target.value)}
+      />
     </div>
   )
 }
