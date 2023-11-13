@@ -11,6 +11,7 @@ interface IProps {
   icon?: ReactNode
   loading?: boolean
   disabled?: boolean
+  flat?: boolean
 }
 
 const Button = (props: IProps) => {
@@ -23,8 +24,9 @@ const Button = (props: IProps) => {
       'items-center',
       'justify-center',
       'rounded-full',
-      props.icon && !props.children ? 'p-3' : 'px-4 py-3',
+      props.icon && !props.children ? 'p-2' : 'px-6 py-3',
       props.block ? 'w-full' : '',
+      loading ? 'opacity-80 cursor-not-allowed' : '',
       typeof props.class === 'string' ? props.class : props?.class?.join(' ')
     ].join(' ')
   )
@@ -36,6 +38,8 @@ const Button = (props: IProps) => {
       setButtonClass(
         `${buttonClass} bg-gray-500 hover:bg-gray-500 focus:bg-gray-500 active:bg-gray-500 opacity-30 text-gray-300 cursor-not-allowed`
       )
+    else if (props.flat)
+      setButtonClass(`${buttonClass} bg-transparent hover:bg-gray-100`)
     else {
       switch (color) {
         case 'primary':
@@ -89,7 +93,7 @@ const Button = (props: IProps) => {
       onClick={handleClicked}
     >
       {loading ? (
-        <MdMoreHoriz className="text-2xl mx-4" />
+        <MdMoreHoriz className="text-2xl mx-4 animate-pulse" />
       ) : (
         <>
           {props.children}
