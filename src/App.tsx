@@ -151,12 +151,14 @@ function App() {
       )}
 
       <div className="flex items-center mb-10">
-        <Badge label="عنوان" color="success" />
+        <Badge label="عنوان" color="primary" />
       </div>
 
       <Breadcrumbs classes="mb-10" options={breadcrumbsOption} />
 
       <TextField
+        type="text"
+        size="lg"
         label="عنوان"
         value={textField}
         classes="mb-10"
