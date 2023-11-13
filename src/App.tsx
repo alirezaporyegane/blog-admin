@@ -4,27 +4,38 @@ import {
   Breadcrumbs,
   Button,
   Card,
+  Modal,
   Table,
   TextField,
   type IHead,
+  type IModalRef,
   type IOption
 } from 'components/shared/ui'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { MdAdd, MdHome, MdRemove } from 'react-icons/md'
 
+interface IItems {
+  id: number
+  title: string
+}
+
+enum Sort {
+  ASCENDING = 'ascending',
+  DESCENDING = 'descending'
+}
+
 function App() {
-  interface IItems {
-    id: number
-    title: string
+  const [items, setItems] = useState<IItems[]>()
+  const [loading, setLoading] = useState<boolean>(true)
+  const [textField, setTextField] = useState<string>('')
+  const modalRef = useRef<IModalRef>()
+
+  function handleClick() {
+    modalRef.current?.show()
   }
 
-  enum Sort {
-    ASCENDING = 'ascending',
-    DESCENDING = 'descending'
-  }
-
-  function handleClick(e: Element | null) {
-    console.log(e)
+  function hideModal() {
+    modalRef.current?.hide()
   }
 
   const head: IHead[] = [
@@ -43,10 +54,6 @@ function App() {
       label: ''
     }
   ]
-
-  const [items, setItems] = useState<IItems[]>()
-  const [loading, setLoading] = useState<boolean>(true)
-  const [textField, setTextField] = useState<string>('')
 
   useEffect(() => filter('name', Sort.ASCENDING), [])
 
@@ -125,15 +132,14 @@ function App() {
     <div className="container mx-auto px-4 mt-5 bg-white dark:bg-black">
       <Button
         type="reset"
-        color="danger"
+        color="primary"
         class="mb-10"
         icon={<MdAdd />}
         clicked={handleClick}
       >
-        عنوان
       </Button>
 
-      <Card classes="mb-10">test</Card>
+      <Card elevated classes="mb-10">test</Card>
 
       {loading ? (
         <div>loading</div>
@@ -164,6 +170,34 @@ function App() {
         classes="mb-10"
         changed={(e) => setTextField(e.target.value)}
       />
+
+      <Modal ref={modalRef} centered showTitle title="عنوان">
+        <TextField
+          type="text"
+          label="نام"
+          value={textField}
+          classes="mb-3"
+          changed={(e) => setTextField(e.target.value)}
+        />
+
+        <TextField
+          type="text"
+          label="نام خانوادگی"
+          value={textField}
+          classes="mb-10"
+          changed={(e) => setTextField(e.target.value)}
+        />
+
+        <Button
+          type="button"
+          color="success"
+          class="rounded-full"
+          block
+          clicked={hideModal}
+        >
+          ارسال
+        </Button>
+      </Modal>
     </div>
   )
 }

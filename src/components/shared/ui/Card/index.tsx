@@ -1,16 +1,20 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react'
 
 interface IProps {
-  children: ReactNode;
-  classes: string;
+  children: ReactNode
+  classes: string
+  elevated?: boolean
+  filled?: boolean
 }
 
-const Card = (props: IProps) => {
-  return (
-    <div className={`p-3 shadow-md rounded-xl ${props.classes}`}>
-      {props.children}
-    </div>
-  );
-};
+const Card = ({ children, classes, elevated, filled }: IProps) => {
+  const cardClass = [`${classes ? `${classes}` : ''}`, 'rounded-xl', 'p-3']
 
-export default Card;
+  if (elevated) cardClass.push('shadow-md ring-1 ring-gray-300')
+  else if (filled) cardClass.push('shadow-md')
+  else cardClass.push('ring-1 ring-gray-300')
+
+  return <div className={cardClass.join(' ')}>{children}</div>
+}
+
+export default Card
