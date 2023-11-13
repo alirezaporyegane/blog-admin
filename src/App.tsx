@@ -1,6 +1,7 @@
-import { MdAdd, MdRemove } from 'react-icons/md'
+import { MdAdd, MdRemove, MdChevronLeft } from 'react-icons/md'
 import Button from '@/module/shared/components/Button'
 import Card from '@/module/shared/components/Card'
+import Link from '@/module/shared/components/Link'
 import Table, { IHead } from '@/module/shared/components/Table'
 
 function App() {
@@ -82,11 +83,22 @@ function App() {
 
       <Table
         expanded
+        classes="mb-10"
         items={items}
         heads={head}
         cellProps={cellProps}
         collapseItem={collapseItem}
       />
+
+      <div className="flex">
+        <Link
+          to="/path"
+          classes="btn-danger py-2 ps-4 pe-3"
+          icon={<MdChevronLeft />}
+        >
+          عنوان
+        </Link>
+      </div>
     </div>
   )
 }

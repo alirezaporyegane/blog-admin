@@ -11,6 +11,7 @@ interface IProps<T> {
   bodyClass?: string
   headClasses?: string
   items: T[]
+  classes?: string
   collapseItem?: (item: T) => ReactNode
   cellProps?: (
     key: string,
@@ -35,6 +36,7 @@ const Table = <T extends IItems>({
   bodyClass,
   cellProps,
   expanded = false,
+  classes,
   collapseItem
 }: IProps<T>) => {
   const [collapse, setCollapse] = useState<boolean>(false)
@@ -50,7 +52,11 @@ const Table = <T extends IItems>({
   }
 
   return (
-    <div className="border bg-white rounded-xl overflow-hidden">
+    <div
+      className={`${
+        classes ? `${classes} ` : ''
+      }border bg-white rounded-xl overflow-hidden`}
+    >
       <table className="table-auto border-collapse w-full text-sm">
         {heads?.length && (
           <>
@@ -88,8 +94,13 @@ const Table = <T extends IItems>({
                         return (
                           <td key={head.key} className="py-3 px-4">
                             {cellProps
-                              ? cellProps(head.key, item, index, collapse, tableIndex, () =>
-                                  collapsing(index)
+                              ? cellProps(
+                                  head.key,
+                                  item,
+                                  index,
+                                  collapse,
+                                  tableIndex,
+                                  () => collapsing(index)
                                 )
                               : item[head.key]}
                           </td>
