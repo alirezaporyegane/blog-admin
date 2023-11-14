@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -9,15 +10,15 @@ interface IProps {
 }
 
 const Links = ({ children, to = '/', classes, icon }: IProps) => {
+  const linkClasses = classNames(classes, 'flex', 'items-center')
+  const iconClasses = classNames({ 'ps-2': !!children })
+
   return (
-    <Link
-      to={to}
-      className={`${classes ? `${classes} ` : ''}flex items-center`}
-    >
+    <Link to={to} className={linkClasses}>
       <>
         <span className="leading-1">{children}</span>
 
-        {icon && <span className={children ? 'ps-2' : ''}>{icon}</span>}
+        {icon && <span className={iconClasses}>{icon}</span>}
       </>
     </Link>
   )

@@ -6,6 +6,7 @@ import {
   Card,
   Link,
   Modal,
+  Select,
   Table,
   TextField,
   type IHead,
@@ -13,7 +14,7 @@ import {
   type IOption
 } from 'components/shared/ui'
 import { useEffect, useRef, useState } from 'react'
-import { MdAdd, MdHome, MdRemove, MdChevronLeft } from 'react-icons/md'
+import { MdAdd, MdChevronLeft, MdHome, MdRemove } from 'react-icons/md'
 
 interface IItems {
   id: number
@@ -29,6 +30,7 @@ function App() {
   const [items, setItems] = useState<IItems[]>()
   const [loading, setLoading] = useState<boolean>(true)
   const [textField, setTextField] = useState<string>('')
+  const [selectValue, setSelectVAlue] = useState<string>('')
   const modalRef = useRef<IModalRef>()
 
   function handleClick() {
@@ -129,6 +131,21 @@ function App() {
     }
   ]
 
+  const selectOption = [
+    {
+      value: '1',
+      text: 'خانه'
+    },
+    {
+      value: '2',
+      text: 'وبلاگ'
+    },
+    {
+      value: '3',
+      text: 'تست'
+    }
+  ]
+
   return (
     <div className="container mx-auto px-4 mt-5 bg-white dark:bg-black">
       <Button
@@ -137,17 +154,19 @@ function App() {
         class="mb-10"
         icon={<MdAdd />}
         clicked={handleClick}
-      >
-      </Button>
+      />
 
-      <Card elevated classes="mb-10">test</Card>
+      <Card bordered classes="mb-10">
+        test
+      </Card>
 
       {loading ? (
         <div>loading</div>
       ) : (
         <Table
-          expanded
+          card
           striped
+          expanded
           classes="mb-10"
           items={items}
           heads={head}
@@ -161,19 +180,10 @@ function App() {
         <Badge label="عنوان" color="primary" />
       </div>
 
-      <Table
-        expanded
-        classes="mb-10"
-        items={items}
-        heads={head}
-        cellProps={cellProps}
-        collapseItem={collapseItem}
-      />
-
       <div className="flex">
         <Link
           to="/path"
-          classes="btn-danger py-2 ps-4 pe-3"
+          classes="btn-danger py-2 ps-4 pe-3 mb-10"
           icon={<MdChevronLeft />}
         >
           عنوان
@@ -217,6 +227,12 @@ function App() {
           ارسال
         </Button>
       </Modal>
+
+      <Select
+        value={selectValue}
+        options={selectOption}
+        changed={(e) => setSelectVAlue(e.target.value)}
+      />
     </div>
   )
 }

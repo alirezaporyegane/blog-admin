@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import { Fragment, ReactNode, useState } from 'react'
 import { MdArrowDownward, MdArrowUpward } from 'react-icons/md'
 
@@ -19,6 +20,7 @@ interface IProps<T> {
   bodyClass?: string
   headClasses?: string
   striped?: boolean
+  card?: boolean
   classes?: string
   items: T[] | undefined
   collapseItem?: (item: T) => ReactNode
@@ -43,6 +45,7 @@ const Table = <T extends IItems>({
   heads,
   headClasses,
   items = [],
+  card,
   classes,
   bodyClass,
   cellProps,
@@ -54,6 +57,15 @@ const Table = <T extends IItems>({
   const [collapse, setCollapse] = useState<boolean>(false)
   const [tableIndex, setTableIndex] = useState<number>(0)
   const [headItems, setHeadItems] = useState(heads)
+
+  const wrapperClasses = classNames(
+    classes,
+    { 'border shadow': card },
+    'rounded-xl',
+    'overflow-hidden'
+  )
+
+  const headerClasses = classNames(headClasses)
 
   function collapsing(index: number) {
     setCollapse((preCollapse: boolean) => {
@@ -88,16 +100,12 @@ const Table = <T extends IItems>({
   }
 
   return (
-    <div
-      className={`${
-        classes ? `${classes} ` : ''
-      }border bg-white rounded-xl overflow-hidden`}
-    >
+    <div className={wrapperClasses}>
       <table className="table-auto border-collapse w-full text-sm">
         {headItems?.length && (
           <>
             {items?.length ? (
-              <thead className={`${headClasses ? headClasses : ''}bg-gray-100`}>
+              <thead className={headerClasses}>
                 <tr>
                   {headItems.map((head) => {
                     return (
