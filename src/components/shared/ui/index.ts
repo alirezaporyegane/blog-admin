@@ -1,3 +1,4 @@
+import Alert from './Alert'
 import Badge from './Badge'
 import Breadcrumbs, { IOption } from './Breadcrumbs'
 import Button from './Button'
@@ -7,6 +8,7 @@ import Table, { IHead } from './Table'
 import TextField from './TextField'
 
 export {
+  Alert,
   Badge,
   Breadcrumbs,
   Button,
@@ -15,6 +17,6 @@ export {
   Table,
   TextField,
   type IHead,
-  type IOption,
-  type IModalRef
+  type IModalRef,
+  type IOption
 }

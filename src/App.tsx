@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {
+  Alert,
   Badge,
   Breadcrumbs,
   Button,
@@ -12,7 +13,7 @@ import {
   type IOption
 } from 'components/shared/ui'
 import { useEffect, useRef, useState } from 'react'
-import { MdAdd, MdHome, MdRemove } from 'react-icons/md'
+import { MdAdd, MdAddAlert, MdHome, MdRemove } from 'react-icons/md'
 
 interface IItems {
   id: number
@@ -130,16 +131,21 @@ function App() {
 
   return (
     <div className="container mx-auto px-4 mt-5 bg-white dark:bg-black">
+      <Alert open className="mb-10" color="warning" icon={<MdAddAlert />}>
+        عنوان
+      </Alert>
+
       <Button
         type="reset"
         color="primary"
         class="mb-10"
         icon={<MdAdd />}
         clicked={handleClick}
-      >
-      </Button>
+      ></Button>
 
-      <Card elevated classes="mb-10">test</Card>
+      <Card elevated classes="mb-10">
+        test
+      </Card>
 
       {loading ? (
         <div>loading</div>
