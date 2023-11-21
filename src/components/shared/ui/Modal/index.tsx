@@ -79,7 +79,7 @@ const Modal = forwardRef(
                         headerClasses ? ` ${headerClasses}` : ''
                       }`}
                     >
-                      <h4 className="text-2xl font-semibold">{title}</h4>
+                      <h4 className="text-xl font-semibold">{title}</h4>
 
                       <Button
                         flat
