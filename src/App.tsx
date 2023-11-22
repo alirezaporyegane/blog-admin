@@ -1,12 +1,17 @@
-import { Outlet } from "react-router-dom"
-import Layout from "./components/Layout"
+import { Outlet } from 'react-router-dom'
+import Layout from './components/Layout'
+import { AccountProvider } from './context/AccountContext'
 
 const App = () => {
-  return <>
-    <Layout>
-      <Outlet />
-    </Layout>
-  </>
+  return (
+    <>
+      <AccountProvider>
+        <Layout>
+          <Outlet />
+        </Layout>
+      </AccountProvider>
+    </>
+  )
 }
 
 export default App

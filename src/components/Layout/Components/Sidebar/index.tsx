@@ -6,8 +6,8 @@ import {
   Typography
 } from '@material-tailwind/react'
 import { ReactNode } from 'react'
-import { MdHome, MdSettings } from 'react-icons/md'
-import { useMatches, useNavigate } from 'react-router-dom'
+import { MdHome, MdPostAdd, MdSettings } from 'react-icons/md'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Account from './Account'
 
 type TNavItem = {
@@ -18,7 +18,7 @@ type TNavItem = {
 }
 
 const Sidebar = () => {
-  const [path] = useMatches()
+  const path = useLocation()
   const navigate = useNavigate()
 
   const handlerSelected = (value: string): boolean | undefined =>
@@ -30,27 +30,33 @@ const Sidebar = () => {
     {
       id: 1,
       name: 'داشبورد',
-      icon: <MdHome className="text-xl" />,
+      icon: <MdHome className="text-2xl md:!text-xl" />,
       url: '/dashboard'
     },
     {
       id: 2,
+      name: 'وبلاگ',
+      icon: <MdPostAdd className="text-2xl md:!text-xl" />,
+      url: '/blog'
+    },
+    {
+      id: 3,
       name: 'تنظیمات',
-      icon: <MdSettings className="text-xl" />,
+      icon: <MdSettings className="text-2xl md:!text-xl" />,
       url: '/settings'
     }
   ]
 
   return (
-    <Card className="h-[calc(100vh)] w-full md:max-w-[20rem] rounded-none bg-gray-100 px-6">
+    <Card className="h-[calc(100vh)] mx-w-[2rem] lg:max-w-[20rem] rounded-none bg-gray-100 px-1 lg:!px-4">
       <Account />
 
-      <List className="p-0">
+      <List className="p-0 min-w-[55px] lg:!min-w-[260px]">
         {navItems.map((navItem) => {
           return (
             <ListItem
               key={navItem.id}
-              className="px-0"
+              className="px-0 w-[55px] lg:!w-[100%]"
               selected={handlerSelected(navItem.url)}
               onClick={() => handleRedirect(navItem.url)}
             >
@@ -58,7 +64,7 @@ const Sidebar = () => {
 
               <Typography
                 color="blue-gray"
-                className="ms-4 font-semibold hidden"
+                className="ms-4 font-semibold hidden lg:!block lg:ms-0"
               >
                 {navItem.name}
               </Typography>

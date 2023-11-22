@@ -1,74 +1,28 @@
-import { ChangeEvent } from 'react'
+import { Input, InputProps } from '@material-tailwind/react'
+import { forwardRef } from 'react'
+import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form'
 
-type TProps = {
-  placeholder?: string
-  id?: string
-  value: any
-  label?: string
-  classes?: string
-  type?: string
-  name?: string
-  size?: 'sm' | 'md' | 'lg'
-  changed: (e: ChangeEvent<HTMLInputElement>) => void
+type IProps = InputProps & {
+  errorMessage?:
+    | string
+    | FieldError
+    | Merge<FieldError, FieldErrorsImpl<any>>
+    | undefined
 }
 
-const TextField = ({
-  value,
-  placeholder,
-  label,
-  size = 'md',
-  classes,
-  type,
-  name,
-  id = 'input',
-  changed
-}: TProps) => {
-  const inputClass = [
-    classes ? `${classes} ` : '',
-    'block',
-    'w-full',
-    'rounded-md',
-    'border-0',
-    'px-1.5',
-    'text-gray-900',
-    'shadow-sm',
-    'ring-1',
-    'ring-inset',
-    'ring-gray-300',
-    'placeholder:text-gray-500',
-    'focus:shadow-sm',
-    'focus:shadow-blue-200',
-    'focus-within:outline-none',
-    'sm:text-sm',
-    'sm:leading-6'
-  ]
-
-  if (size === 'sm') inputClass.push('py-0.75 text-sm')
-  else if (size === 'md') inputClass.push('py-2')
-  else if (size === 'lg') inputClass.push('py-1.5 text-xl')
-
+const TextField = forwardRef<HTMLInputElement, IProps>((props: IProps, ref) => {
+  const { errorMessage, ...rest } = props
   return (
-    <>
-      {label ? (
-        <label
-          htmlFor={id}
-          className="block text-sm font-semibold leading-6 text-gray-900 mb-2.5 tex-x"
-        >
-          {label}
-        </label>
-      ) : null}
+    <div ref={ref} className="custom-input pb-5 relative">
+      <Input crossOrigin={{}} {...rest} />
 
-      <input
-        id={id}
-        type={type}
-        name={name}
-        className={inputClass.join(' ')}
-        value={value}
-        placeholder={placeholder}
-        onChange={changed}
-      />
-    </>
+      {errorMessage && (
+        <small className="text-red-400 text-xs mt-1 absolute">
+          {typeof errorMessage === 'string' && errorMessage}
+        </small>
+      )}
+    </div>
   )
-}
+})
 
 export default TextField

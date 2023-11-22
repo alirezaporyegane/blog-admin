@@ -1,11 +1,15 @@
 import App from '@/App'
-import Dashboard from '@/view/Dashboard'
-import Settings from '@/view/Settings'
+import Blog from '@/modules/Blog'
+import Dashboard from '@/modules/Dashboard'
+import Login from '@/modules/Login/Page'
+import Settings from '@/modules/Settings'
 import { createBrowserRouter } from 'react-router-dom'
 
-enum Router {
+export enum Router {
   BASE = '/',
+  LOGIN = '/login',
   DASHBOARD = '/dashboard',
+  BLOG = '/blog',
   SETTINGS = '/settings'
 }
 
@@ -17,6 +21,14 @@ export const router = createBrowserRouter([
       {
         path: Router.DASHBOARD,
         element: <Dashboard />
+      },
+      {
+        path: Router.LOGIN,
+        element: <Login />
+      },
+      {
+        path: Router.BLOG,
+        element: <Blog />
       },
       {
         path: Router.SETTINGS,
