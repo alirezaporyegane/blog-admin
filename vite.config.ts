@@ -13,5 +13,6 @@ export default defineConfig({
   },
   server: {
     port: 8080
-  }
+  },
+  mode: process.env.NODE_ENV,
 })

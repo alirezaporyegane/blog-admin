@@ -1,0 +1,23 @@
+.btn-default {
+  @apply bg-gray-500 hover:bg-gray-600 focus:bg-gray-700 active:bg-gray-700 text-white flex items-center justify-center rounded-full;
+}
+
+.btn-primary {
+  @apply bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 active:bg-blue-700 text-white flex items-center justify-center rounded-full;
+}
+
+.btn-secondary {
+  @apply bg-orange-500 hover:bg-orange-600 focus:bg-orange-700 active:bg-orange-700 text-black flex items-center justify-center rounded-full;
+}
+
+.btn-danger {
+  @apply bg-red-500 hover:bg-red-600 focus:bg-red-700 active:bg-red-700 text-white flex items-center justify-center rounded-full;
+}
+
+// .btn-success {
+//   @apply bg-emerald-500 hover:bg-emerald-600 focus:bg-emerald-700 active:bg-emerald-700 text-white flex items-center justify-center rounded-full;
+// }
+
+.btn-warning {
+  @apply bg-yellow-500 hover:bg-yellow-600 focus:bg-yellow-700 active:bg-yellow-700 text-black flex items-center justify-center rounded-full;
+}
