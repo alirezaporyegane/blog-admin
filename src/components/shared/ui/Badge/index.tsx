@@ -1,11 +1,11 @@
 interface IProps {
   label: string
   classes?: string
-  color?: TVariants
+  color?: string
 }
 
 const Badge = ({ label, classes, color }: IProps) => {
-  const badgeColor = (bg: TVariants) => {
+  const badgeColor = (bg: string) => {
     if (bg === 'primary') return 'bg-blue-50 text-blue-800 ring-blue-500/10'
     else if (bg === 'danger') return 'bg-red-50 text-red-800 ring-red-500/10'
     else if (bg === 'warning')

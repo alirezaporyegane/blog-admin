@@ -1,6 +1,7 @@
 import { Input, InputProps } from '@material-tailwind/react'
 import { forwardRef } from 'react'
 import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form'
+import './index.scss'
 
 type IProps = InputProps & {
   errorMessage?:
@@ -13,11 +14,16 @@ type IProps = InputProps & {
 const TextField = forwardRef<HTMLInputElement, IProps>((props: IProps, ref) => {
   const { errorMessage, ...rest } = props
   return (
-    <div ref={ref} className="custom-input pb-5 relative">
+    <div
+      ref={ref}
+      className={`pb-5 relative ${
+        rest.variant === 'outlined' ? 'label-outlined' : ''
+      }`}
+    >
       <Input crossOrigin={{}} {...rest} />
 
       {errorMessage && (
-        <small className="text-red-400 text-xs mt-1 absolute">
+        <small className="text-red-400 text-[12px] mt-1 absolute">
           {typeof errorMessage === 'string' && errorMessage}
         </small>
       )}

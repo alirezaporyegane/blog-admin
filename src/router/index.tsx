@@ -1,5 +1,5 @@
 import App from '@/App'
-import Blog from '@/modules/Blog'
+import Blog from '@/modules/Blog/Page'
 import Dashboard from '@/modules/Dashboard'
 import Login from '@/modules/Login/Page'
 import Settings from '@/modules/Settings'

@@ -1,12 +1,9 @@
-import { AccountContext } from '@/context/AccountContext'
-import { useContext } from 'react'
+import { useTranslation } from 'react-i18next';
 
 const Dashboard = () => {
-  const { getAccount } = useContext(AccountContext)
-
-  const account = getAccount()
-  console.log(account)
-  return 'hi'
+  const { t } = useTranslation();
+  console.log((t));
+  return <div>{t('test')}</div>
 }
 
 export default Dashboard

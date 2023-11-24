@@ -43,5 +43,27 @@ export enum EXCEPTION_CODE {
   USER_WITH_THIS_PHONE_NUMBER_ALREADY_EXIST = 'USER_WITH_THIS_PHONE_NUMBER_ALREADY_EXIST',
   USER_NOT_FOUND = 'USER_NOT_FOUND',
   USER_IS_SUSPENDED = 'USER_IS_SUSPENDED',
-  PASSWORD_IS_WRONG = 'PASSWORD_IS_WRONG'
+  PASSWORD_IS_WRONG = 'PASSWORD_IS_WRONG',
+  CLIENT_ERROR = 'CLIENT_ERROR'
 }
+
+export class ErrorException {
+  errorCode: number
+  data: unknown
+  code: keyof typeof EXCEPTION_CODE
+  status: number
+
+  constructor(
+    data: unknown,
+    status: number,
+    code: keyof typeof EXCEPTION_CODE,
+    errorCode: number
+  ) {
+    this.data = data
+    this.errorCode = errorCode
+    this.code = code
+    this.status = status
+  }
+}
+
+export type ErrorExceptions = ErrorException[]

@@ -8,11 +8,11 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
-      'components': resolve(__dirname, 'src/components'),
+      components: resolve(__dirname, 'src/components')
     }
   },
   server: {
     port: 8080
   },
-  mode: process.env.NODE_ENV,
+  mode: process.env.NODE_ENV
 })

@@ -10,7 +10,7 @@ type TProp = {
   className?: string
   icon?: ReactNode
   variant?: TVariant
-  color?: TVariants
+  color?: string
   open?: boolean
 }
 
@@ -23,7 +23,7 @@ const Alert = ({
   open = false
 }: TProp) => {
   const [isOpen, setIsOpen] = useState(open)
-  const margVariant = (colorName?: TVariants, variant?: TVariant) => {
+  const margVariant = (colorName?: string, variant?: TVariant) => {
     if (variant === 'outlined') {
       if (colorName === 'primary') return 'border-blue-500 text-blue-500'
       else if (colorName === 'secondary')
