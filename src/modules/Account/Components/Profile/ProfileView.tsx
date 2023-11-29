@@ -10,6 +10,7 @@ import {
   TextField
 } from '@mui/material'
 import { t } from 'i18next'
+import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { IAccount } from '../../@types/account.entry'
 import { updateProfileHandler } from '../../Handler/account.handler'
@@ -20,6 +21,7 @@ type Props = {
 }
 
 const ProfileView = ({ profile, account }: Props) => {
+  const [loading, setLoading] = useState(false)
   const { register, control, handleSubmit } = useForm({
     mode: 'onChange',
     defaultValues: profile
@@ -34,9 +36,12 @@ const ProfileView = ({ profile, account }: Props) => {
 
   async function onSubmit(data: IAccount) {
     try {
+      setLoading(true)
       await updateProfileHandler(data, account)
     } catch (err) {
       console.log(err)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -113,8 +118,13 @@ const ProfileView = ({ profile, account }: Props) => {
                 fullWidth
                 labelId="select"
                 label={t('legality')}
+                defaultValue={profile?.legality}
                 {...register('legality')}
               >
+                <MenuItem value={undefined} disabled>
+                  <em className="italic">{t('select')}</em>
+                </MenuItem>
+
                 <MenuItem value={0}>{t('real')}</MenuItem>
 
                 <MenuItem value={1}>{t('legal')}</MenuItem>
@@ -141,10 +151,11 @@ const ProfileView = ({ profile, account }: Props) => {
 
         <Grid item lg={4}>
           <Button
-            classes={{ root: '!mt-5' }}
-            variant="contained"
             size="large"
             type="submit"
+            variant="contained"
+            classes={{ root: '!mt-5' }}
+            disabled={loading}
             onClick={handleSubmit(onSubmit)}
           >
             {t('save')}

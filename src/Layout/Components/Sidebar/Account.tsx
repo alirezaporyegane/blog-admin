@@ -73,7 +73,11 @@ const Account = () => {
 
       <Menu open={open} anchorEl={anchorEl} onClose={handleClose}>
         <MenuItem>
-          <Link className="flex items-center" to={Router.PROFILE}>
+          <Link
+            className="flex items-center"
+            to={Router.PROFILE}
+            onClick={handleClose}
+          >
             <MdPerson className="me-4" />
 
             {t('profile')}
@@ -83,7 +87,10 @@ const Account = () => {
         <MenuItem
           disabled={loading}
           className="flex items-center"
-          onClick={logout}
+          onClick={() => {
+            logout()
+            handleClose()
+          }}
         >
           <MdLogout className="me-4 text-red-700" />
 

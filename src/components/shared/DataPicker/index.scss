@@ -29,14 +29,14 @@
     }
 
     .year-picker-grid {
-      @apply grid gap-1 md:gap-4 grid-cols-2 auto-rows-[2rem];
+      @apply grid gap-1 md:gap-4 grid-cols-2 md:grid-cols-3 auto-rows-[2rem];
       * {
         @apply flex justify-center items-center w-full h-full;
       }
     }
 
     .month-picker-grid {
-      @apply grid gap-1 md:gap-4 grid-cols-1 auto-rows-[2rem];
+      @apply grid gap-1 md:gap-4 grid-cols-1 md:grid-cols-3 auto-rows-[2rem];
       * {
         @apply flex justify-center items-center w-full h-full;
       }
