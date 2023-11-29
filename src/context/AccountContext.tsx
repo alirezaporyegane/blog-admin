@@ -24,13 +24,13 @@ interface IAccount {
   refreshTtl: number
 }
 
-interface ICartProvider {
+interface IAccountProvider {
   children: ReactNode
 }
 
 interface IAccountContext {
   account: IAccount | undefined
-  getAccount: () => IAccount | object
+  getAccount: () => IAccount
   setAccount: (body?: IAccount) => void
   clearAccount: () => void
   getAccountToken: () => string | undefined
@@ -45,7 +45,7 @@ export const AccountContext = createContext({
 } as IAccountContext)
 
 // eslint-disable-next-line react-refresh/only-export-components
-export function AccountProvider({ children }: ICartProvider) {
+export function AccountProvider({ children }: IAccountProvider) {
   const [account, setAccountState] = useState<IAccount>()
 
   const setLocaleStorage = (key: string, value: IAccount | undefined) => {
@@ -60,13 +60,14 @@ export function AccountProvider({ children }: ICartProvider) {
 
   useEffect(() => {
     const accountItem = getLocaleStorage(AccountKey.ACCOUNT_KEY)
+    console.log(accountItem);
 
     if (accountItem) setAccountState(accountItem)
   }, [])
 
   useEffect(() => setLocaleStorage(AccountKey.ACCOUNT_KEY, account), [account])
 
-  function getAccount(): IAccount | object {
+  function getAccount(): IAccount {
     return account ? account : {}
   }
 

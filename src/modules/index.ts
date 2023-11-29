@@ -1,4 +1,6 @@
-import login from './Login'
-import blog from './Blog'
+import Account from './Account'
+import Blog from './Blog'
 
-export default [login, blog]
+export { Account, Blog }
+
+export default [Blog, Account]

@@ -25,8 +25,7 @@ export type RequestOption = {
   action?: string | number
   params?: object
   body?: unknown
-  accessToken?: string
-  account?: any
+  token?: string
 }
 
 export interface RequestError {

@@ -22,8 +22,8 @@ function requestConfig(
     params: options.params,
     headers: {
       Authorization:
-        account?.accessToken && !options.tokenLess
-          ? `Bearer ${options.accessToken}`
+        account?.token && !options.tokenLess
+          ? `Bearer ${account.token}`
           : null
     },
     data: options.body,

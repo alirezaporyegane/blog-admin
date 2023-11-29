@@ -1,9 +1,12 @@
-import { useTranslation } from 'react-i18next';
+import { HeaderNameContext } from '@/context/HeaderNameContext'
+import { useContext, useEffect } from 'react'
 
 const Dashboard = () => {
-  const { t } = useTranslation();
-  console.log((t));
-  return <div>{t('test')}</div>
+  const { setName } = useContext(HeaderNameContext)
+
+  useEffect(() => setName('داشبورد'))
+
+  return <div className="text-center"></div>
 }
 
 export default Dashboard

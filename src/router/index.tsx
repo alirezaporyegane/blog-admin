@@ -1,7 +1,9 @@
-import App from '@/App'
+import Layout from '@/Layout'
+import Login from '@/modules/Account/Pages/Login'
+import Profile from '@/modules/Account/Pages/Profile'
+import Register from '@/modules/Account/Pages/Register'
 import Blog from '@/modules/Blog/Page'
 import Dashboard from '@/modules/Dashboard'
-import Login from '@/modules/Login/Page'
 import Settings from '@/modules/Settings'
 import { createBrowserRouter } from 'react-router-dom'
 
@@ -9,14 +11,16 @@ export enum Router {
   BASE = '/',
   LOGIN = '/login',
   DASHBOARD = '/dashboard',
+  REGISTER = '/register',
   BLOG = '/blog',
+  PROFILE = '/profile',
   SETTINGS = '/settings'
 }
 
 export const router = createBrowserRouter([
   {
-    path: Router.BASE,
-    element: <App />,
+    element: <Layout />,
+    path: '/',
     children: [
       {
         path: Router.DASHBOARD,
@@ -25,6 +29,14 @@ export const router = createBrowserRouter([
       {
         path: Router.LOGIN,
         element: <Login />
+      },
+      {
+        path: Router.REGISTER,
+        element: <Register />
+      },
+      {
+        path: Router.PROFILE,
+        element: <Profile />
       },
       {
         path: Router.BLOG,
