@@ -44,26 +44,21 @@ export const AccountContext = createContext({
   getAccountToken: () => {}
 } as IAccountContext)
 
+const getLocaleStorage = (key: string): IAccount => {
+  return localStorage.getItem(key)
+    ? JSON.parse(localStorage.getItem(key) || '')
+    : ''
+}
+
 // eslint-disable-next-line react-refresh/only-export-components
 export function AccountProvider({ children }: IAccountProvider) {
-  const [account, setAccountState] = useState<IAccount>()
+  const [account, setAccountState] = useState<IAccount>(() =>
+    getLocaleStorage(AccountKey.ACCOUNT_KEY)
+  )
 
   const setLocaleStorage = (key: string, value: IAccount | undefined) => {
     if (value) localStorage.setItem(key, JSON.stringify(value))
   }
-
-  const getLocaleStorage = (key: string): IAccount => {
-    return localStorage.getItem(key)
-      ? JSON.parse(localStorage.getItem(key) || '')
-      : ''
-  }
-
-  useEffect(() => {
-    const accountItem = getLocaleStorage(AccountKey.ACCOUNT_KEY)
-    console.log(accountItem);
-
-    if (accountItem) setAccountState(accountItem)
-  }, [])
 
   useEffect(() => setLocaleStorage(AccountKey.ACCOUNT_KEY, account), [account])
 
@@ -77,6 +72,7 @@ export function AccountProvider({ children }: IAccountProvider) {
 
   function clearAccount() {
     setAccountState(undefined)
+    localStorage.removeItem(AccountKey.ACCOUNT_KEY)
   }
 
   function getAccountToken() {

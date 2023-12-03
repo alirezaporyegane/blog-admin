@@ -1,15 +1,14 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
-import modules from '@/modules'
+import translation from '@/translate'
 const lng = 'fa'
 
 let translate = {}
-modules.forEach((modules) => {
-  translate = { ...translate, ...modules.translate[lng] }
-})
+Object.values(translation[lng]).forEach(
+  (value) => (translate = { ...translate, ...value })
+)
 
-console.log(translate)
 const resources = {
   [lng]: {
     translation: {

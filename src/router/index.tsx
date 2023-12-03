@@ -1,11 +1,12 @@
 import Layout from '@/Layout'
-import Login from '@/modules/Account/Pages/Login'
-import Profile from '@/modules/Account/Pages/Profile'
-import Register from '@/modules/Account/Pages/Register'
-import Blog from '@/modules/Blog/Page'
-import Dashboard from '@/modules/Dashboard'
-import Settings from '@/modules/Settings'
+import Login from '@/views/Login'
+import Profile from '@/views/Profile'
+import Register from '@/views/Register'
+import Blog from '@/views/Blog'
+import Dashboard from '@/views/Dashboard'
+import Settings from '@/views/Settings'
 import { createBrowserRouter } from 'react-router-dom'
+import ProtectedRoute from './ProtectedRoute'
 
 export enum Router {
   BASE = '/',
@@ -24,7 +25,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: Router.DASHBOARD,
-        element: <Dashboard />
+        element: (
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        )
       },
       {
         path: Router.LOGIN,
@@ -36,15 +41,27 @@ export const router = createBrowserRouter([
       },
       {
         path: Router.PROFILE,
-        element: <Profile />
+        element: (
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        )
       },
       {
         path: Router.BLOG,
-        element: <Blog />
+        element: (
+          <ProtectedRoute>
+            <Blog />
+          </ProtectedRoute>
+        )
       },
       {
         path: Router.SETTINGS,
-        element: <Settings />
+        element: (
+          <ProtectedRoute>
+            <Settings />
+          </ProtectedRoute>
+        )
       }
     ]
   }

@@ -1,6 +1,6 @@
 import { AccountContext } from '@/context/AccountContext'
-import { logoutHandler } from '@/modules/Account/Handler/account.handler'
 import { Router } from '@/router'
+import { Account as AccountService } from '@/services'
 import { success } from '@/utils/Notify'
 import { Box, IconButton, Menu, MenuItem } from '@mui/material'
 import { useContext, useState } from 'react'
@@ -20,8 +20,8 @@ const Account = () => {
   async function logout() {
     try {
       setLoading(true)
-      await logoutHandler(getAccount())
       clearAccount()
+      await AccountService.logoutHandler(getAccount())
       navigate(Router.LOGIN)
       success(t('loginSuccess'))
     } catch (err: any) {
