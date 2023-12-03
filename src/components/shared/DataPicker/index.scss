@@ -1,0 +1,67 @@
+.date-picker {
+  @apply bg-white  overflow-hidden;
+
+  .date-picker-selected-date {
+    @apply bg-blue-200 text-start p-4;
+  }
+
+  .date-picker-body {
+    @apply p-6;
+    .date-picker-header {
+      @apply flex justify-between font-bold text-sm items-center mb-2;
+
+      .month-button {
+        @apply bg-none border-none cursor-pointer;
+
+        &:hover {
+          @apply shadow-lg rounded-full;
+        }
+      }
+    }
+
+    .date-picker-grid {
+      @apply grid gap-1 md:gap-4 grid-cols-7 auto-rows-[2rem];
+      * {
+        @apply flex justify-center items-center w-full h-full;
+      }
+    }
+
+    .year-picker-grid {
+      @apply grid gap-1 md:gap-4 grid-cols-2 md:grid-cols-3 auto-rows-[2rem];
+      * {
+        @apply flex justify-center items-center w-full h-full;
+      }
+    }
+
+    .month-picker-grid {
+      @apply grid gap-1 md:gap-4 grid-cols-1 md:grid-cols-3 auto-rows-[2rem];
+      * {
+        @apply flex justify-center items-center w-full h-full;
+      }
+    }
+
+    .date-picker-grid-header {
+      @apply font-bold text-xs text-gray-600 flex items-center justify-center;
+    }
+
+    .date-picker-grid-dates {
+      @apply text-[#555];
+
+      .date {
+        @apply cursor-pointer bg-none hover:bg-blue-50 text-black rounded-full;
+
+        &.date-picker-other-month-date {
+          @apply text-[#aaa];
+        }
+
+        &.today {
+          @apply border border-dashed border-blue-400;
+        }
+
+        &.selected {
+          @apply bg-blue-400 text-white;
+        }
+      }
+    }
+  }
+}

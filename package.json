@@ -10,17 +10,27 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@material-tailwind/react": "^2.1.4",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.18",
+    "@mui/material": "^5.14.18",
     "@types/qs": "^6.9.10",
     "axios": "^1.6.2",
     "classnames": "^2.3.2",
+    "date-fns": "^2.30.0",
+    "date-fns-jalali": "^2.13.0-0",
+    "dayjs": "^1.11.10",
+    "i18next": "^23.7.6",
     "qs": "^6.11.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-helmet-async": "^2.0.1",
     "react-hook-form": "^7.48.2",
+    "react-hot-toast": "^2.4.1",
+    "react-i18next": "^13.5.0",
     "react-icons": "^4.11.0",
     "react-router-dom": "^6.18.0",
-    "tailwind-merge": "^2.0.0"
+    "stylis-plugin-rtl": "^2.1.1"
   },
   "devDependencies": {
     "@types/node": "^20.9.0",
@@ -36,6 +46,7 @@
     "postcss": "^8.4.31",
     "postcss-import": "^15.1.0",
     "sass": "^1.69.5",
+    "stylis": "^4.3.0",
     "tailwindcss": "^3.3.5",
     "typescript": "^5.0.2",
     "vite": "^5.0.0"
