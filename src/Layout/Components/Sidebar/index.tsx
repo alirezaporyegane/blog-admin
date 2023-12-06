@@ -1,4 +1,5 @@
-import { Home, PostAdd, Settings } from '@mui/icons-material'
+import { AccountContext, Role } from '@/context/AccountContext'
+import { Category, Home, PostAdd, Settings, Group } from '@mui/icons-material'
 import {
   Drawer,
   List,
@@ -7,9 +8,8 @@ import {
   ListItemIcon,
   ListItemText
 } from '@mui/material'
-import { ReactNode } from 'react'
+import { ReactNode, useContext } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-
 import Account from './Account'
 
 type Props = {
@@ -22,6 +22,7 @@ export type TNavItem = {
   name: string
   icon: ReactNode
   url: string
+  roles: Role[]
 }
 
 type MobileProps = Pick<Props, 'mobileDrawerWidth'> & {
@@ -87,6 +88,8 @@ const MobileSlider = ({
 const Sidebar = ({ drawerWidth, mobileDrawerWidth }: Props) => {
   const path = useLocation()
   const navigate = useNavigate()
+  const { getAccount } = useContext(AccountContext)
+  const account = getAccount()
 
   const handleRedirect = (url: string) => navigate(url)
 
@@ -95,21 +98,41 @@ const Sidebar = ({ drawerWidth, mobileDrawerWidth }: Props) => {
       id: 1,
       name: 'داشبورد',
       icon: <Home fontSize="medium" />,
-      url: '/dashboard'
+      url: '/dashboard',
+      roles: [Role.ADMIN, Role.WRITER]
     },
     {
       id: 2,
       name: 'وبلاگ',
       icon: <PostAdd fontSize="medium" />,
-      url: '/blog'
+      url: '/blog',
+      roles: [Role.ADMIN, Role.WRITER]
     },
     {
       id: 3,
+      name: 'دسته بندی ها',
+      icon: <Category fontSize="medium" />,
+      url: '/post-categories',
+      roles: [Role.ADMIN]
+    },
+    {
+      id: 4,
+      name: 'کاربران',
+      icon: <Group fontSize="medium" />,
+      url: '/users',
+      roles: [Role.ADMIN]
+    },
+    {
+      id: 5,
       name: 'تنظیمات',
       icon: <Settings fontSize="medium" />,
-      url: '/settings'
+      url: '/settings',
+      roles: [Role.ADMIN]
     }
   ]
+
+  const isValidRole = (roles: Role[]) =>
+    roles.find((role) => account?.role?.length && account.role.includes(role))
 
   return (
     <>
@@ -134,8 +157,8 @@ const Sidebar = ({ drawerWidth, mobileDrawerWidth }: Props) => {
         <Account />
 
         <List>
-          {navItems.map((navItem) => {
-            return (
+          {navItems.map((navItem) =>
+            isValidRole(navItem.roles) ? (
               <ListItem
                 key={navItem.id}
                 classes={{ selected: '!rounded-xl' }}
@@ -164,8 +187,8 @@ const Sidebar = ({ drawerWidth, mobileDrawerWidth }: Props) => {
                   />
                 </ListItemButton>
               </ListItem>
-            )
-          })}
+            ) : undefined
+          )}
         </List>
       </Drawer>
     </>

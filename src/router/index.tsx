@@ -1,10 +1,13 @@
 import Layout from '@/Layout'
-import Login from '@/views/Login'
-import Profile from '@/views/Profile'
-import Register from '@/views/Register'
+import { Role } from '@/context/AccountContext'
 import Blog from '@/views/Blog'
 import Dashboard from '@/views/Dashboard'
+import Login from '@/views/Login'
+import PostCategories from '@/views/PostCategories'
+import Profile from '@/views/Profile'
+import Register from '@/views/Register'
 import Settings from '@/views/Settings'
+import Users from '@/views/Users'
 import { createBrowserRouter } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 
@@ -14,8 +17,10 @@ export enum Router {
   DASHBOARD = '/dashboard',
   REGISTER = '/register',
   BLOG = '/blog',
+  USERS = '/users',
   PROFILE = '/profile',
-  SETTINGS = '/settings'
+  SETTINGS = '/settings',
+  POST_CATEGORIES = '/post-categories'
 }
 
 export const router = createBrowserRouter([
@@ -26,7 +31,7 @@ export const router = createBrowserRouter([
       {
         path: Router.DASHBOARD,
         element: (
-          <ProtectedRoute>
+          <ProtectedRoute roles={[Role.ADMIN, Role.WRITER]}>
             <Dashboard />
           </ProtectedRoute>
         )
@@ -42,7 +47,7 @@ export const router = createBrowserRouter([
       {
         path: Router.PROFILE,
         element: (
-          <ProtectedRoute>
+          <ProtectedRoute roles={[Role.ADMIN, Role.WRITER]}>
             <Profile />
           </ProtectedRoute>
         )
@@ -50,15 +55,31 @@ export const router = createBrowserRouter([
       {
         path: Router.BLOG,
         element: (
-          <ProtectedRoute>
+          <ProtectedRoute roles={[Role.ADMIN, Role.WRITER]}>
             <Blog />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: Router.POST_CATEGORIES,
+        element: (
+          <ProtectedRoute roles={[Role.ADMIN]}>
+            <PostCategories />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: Router.USERS,
+        element: (
+          <ProtectedRoute roles={[Role.ADMIN]}>
+            <Users />
           </ProtectedRoute>
         )
       },
       {
         path: Router.SETTINGS,
         element: (
-          <ProtectedRoute>
+          <ProtectedRoute roles={[Role.ADMIN]}>
             <Settings />
           </ProtectedRoute>
         )

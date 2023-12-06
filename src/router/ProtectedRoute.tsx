@@ -1,16 +1,25 @@
-import { AccountContext } from '@/context/AccountContext'
+import { AccountContext, Role } from '@/context/AccountContext'
+import { Router } from '@/router'
 import { ReactNode, useContext } from 'react'
 import { Navigate } from 'react-router-dom'
 
 type Props = {
   children: ReactNode
+  roles: Role[]
 }
 
-const ProtectedRoute = ({ children }: Props) => {
+const ProtectedRoute = ({ children, roles }: Props) => {
   const { getAccount } = useContext(AccountContext)
-  const isLogin = getAccount() && Object.keys(getAccount()).length
+  const account = getAccount()
+  const isLogin = account && Object.keys(account).length
+  const isAdmittedRole =
+    isLogin && roles.find((role) => account.role.includes(role))
 
-  return <>{isLogin ? children : <Navigate to={'/login'} />}</>
+  if (!isLogin) return <Navigate to={Router.LOGIN} />
+
+  if (!isAdmittedRole) return <Navigate to={Router.DASHBOARD} />
+
+  return <>{children}</>
 }
 
 export default ProtectedRoute
