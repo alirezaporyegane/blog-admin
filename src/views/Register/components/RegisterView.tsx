@@ -75,6 +75,10 @@ const RegisterView = () => {
     required: { value: true, message: t('userNameIsRequired') }
   }
 
+  const emailRoles = {
+    required: { value: true, message: t('emailIsRequired') }
+  }
+
   const passwordValidate = {
     required: { value: true, message: t('passwordIsRequired') },
     minLength: {
@@ -208,6 +212,20 @@ const RegisterView = () => {
                   />
                 </Grid>
               </Grid>
+
+              <TextField
+                fullWidth
+                size="small"
+                variant="outlined"
+                label={t('email')}
+                error={!!errors.email?.message}
+                helperText={errors.email?.message}
+                classes={{
+                  root: '!mb-6'
+                }}
+                {...register('email', emailRoles)}
+                sx={errorClass}
+              />
 
               <TextField
                 fullWidth

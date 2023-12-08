@@ -1,5 +1,5 @@
 import { AccountProvider } from '@/context/AccountContext.tsx'
-import '@/plugins/i18n'
+import '@/utils/i18n.ts'
 import { cacheRtl, theme } from '@/theme/MatrialConfig.ts'
 import { CacheProvider } from '@emotion/react'
 import { ThemeProvider } from '@mui/material'

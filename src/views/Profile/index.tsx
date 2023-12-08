@@ -5,7 +5,6 @@ import { Account } from '@/services'
 import { Fade } from '@mui/material'
 import { t } from 'i18next'
 import { useContext, useEffect, useState, useTransition } from 'react'
-import { Helmet } from 'react-helmet-async'
 import Loading from './components/Loading'
 import ProfileView from './components/ProfileView'
 
@@ -32,10 +31,6 @@ const Profile = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{t('profile')}</title>
-      </Helmet>
-
       {loading ? (
         <Loading />
       ) : (
