@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import Layout from '@/Layout'
 import { Role } from '@/context/AccountContext'
 import Blog from '@/views/Blog'
@@ -8,7 +9,7 @@ import Profile from '@/views/Profile'
 import Register from '@/views/Register'
 import Settings from '@/views/Settings'
 import Users from '@/views/Users'
-import { createBrowserRouter } from 'react-router-dom'
+import { Navigate, createBrowserRouter } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 
 export enum Router {
@@ -26,8 +27,8 @@ export enum Router {
 export const router = createBrowserRouter([
   {
     element: <Layout />,
-    path: '/',
     children: [
+      { index: true, element: <Navigate to={Router.DASHBOARD} /> },
       {
         path: Router.DASHBOARD,
         element: (
