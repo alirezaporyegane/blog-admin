@@ -1,23 +1,29 @@
 import development from './development'
 import production from './production'
 
-export interface IConfig {
+export type IConfig = {
   apiServer: string
   ssl: boolean
 }
 
-export interface IAppConfig extends IConfig {
+type Config = {
+  development: IConfig
+  production: IConfig
+}
+
+export type IAppConfig = IConfig & {
   protocol: string
   apiServerUrl: string
 }
 
-const envConfig = {
+const envConfig: Config = {
   development,
   production
 }
 
 export default function useAppConfig(): IAppConfig {
-  const NODE_ENV: string = process.env.NODE_ENV || 'development'
+  const NODE_ENV =
+    (process.env.NODE_ENV as keyof Config) || ('development' as keyof Config)
 
   return {
     ...envConfig[NODE_ENV],
