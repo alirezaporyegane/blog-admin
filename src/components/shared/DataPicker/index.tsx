@@ -18,7 +18,7 @@ type Props = Omit<TextFieldProps, 'onChange' | 'value'> & {
   onChange: Dispatch<SetStateAction<string>>
 }
 
-const DatePicker = (props: Props) => {
+const DatePicker = ({onChange,...props}: Props) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
 
@@ -61,7 +61,7 @@ const DatePicker = (props: Props) => {
         >
           <DatePickerModal
             value={props.value}
-            onChange={props.onChange}
+            onChange={onChange}
             closeDatePicker={handleClose}
           />
         </DialogContent>
@@ -85,7 +85,7 @@ const DatePicker = (props: Props) => {
       >
         <DatePickerModal
           value={props.value}
-          onChange={props.onChange}
+          onChange={onChange}
           closeDatePicker={handleClose}
         />
       </Menu>
