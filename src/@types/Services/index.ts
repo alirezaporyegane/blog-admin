@@ -1,4 +1,4 @@
-import { Method } from 'axios'
+import { GenericAbortSignal, Method } from 'axios'
 
 export enum RequestMethod {
   POST = 'POST',
@@ -26,6 +26,7 @@ export type RequestOption = {
   params?: object
   body?: unknown
   token?: string
+  signal?: GenericAbortSignal
 }
 
 export interface RequestError {
@@ -48,20 +49,20 @@ export enum EXCEPTION_CODE {
 
 export class ErrorException {
   errorCode: number
-  data: unknown
-  code: keyof typeof EXCEPTION_CODE
-  status: number
+  data: string
+  code: number
+  msg: keyof typeof EXCEPTION_CODE
 
   constructor(
-    data: unknown,
-    status: number,
-    code: keyof typeof EXCEPTION_CODE,
+    data: string,
+    msg: keyof typeof EXCEPTION_CODE,
+    code: number,
     errorCode: number
   ) {
     this.data = data
     this.errorCode = errorCode
     this.code = code
-    this.status = status
+    this.msg = msg
   }
 }
 

@@ -1,15 +1,15 @@
 import { HeaderNameProvider } from '@/context/HeaderNameContext'
+import { checkStatusHandler } from '@/services/Status'
+import { getDescriptionFromRoute, getTitleFromRoute } from '@/utils/docTitle'
 import { Box } from '@mui/material'
+import { lazy, useLayoutEffect, useState } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { Toaster } from 'react-hot-toast'
 import { Outlet, useLocation } from 'react-router-dom'
-import { Helmet } from 'react-helmet-async'
-import { getDescriptionFromRoute, getTitleFromRoute } from '@/utils/docTitle'
-import { lazy, useLayoutEffect, useState } from 'react'
-import { checkStatusHandler } from '@/services/Status'
 const LoadingComponent = lazy(() => import('./Components/LoadingComponent'))
 const ErrorComponent = lazy(() => import('./Components/ErrorComponent'))
-const Header = lazy(() => import('./Components/Header'))
-const Sidebar = lazy(() => import('./Components/Sidebar'))
+const Header = lazy(() => import('./Components/HeaderComponent'))
+const Sidebar = lazy(() => import('./Components/SidebarComponent'))
 
 const Layout = () => {
   const location = useLocation()
@@ -22,7 +22,7 @@ const Layout = () => {
   useLayoutEffect(() => {
     const checkServerStatus = async () => {
       try {
-        await checkStatusHandler({}, true)
+        await checkStatusHandler(true)
       } catch (err) {
         console.log(err)
         setError(true)

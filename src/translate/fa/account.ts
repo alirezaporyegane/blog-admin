@@ -14,7 +14,7 @@ export default {
   login: 'ورود',
   loginSuccess: 'ورود با موفقت انجام شد',
   logout: 'خروج از حساب کاربری',
-  men: 'مرد',
+  man: 'مرد',
   minLengthMustBeGreaterThanSix: 'باید حداقل بیشتر از 6 کارکتر باشد',
   password: 'رمز عبور',
   passwordIsRequired: 'رمز عبور الزامی است',
@@ -28,5 +28,7 @@ export default {
   singUp: 'ثبت نام',
   userName: 'نام کاربری',
   userNameIsRequired: 'نام کاربری الزامی است',
-  woman: 'زن'
+  woman: 'زن',
+  emailIsRequired: 'ایمیل الزامی است',
+  profileUpdated: 'مشخصات فردی با موفقیت به روزرسانی شد'
 }

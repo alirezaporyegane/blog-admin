@@ -18,7 +18,7 @@ type Props = Omit<TextFieldProps, 'onChange' | 'value'> & {
   onChange: Dispatch<SetStateAction<string>>
 }
 
-const DatePicker = ({onChange,...props}: Props) => {
+const DatePicker = ({ onChange, ...props }: Props) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
 
