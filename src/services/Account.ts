@@ -11,10 +11,9 @@ const BASE_URL = 'shared/account'
 
 async function loginHandler(
   body: IAccountLoginDtoOut,
-  account: any,
   tokenLess: boolean = true
 ) {
-  return await axiosHandler<ILoginIn>(BASE_URL, account, {
+  return await axiosHandler<ILoginIn>(BASE_URL, {
     method: RequestMethod.POST,
     action: 'login',
     body,
@@ -24,10 +23,9 @@ async function loginHandler(
 
 async function registerHandler(
   body: IAccountRegisterDtoOut,
-  account: any,
   tokenLess: boolean = true
 ) {
-  return await axiosHandler<ILoginIn>(BASE_URL, account, {
+  return await axiosHandler<ILoginIn>(BASE_URL, {
     method: RequestMethod.POST,
     action: 'register',
     body,
@@ -35,22 +33,23 @@ async function registerHandler(
   })
 }
 
-async function logoutHandler(account: any) {
-  return await axiosHandler<string>(BASE_URL, account, {
+async function logoutHandler() {
+  return await axiosHandler<string>(BASE_URL, {
     method: RequestMethod.POST,
     action: 'logout'
   })
 }
 
-async function getProfileHandler(account: any) {
-  return await axiosHandler<IAccountIn>(BASE_URL, account, {
+async function getProfileHandler(signal: AbortSignal) {
+  return await axiosHandler<IAccountIn>(BASE_URL, {
     method: RequestMethod.GET,
-    action: 'my'
+    action: 'my',
+    signal
   })
 }
 
-async function updateProfileHandler(body: IAccountDtoOut, account: any) {
-  return await axiosHandler<IAccountIn>(BASE_URL, account, {
+async function updateProfileHandler(body: IAccountDtoOut) {
+  return await axiosHandler<IAccountIn>(BASE_URL, {
     method: RequestMethod.PUT,
     action: 'my',
     body

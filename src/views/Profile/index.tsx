@@ -1,45 +1,20 @@
 import { IAccountIn } from '@/@types/Account/Dto/in'
-import { AccountContext } from '@/context/AccountContext'
 import { HeaderNameContext } from '@/context/HeaderNameContext'
-import { Account } from '@/services'
-import { Fade } from '@mui/material'
 import { t } from 'i18next'
-import { useContext, useEffect, useState, useTransition } from 'react'
-import Loading from './components/Loading'
+import { useContext, useEffect } from 'react'
+import { useLoaderData, useNavigation } from 'react-router-dom'
 import ProfileView from './components/ProfileView'
 
 const Profile = () => {
   const { setName } = useContext(HeaderNameContext)
-  const { getAccount } = useContext(AccountContext)
-  const [loading, setLoading] = useState<boolean>()
-  const [profile, setProfile] = useState<IAccountIn>()
-  const [isPending, startTransition] = useTransition()
+  const profile = useLoaderData() as IAccountIn
+  const { state } = useNavigation()
+
+  const loading = state === 'loading'
 
   useEffect(() => setName(t('profile')), [setName])
 
-  useEffect(() => {
-    setLoading(true)
-    if (Object.keys(getAccount()).length) {
-      Account.getProfileHandler(getAccount())
-        .then((res) => setProfile(res))
-        .catch((err) => console.log(err))
-        .finally(() => startTransition(() => setLoading(false)))
-    }
-  }, [getAccount])
-
-  if (isPending) return <Loading />
-
-  return (
-    <>
-      {loading ? (
-        <Loading />
-      ) : (
-        <Fade in={loading} easing={'ease in out'}>
-          <ProfileView profile={profile} account={getAccount()} />
-        </Fade>
-      )}
-    </>
-  )
+  return <ProfileView profile={profile} loading={loading} />
 }
 
 export default Profile

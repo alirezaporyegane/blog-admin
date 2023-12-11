@@ -10,7 +10,7 @@ export enum AccountKey {
   ACCOUNT_KEY = 'ACCOUNT'
 }
 
-interface IAccount {
+export interface IAccount {
   _id: string
   userName: string
   phoneNumber: string

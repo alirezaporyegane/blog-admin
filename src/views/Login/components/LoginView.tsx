@@ -1,6 +1,7 @@
 import { IAccountLoginDtoOut } from '@/@types/Account/Dto/out'
 import { AccountContext } from '@/context/AccountContext'
 import { Account } from '@/services'
+import { errorHandler } from '@/services/errorHandler'
 import { success } from '@/utils/Notify'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {
@@ -23,7 +24,7 @@ const LoginView = () => {
   const { t } = useTranslation()
   const [loading, setLoading] = useState(false)
   const [type, setType] = useState(false)
-  const { getAccount, setAccount } = useContext(AccountContext)
+  const { setAccount } = useContext(AccountContext)
   const {
     register,
     handleSubmit,
@@ -50,12 +51,12 @@ const LoginView = () => {
   async function onSubmit(data: IAccountLoginDtoOut) {
     try {
       setLoading(true)
-      const res = await Account.loginHandler(data, getAccount())
+      const res = await Account.loginHandler(data)
       setAccount(res)
       navigate('/dashboard')
       success(t('loginSuccess'))
-    } catch (err) {
-      console.log(err)
+    } catch (err: unknown) {
+      errorHandler(err)
     } finally {
       setLoading(false)
     }

@@ -5,11 +5,11 @@ import Blog from '@/views/Blog'
 import Dashboard from '@/views/Dashboard'
 import Login from '@/views/Login'
 import PostCategories from '@/views/PostCategories'
-import Profile from '@/views/Profile'
 import Register from '@/views/Register'
 import Settings from '@/views/Settings'
 import Users from '@/views/Users'
 import { Navigate, createBrowserRouter } from 'react-router-dom'
+import ProfileRoute from './Profile'
 import ProtectedRoute from './ProtectedRoute'
 
 export enum Router {
@@ -45,14 +45,7 @@ export const router = createBrowserRouter([
         path: Router.REGISTER,
         element: <Register />
       },
-      {
-        path: Router.PROFILE,
-        element: (
-          <ProtectedRoute roles={[Role.ADMIN, Role.WRITER]}>
-            <Profile />
-          </ProtectedRoute>
-        )
-      },
+      ProfileRoute,
       {
         path: Router.BLOG,
         element: (

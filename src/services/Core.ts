@@ -1,4 +1,5 @@
 import configuration from '@/config'
+import { AccountKey, IAccount } from '@/context/AccountContext'
 import axios, { AxiosError, type AxiosRequestConfig } from 'axios'
 import { stringify } from 'qs'
 import type { ErrorExceptions, RequestOption } from '../@types/Services'
@@ -7,19 +8,22 @@ const config = configuration()
 
 function requestConfig(
   endpointBaseUrl: string,
-  account: any,
   options: RequestOption
 ): AxiosRequestConfig {
   const restUrl: string = [endpointBaseUrl, options.action]
     .filter((item) => !!item)
     .join('/')
   const baseURL = config.apiServerUrl
+  const account = JSON.parse(
+    localStorage.getItem(AccountKey.ACCOUNT_KEY) || ''
+  ) as IAccount
 
   const axiosRequestConfig: AxiosRequestConfig = {
     baseURL,
     url: restUrl,
     method: options.method,
     params: options.params,
+    signal: options.signal,
     headers: {
       Authorization:
         account?.token && !options.tokenLess ? `Bearer ${account.token}` : null
@@ -34,10 +38,9 @@ function requestConfig(
 
 export async function axiosHandler<T>(
   url: string,
-  account: any,
   options: RequestOption
 ): Promise<T> {
-  const req = requestConfig(url, account, options)
+  const req = requestConfig(url, options)
 
   try {
     const res = await axios(req)
@@ -61,9 +64,9 @@ async function errorHandler(
   const error = err.response
   if (!error) {
     const clientError = new ErrorException(
-      { message: 'client error' },
-      -1,
       'CLIENT_ERROR',
+      'CLIENT_ERROR',
+      -1,
       -1
     )
     throw [clientError]

@@ -42,13 +42,13 @@ const RegisterView = () => {
     }
   })
 
-  const { getAccount, setAccount } = useContext(AccountContext)
+  const { setAccount } = useContext(AccountContext)
   const navigate = useNavigate()
 
   async function onSubmit(data: IAccountRegisterDtoOut) {
     try {
       setLoading(true)
-      const res = await Account.registerHandler(data, getAccount())
+      const res = await Account.registerHandler(data)
       setAccount(res)
       navigate('/dashboard')
       success(t('loginSuccess'))

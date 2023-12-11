@@ -3,8 +3,8 @@ import { axiosHandler } from './Core'
 
 const BASE_URL = 'admin/post-categories'
 
-const getAllItem = async (account: any) => {
-  return await axiosHandler(BASE_URL, account, {
+const getAllItem = async () => {
+  return await axiosHandler(BASE_URL, {
     method: RequestMethod.GET
   })
 }
