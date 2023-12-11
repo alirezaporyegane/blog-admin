@@ -7,10 +7,10 @@ import Login from '@/views/Login'
 import PostCategories from '@/views/PostCategories'
 import Register from '@/views/Register'
 import Settings from '@/views/Settings'
-import Users from '@/views/Users'
 import { Navigate, createBrowserRouter } from 'react-router-dom'
 import ProfileRoute from './Profile'
 import ProtectedRoute from './ProtectedRoute'
+import UserRoute from './User'
 
 export enum Router {
   BASE = '/',
@@ -62,14 +62,7 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
-      {
-        path: Router.USERS,
-        element: (
-          <ProtectedRoute roles={[Role.ADMIN]}>
-            <Users />
-          </ProtectedRoute>
-        )
-      },
+      UserRoute,
       {
         path: Router.SETTINGS,
         element: (

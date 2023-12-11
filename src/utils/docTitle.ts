@@ -29,6 +29,10 @@ const metaMap: MetaMap = {
   '/post': {
     title: t('blog'),
     description: t('blog')
+  },
+  '/users': {
+    title: t('users'),
+    description: t('users')
   }
 }
 
@@ -43,6 +47,14 @@ export const getTitleFromRoute = (path: keyof MetaMap): string => {
   }
 
   return t('blogAdminPanel')
+}
+
+export const getHeaderNameFromRoute = (path: keyof MetaMap): string => {
+  if (metaMap[path] && path !== '/dashboard') {
+    return metaMap[path].title
+  }
+
+  return t('dashboard')
 }
 
 /**

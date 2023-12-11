@@ -25,7 +25,7 @@ export default {
   save: 'ذخیره',
   select: 'انتخاب کنید ...',
   signUp: 'ثبت نام',
-  singUp: 'ثبت نام',
+  users: 'کاربران',
   userName: 'نام کاربری',
   userNameIsRequired: 'نام کاربری الزامی است',
   woman: 'زن',
