@@ -1,11 +1,10 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
+import fa from './fa'
 
-import translation from '@/translate'
 const lng = 'fa'
-
-let translate = {}
-Object.values(translation[lng]).forEach(
+let translate = { fa }
+Object.values(translate[lng]).forEach(
   (value) => (translate = { ...translate, ...value })
 )
 

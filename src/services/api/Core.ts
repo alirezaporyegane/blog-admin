@@ -2,8 +2,8 @@ import configuration from '@/config'
 import { AccountKey, IAccount } from '@/context/AccountContext'
 import axios, { AxiosError, type AxiosRequestConfig } from 'axios'
 import { stringify } from 'qs'
-import type { ErrorExceptions, RequestOption } from '../@types/Services'
-import { ErrorException } from '../@types/Services'
+import type { ErrorExceptions, RequestOption } from '@/@types/Services'
+import { ErrorException } from '@/@types/Services'
 const config = configuration()
 
 function requestConfig(
