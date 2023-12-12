@@ -27,7 +27,7 @@ const User = ({ data }: Props) => {
     }
   ]
 
-  return <Table items={data} heads={columns} />
+  return <Table<UserDtoIn> items={data} heads={columns} />
 }
 
 export default User
