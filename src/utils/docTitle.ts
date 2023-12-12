@@ -45,11 +45,12 @@ export const getTitleFromRoute = (
   path: keyof MetaMap,
   isHeaderTitle: boolean = false
 ): string => {
+  if (!metaMap[path]) return t('blogAdminPanel')
+
   if (isHeaderTitle) return metaMap[path].title
 
-  if (metaMap[path] && path !== '/dashboard') {
+  if (path !== '/dashboard')
     return `${metaMap[path].title} | ${t('blogAdminPanel')}`
-  }
 
   return t('blogAdminPanel')
 }
