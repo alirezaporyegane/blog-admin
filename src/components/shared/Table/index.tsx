@@ -1,17 +1,75 @@
-import { ArrowDownward, ArrowUpward } from '@mui/icons-material'
-import { Fragment, ReactNode, useState } from 'react'
+import {
+  TableContainer,
+  Paper,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableCellProps,
+  TableSortLabel
+} from '@mui/material'
+import TableBodyComponent from './TableBodyComponent'
+import { useState } from 'react'
+import useSetSearchQuery from '@/hooks/useSetSearchQuery'
 
-export type TableHeader = {
-  key: string
-  label: string
-  classes?: string
-  sortable?: boolean
-  activeSort?: boolean
+export type Order = 'asc' | 'desc'
+
+type Items = {
+  [key: string]: any
 }
 
-enum Sort {
-  ASCENDING = 'ascending',
-  DESCENDING = 'descending'
+export type TableHeader = {
+  key: keyof Items
+  label: string
+  classes?: string
+} & TableCellProps
+
+type TableHeaderProps<T> = Pick<Props<T>, 'items' | 'heads' | 'headClasses'> & {
+  orderBy: number | string
+  order: Order
+  onRequestSort: (
+    event: React.MouseEvent<unknown>,
+    property: keyof Items
+  ) => void
+}
+
+function TableHeader<T>({
+  heads,
+  items,
+  headClasses,
+  orderBy,
+  order,
+  onRequestSort
+}: TableHeaderProps<T>) {
+  const createSortHandler =
+    (property: keyof Items) => (event: React.MouseEvent<unknown>) => {
+      onRequestSort(event, property)
+    }
+  if (items?.length)
+    return (
+      <TableHead classes={{ root: headClasses }}>
+        <TableRow>
+          {heads.map((head) => {
+            return (
+              <TableCell
+                key={head.key}
+                sortDirection={orderBy === head.key ? order : false}
+              >
+                <TableSortLabel
+                  active={orderBy === head.key}
+                  direction={orderBy === head.key ? order : 'asc'}
+                  onClick={createSortHandler(head.key)}
+                >
+                  {head.label}
+                </TableSortLabel>
+              </TableCell>
+            )
+          })}
+        </TableRow>
+      </TableHead>
+    )
+
+  return null
 }
 
 type Props<T> = {
@@ -21,179 +79,70 @@ type Props<T> = {
   striped?: boolean
   classes?: string
   items: T[] | undefined
-  collapseItem?: (item: T) => ReactNode
-  cellProps?: (
-    key: string,
-    value: T,
-    index: number,
-    collapse?: boolean,
-    tableIndex?: number,
-    collapsing?: (index: number) => void
-  ) => ReactNode
   expanded?: boolean
-  emitSortableKey?: (key: string, sort: Sort) => void
+  sortColumn?: keyof Items
 }
 
-type Items = {
-  [key: string]: any
-}
-
-const Table = <T extends Items>({
+const TableComponent = <T extends Items>({
   heads,
   headClasses,
   items = [],
-  classes,
   bodyClass,
-  cellProps,
-  expanded = false,
-  striped = false,
-  collapseItem,
-  emitSortableKey
+  classes,
+  sortColumn = '_id'
 }: Props<T>) => {
-  const [collapse, setCollapse] = useState<boolean>(false)
-  const [tableIndex, setTableIndex] = useState<number>(0)
-  const [headItems, setHeadItems] = useState(heads)
+  const [searchParams, setQuery] = useSetSearchQuery()
+  const [order, setOrder] = useState<Order>(
+    () => (searchParams.get('sortType') as Order) || 'asc'
+  )
+  const [orderBy, setOrderBy] = useState<string | number>(
+    () => searchParams.get('sortColumn') || sortColumn
+  )
 
-  function collapsing(index: number) {
-    setCollapse((preCollapse: boolean) => {
-      preCollapse = !collapse
-      return preCollapse
-    })
+  const handleRequestSort = (
+    _: React.MouseEvent<unknown>,
+    property: keyof Items = '_id'
+  ) => {
+    const isAsc = orderBy === property && order === 'asc'
+    setOrder(isAsc ? 'desc' : 'asc')
+    setOrderBy(property)
 
-    setTableIndex(index)
-  }
-
-  function isEven(striped: boolean, index: number) {
-    return striped && index % 2 == 0
-  }
-
-  function emitSortable(head: TableHeader) {
-    if (head.sortable) {
-      setHeadItems(
-        headItems.map((item) => {
-          if (item.key === head.key) {
-            item.activeSort = !item.activeSort
-            emitSortableKey &&
-              emitSortableKey(
-                item.key,
-                item.activeSort ? Sort.DESCENDING : Sort.ASCENDING
-              )
-          } else item.activeSort = false
-
-          return item
-        })
-      )
+    const query = {
+      sortType: isAsc ? 'desc' : 'asc',
+      sortColumn: property
     }
+
+    setQuery(query)
   }
 
   return (
-    <div
-      className={`${
-        classes ? `${classes} ` : ''
-      }border bg-white rounded-xl overflow-hidden`}
+    <TableContainer
+      component={Paper}
+      classes={{ root: classes }}
+      sx={{ borderBottom: 'none', boxShadow: 'none', bgcolor: 'white' }}
     >
-      <table className="table-auto border-collapse w-full text-sm">
-        {headItems?.length && (
+      <Table aria-label="collapsible table">
+        {heads?.length && (
           <>
-            {items?.length ? (
-              <thead className={`${headClasses ? headClasses : ''}bg-gray-100`}>
-                <tr>
-                  {headItems.map((head) => {
-                    return (
-                      <th
-                        key={head.key}
-                        className={`${
-                          head.classes ? head.classes : ''
-                        }border-b border-gray-200 font-medium px-4 py-3 text-gray-600 dark:text-slate-200 text-right ${
-                          head.sortable ? 'cursor-pointer' : ''
-                        }`}
-                        onClick={() => emitSortable(head)}
-                      >
-                        <span className="flex">
-                          {head.label}
-                          {head.activeSort}
+            <TableHeader<T>
+              heads={heads}
+              items={items}
+              order={order}
+              orderBy={orderBy}
+              headClasses={headClasses}
+              onRequestSort={handleRequestSort}
+            />
 
-                          {head.sortable ? (
-                            head.activeSort ? (
-                              <ArrowUpward className="ms-1" />
-                            ) : (
-                              <ArrowDownward className="ms-1" />
-                            )
-                          ) : (
-                            ''
-                          )}
-                        </span>
-                      </th>
-                    )
-                  })}
-                </tr>
-              </thead>
-            ) : null}
-
-            <tbody className={bodyClass}>
-              {items?.length ? (
-                items.map((item, index) => {
-                  return (
-                    <Fragment key={index}>
-                      <tr
-                        className={`${
-                          index !== items.length - 1
-                            ? index === tableIndex && collapse
-                              ? ''
-                              : 'border-b'
-                            : ''
-                        } ${isEven(striped, index) ? 'bg-gray-50' : ''}`}
-                      >
-                        {heads.map((head) => {
-                          return (
-                            <td key={head.key} className="py-3 px-4">
-                              {cellProps
-                                ? cellProps(
-                                    head.key,
-                                    item,
-                                    index,
-                                    collapse,
-                                    tableIndex,
-                                    () => collapsing(index)
-                                  )
-                                : item[head.key]}
-                            </td>
-                          )
-                        })}
-                      </tr>
-
-                      {expanded && collapse && index === tableIndex && (
-                        <tr
-                          className={
-                            index !== items.length - 1 ? 'border-b' : ''
-                          }
-                        >
-                          <td
-                            className={
-                              isEven(striped, index) ? 'bg-gray-50' : ''
-                            }
-                            colSpan={100}
-                          >
-                            {collapseItem && collapseItem(item)}
-                          </td>
-                        </tr>
-                      )}
-                    </Fragment>
-                  )
-                })
-              ) : (
-                <tr>
-                  <td className="py-3 px-4 text-center" colSpan={100}>
-                    موردی برای نمایش وجود ندارد
-                  </td>
-                </tr>
-              )}
-            </tbody>
+            <TableBodyComponent
+              bodyClass={bodyClass}
+              items={items}
+              tableHeaders={heads}
+            />
           </>
         )}
-      </table>
-    </div>
+      </Table>
+    </TableContainer>
   )
 }
 
-export default Table
+export default TableComponent
