@@ -1,15 +1,17 @@
 import { Role } from '@/context/AccountContext'
-import { Users as UserService } from '@/services'
-import { errorHandler } from '@/services/errorHandler'
+import { Users as UserService } from '@/services/api'
+import { errorHandler } from '@/services/api/ErrorHandler'
 import Users from '@/views/Users'
 import { RouteObject } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
+import { createQueryParams } from '@/utils/helpers'
 
 export default {
   path: '/users',
-  loader: ({ request: { signal } }) => {
+  loader: ({ request: { signal, url } }) => {
     try {
-      return UserService.getAll(signal)
+      const params = createQueryParams(url)
+      return UserService.getAll(params, signal)
     } catch (err) {
       errorHandler(err)
     }

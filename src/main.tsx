@@ -1,6 +1,6 @@
 import { AccountProvider } from '@/context/AccountContext.tsx'
 import { cacheRtl, theme } from '@/theme/MatrialConfig.ts'
-import '@/utils/i18n.ts'
+import '@/services/i18n'
 import { CacheProvider } from '@emotion/react'
 import { ThemeProvider } from '@mui/material'
 import ReactDOM from 'react-dom/client'

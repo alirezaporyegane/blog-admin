@@ -1,5 +1,5 @@
 import { HeaderNameContext } from '@/context/HeaderNameContext'
-import { checkStatusHandler } from '@/services/Status'
+import { Status } from '@/services/api'
 import { getDescriptionFromRoute, getTitleFromRoute } from '@/utils/docTitle'
 import { Box } from '@mui/material'
 import { lazy, useContext, useEffect, useLayoutEffect, useState } from 'react'
@@ -23,7 +23,7 @@ const Layout = () => {
   useLayoutEffect(() => {
     const checkServerStatus = async () => {
       try {
-        await checkStatusHandler(true)
+        await Status.checkStatusHandler(true)
       } catch (err) {
         setError(true)
       } finally {

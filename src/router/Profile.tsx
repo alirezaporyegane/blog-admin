@@ -1,6 +1,6 @@
 import { Role } from '@/context/AccountContext'
-import { Account } from '@/services'
-import { errorHandler } from '@/services/errorHandler'
+import { Account } from '@/services/api'
+import { errorHandler } from '@/services/api/ErrorHandler'
 import Profile from '@/views/Profile'
 import { RouteObject } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'

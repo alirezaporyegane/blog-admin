@@ -1,6 +1,6 @@
 import { IAccountRegisterDtoOut } from '@/@types/Account/Dto/out'
 import { AccountContext } from '@/context/AccountContext'
-import { Account } from '@/services'
+import { Account } from '@/services/api'
 import { success } from '@/utils/Notify'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {

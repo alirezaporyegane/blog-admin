@@ -1,4 +1,4 @@
-import { PostCategories as PostCategoriesService } from '@/services'
+import { PostCategories as PostCategoriesService } from '@/services/api'
 import { useEffect } from 'react'
 
 const PostCategories = () => {
