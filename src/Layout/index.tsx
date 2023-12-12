@@ -1,8 +1,8 @@
-import { HeaderNameProvider } from '@/context/HeaderNameContext'
+import { HeaderNameContext } from '@/context/HeaderNameContext'
 import { checkStatusHandler } from '@/services/Status'
 import { getDescriptionFromRoute, getTitleFromRoute } from '@/utils/docTitle'
 import { Box } from '@mui/material'
-import { lazy, useLayoutEffect, useState } from 'react'
+import { lazy, useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Toaster } from 'react-hot-toast'
 import { Outlet, useLocation } from 'react-router-dom'
@@ -18,13 +18,13 @@ const Layout = () => {
   const excludeLinks = ['/login', '/register']
   const drawerWidth = excludeLinks.includes(location.pathname) ? 0 : 300
   const mobileDrawerWidth = excludeLinks.includes(location.pathname) ? 0 : 90
+  const { setName } = useContext(HeaderNameContext)
 
   useLayoutEffect(() => {
     const checkServerStatus = async () => {
       try {
         await checkStatusHandler(true)
       } catch (err) {
-        console.log(err)
         setError(true)
       } finally {
         setLoading(false)
@@ -33,6 +33,11 @@ const Layout = () => {
 
     checkServerStatus()
   }, [])
+
+  useEffect(
+    () => setName(getTitleFromRoute(location.pathname, true)),
+    [location.pathname, setName]
+  )
 
   if (loading) return <LoadingComponent />
 
@@ -49,35 +54,33 @@ const Layout = () => {
         <base target="_blank" href="/localhost:8080" />
       </Helmet>
 
-      <HeaderNameProvider>
-        <Box sx={{ height: '100vh' }} className="bg-blue-50 bg-opacity-20">
-          {!excludeLinks.includes(location.pathname) && (
-            <Sidebar
-              drawerWidth={drawerWidth}
-              mobileDrawerWidth={mobileDrawerWidth}
-            />
-          )}
+      <Box sx={{ height: '100vh' }} className="bg-blue-50 bg-opacity-20">
+        {!excludeLinks.includes(location.pathname) && (
+          <Sidebar
+            drawerWidth={drawerWidth}
+            mobileDrawerWidth={mobileDrawerWidth}
+          />
+        )}
 
-          <Box
-            component="main"
-            sx={{
-              flexGrow: 1,
-              marginLeft: 'auto',
-              p: excludeLinks.includes(location.pathname) ? 0 : 3,
-              width: {
-                xs: `calc(100% - ${mobileDrawerWidth}px)`,
-                md: `calc(100% - ${drawerWidth}px)`
-              }
-            }}
-          >
-            {!excludeLinks.includes(location.pathname) && <Header />}
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            marginLeft: 'auto',
+            p: excludeLinks.includes(location.pathname) ? 0 : 3,
+            width: {
+              xs: `calc(100% - ${mobileDrawerWidth}px)`,
+              md: `calc(100% - ${drawerWidth}px)`
+            }
+          }}
+        >
+          {!excludeLinks.includes(location.pathname) && <Header />}
 
-            <Outlet />
+          <Outlet />
 
-            <Toaster />
-          </Box>
+          <Toaster />
         </Box>
-      </HeaderNameProvider>
+      </Box>
     </>
   )
 }

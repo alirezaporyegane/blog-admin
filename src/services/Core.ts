@@ -15,7 +15,7 @@ function requestConfig(
     .join('/')
   const baseURL = config.apiServerUrl
   const account = JSON.parse(
-    localStorage.getItem(AccountKey.ACCOUNT_KEY) || ''
+    localStorage.getItem(AccountKey.ACCOUNT_KEY) || '{}'
   ) as IAccount
 
   const axiosRequestConfig: AxiosRequestConfig = {
