@@ -1,10 +1,6 @@
 import { HeaderNameContext } from '@/context/HeaderNameContext'
 import { checkStatusHandler } from '@/services/Status'
-import {
-  getDescriptionFromRoute,
-  getHeaderNameFromRoute,
-  getTitleFromRoute
-} from '@/utils/docTitle'
+import { getDescriptionFromRoute, getTitleFromRoute } from '@/utils/docTitle'
 import { Box } from '@mui/material'
 import { lazy, useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
@@ -29,7 +25,6 @@ const Layout = () => {
       try {
         await checkStatusHandler(true)
       } catch (err) {
-        console.log(err);
         setError(true)
       } finally {
         setLoading(false)
@@ -40,7 +35,7 @@ const Layout = () => {
   }, [])
 
   useEffect(
-    () => setName(getHeaderNameFromRoute(location.pathname)),
+    () => setName(getTitleFromRoute(location.pathname, true)),
     [location.pathname, setName]
   )
 

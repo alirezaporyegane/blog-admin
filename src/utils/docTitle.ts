@@ -41,20 +41,17 @@ const metaMap: MetaMap = {
  * @param {string} path - The path of the page route.
  * @returns {string} The title of the page with the site name appended.
  */
-export const getTitleFromRoute = (path: keyof MetaMap): string => {
+export const getTitleFromRoute = (
+  path: keyof MetaMap,
+  isHeaderTitle: boolean = false
+): string => {
+  if (isHeaderTitle) return metaMap[path].title
+
   if (metaMap[path] && path !== '/dashboard') {
     return `${metaMap[path].title} | ${t('blogAdminPanel')}`
   }
 
   return t('blogAdminPanel')
-}
-
-export const getHeaderNameFromRoute = (path: keyof MetaMap): string => {
-  if (metaMap[path] && path !== '/dashboard') {
-    return metaMap[path].title
-  }
-
-  return t('dashboard')
 }
 
 /**
