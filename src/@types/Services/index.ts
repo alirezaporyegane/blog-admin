@@ -23,7 +23,7 @@ export type RequestOption = {
   tokenLess?: boolean
   method: Method
   action?: string | number
-  params?: object
+  params?: unknown
   body?: unknown
   token?: string
   signal?: GenericAbortSignal
