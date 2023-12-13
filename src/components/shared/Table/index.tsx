@@ -1,99 +1,57 @@
-import {
-  TableContainer,
-  Paper,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableCellProps,
-  TableSortLabel
-} from '@mui/material'
-import TableBodyComponent from './TableBodyComponent'
-import { useState } from 'react'
 import useSetSearchQuery from '@/hooks/useSetSearchQuery'
+import { Paper, Table, TableCellProps, TableContainer } from '@mui/material'
+import { ReactNode, useState } from 'react'
+import PaginationComponent from './PaginationComponent'
+import TableBodyComponent from './TableBodyComponent'
+import TableHeader from './TableHeaderComponent'
 
 export type Order = 'asc' | 'desc'
 
-type Items = {
+export type Item = {
   [key: string]: any
 }
 
 export type TableHeader = {
-  key: keyof Items
+  key: keyof Item
   label: string
   classes?: string
+  sortable?: boolean
 } & TableCellProps
 
-type TableHeaderProps<T> = Pick<Props<T>, 'items' | 'heads' | 'headClasses'> & {
-  orderBy: number | string
-  order: Order
-  onRequestSort: (
-    event: React.MouseEvent<unknown>,
-    property: keyof Items
-  ) => void
-}
-
-function TableHeader<T>({
-  heads,
-  items,
-  headClasses,
-  orderBy,
-  order,
-  onRequestSort
-}: TableHeaderProps<T>) {
-  const createSortHandler =
-    (property: keyof Items) => (event: React.MouseEvent<unknown>) => {
-      onRequestSort(event, property)
-    }
-  if (items?.length)
-    return (
-      <TableHead classes={{ root: headClasses }}>
-        <TableRow>
-          {heads.map((head) => {
-            return (
-              <TableCell
-                key={head.key}
-                sortDirection={orderBy === head.key ? order : false}
-              >
-                <TableSortLabel
-                  active={orderBy === head.key}
-                  direction={orderBy === head.key ? order : 'asc'}
-                  onClick={createSortHandler(head.key)}
-                >
-                  {head.label}
-                </TableSortLabel>
-              </TableCell>
-            )
-          })}
-        </TableRow>
-      </TableHead>
-    )
-
-  return null
-}
-
-type Props<T> = {
+export type Props<T> = {
+  hover?: boolean
   heads: TableHeader[]
   bodyClass?: string
   headClasses?: string
   striped?: boolean
   classes?: string
   items: T[] | undefined
+  count: number
   expanded?: boolean
-  sortColumn?: keyof Items
+  sortColumn?: keyof Item
+  size?: number
+  loading?: boolean
+  rowsPerPageOptions?: number[]
+  cellContentProps?: (key: keyof Item, item: Item) => ReactNode
 }
 
-const TableComponent = <T extends Items>({
+const TableComponent = <T extends Item>({
   heads,
   headClasses,
   items = [],
   bodyClass,
   classes,
-  sortColumn = '_id'
+  sortColumn = '_id',
+  size = 20,
+  count,
+  hover = true,
+  loading,
+  rowsPerPageOptions = [10, 20, 30, 50],
+  cellContentProps
 }: Props<T>) => {
   const [searchParams, setQuery] = useSetSearchQuery()
   const [order, setOrder] = useState<Order>(
-    () => (searchParams.get('sortType') as Order) || 'asc'
+    () => (searchParams.get('sortType') as Order) || 'desc'
   )
   const [orderBy, setOrderBy] = useState<string | number>(
     () => searchParams.get('sortColumn') || sortColumn
@@ -101,7 +59,7 @@ const TableComponent = <T extends Items>({
 
   const handleRequestSort = (
     _: React.MouseEvent<unknown>,
-    property: keyof Items = '_id'
+    property: keyof Item = '_id'
   ) => {
     const isAsc = orderBy === property && order === 'asc'
     setOrder(isAsc ? 'desc' : 'asc')
@@ -112,36 +70,54 @@ const TableComponent = <T extends Items>({
       sortColumn: property
     }
 
-    setQuery(query)
+    setQuery({ ...query })
   }
 
   return (
-    <TableContainer
-      component={Paper}
-      classes={{ root: classes }}
-      sx={{ borderBottom: 'none', boxShadow: 'none', bgcolor: 'white' }}
+    <Paper
+      sx={{
+        width: '100%',
+        mb: 2,
+        borderRadius: 3,
+        boxShadow: 'rgba(0, 0, 0, 0.04) 0px 3px 5px;'
+      }}
     >
-      <Table aria-label="collapsible table">
-        {heads?.length && (
-          <>
-            <TableHeader<T>
-              heads={heads}
-              items={items}
-              order={order}
-              orderBy={orderBy}
-              headClasses={headClasses}
-              onRequestSort={handleRequestSort}
-            />
+      <TableContainer classes={{ root: classes }}>
+        <Table aria-label="collapsible table">
+          {heads?.length && (
+            <>
+              <TableHeader<T>
+                heads={heads}
+                items={items}
+                order={order}
+                orderBy={orderBy}
+                headClasses={headClasses}
+                onRequestSort={handleRequestSort}
+              />
 
-            <TableBodyComponent
-              bodyClass={bodyClass}
-              items={items}
-              tableHeaders={heads}
-            />
-          </>
-        )}
-      </Table>
-    </TableContainer>
+              <TableBodyComponent
+                loading={loading}
+                items={items}
+                hover={hover}
+                tableHeaders={heads}
+                bodyClass={bodyClass}
+                cellContentProps={cellContentProps}
+              />
+            </>
+          )}
+        </Table>
+      </TableContainer>
+
+      {items?.length ? (
+        <PaginationComponent
+          count={count}
+          size={size}
+          rowsPerPageOptions={rowsPerPageOptions}
+        />
+      ) : (
+        ''
+      )}
+    </Paper>
   )
 }
 

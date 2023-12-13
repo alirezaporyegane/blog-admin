@@ -11,3 +11,14 @@ export function createQueryParams(url: string) {
 
   return params
 }
+
+export function createQueryParamsForGetCount(url: string) {
+  const params: Params = {}
+  const searchParams = new URL(url).searchParams
+  const queries = ['page', 'size', 'sortType', 'sortColumn']
+  for (const [key, value] of searchParams.entries()) {
+    if (!queries.includes(key)) params[key] = value
+  }
+
+  return params
+}

@@ -16,7 +16,6 @@ interface IHeaderNameProvider {
   children: ReactNode
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
 export function HeaderNameProvider({ children }: IHeaderNameProvider) {
   const [name, setNameState] = useState<string>('')
 
