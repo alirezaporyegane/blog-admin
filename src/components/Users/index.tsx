@@ -1,5 +1,5 @@
 import { UserDtoIn } from '@/@types/User/Dto/user.dto.in'
-import Table, { TableHeader } from '@/components/shared/Table'
+import { TableHeader } from '@/components/shared/Table'
 import { Users as UserServices } from '@/services/api'
 import { errorHandler } from '@/services/api/ErrorHandler'
 import { success } from '@/utils/Notify'
@@ -10,8 +10,10 @@ import {
 } from '@mui/icons-material'
 import { Box, IconButton, Tooltip } from '@mui/material'
 import { t } from 'i18next'
-import { useState } from 'react'
+import { lazy, useState } from 'react'
 import { useSubmit } from 'react-router-dom'
+const Table = lazy(() => import('@/components/shared/Table'))
+
 
 type Props = {
   data: UserDtoIn[]
@@ -101,7 +103,7 @@ const User = ({ data, count }: Props) => {
   }
 
   return (
-    <Table<UserDtoIn>
+    <Table
       items={data}
       loading={loading}
       heads={columns}

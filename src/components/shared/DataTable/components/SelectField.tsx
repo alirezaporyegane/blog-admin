@@ -24,7 +24,7 @@ const SelectField = forwardRef<HTMLSelectElement, Props>(
       <FormControl fullWidth>
         <InputLabel id={props.labelId}>{props.label}</InputLabel>
 
-        <Select ref={ref} defaultValue={props.defaultValue} {...props}>
+        <Select ref={ref} defaultValue={props.defaultValue || ''} {...props}>
           {options?.map((option) => {
             return (
               <MenuItem

@@ -54,7 +54,7 @@ const Layout = () => {
         <base target="_blank" href="/localhost:8080" />
       </Helmet>
 
-      <Box sx={{ height: '100vh' }} className="bg-blue-50 bg-opacity-20">
+      <Box sx={{ height: '100vh' }}>
         {!excludeLinks.includes(location.pathname) && (
           <Sidebar
             drawerWidth={drawerWidth}

@@ -27,9 +27,7 @@ export default {
   save: 'ذخیره',
   select: 'انتخاب کنید ...',
   signUp: 'ثبت نام',
-  userDeletedSuccessFully: 'کاربر با موفقیت حذف شد!',
   userName: 'نام کاربری',
   userNameIsRequired: 'نام کاربری الزامی است',
-  users: 'کاربران',
   woman: 'زن',
 }

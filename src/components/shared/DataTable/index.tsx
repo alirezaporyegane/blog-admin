@@ -47,7 +47,7 @@ type Props = {
   gridSpacing?: number
   buttonGrids?: ButtonGrids
   fields: Field[]
-  initializing: boolean
+  initializing?: boolean
   progressing?: boolean
   defaultValue?: any
   onSubmit: (data: any) => void
@@ -71,7 +71,7 @@ const DataForm = ({
     formState: { errors }
   } = useForm({
     mode: 'onChange',
-    defaultValues: defaultValue
+    defaultValues: defaultValue || {}
   })
 
   const handleTypeField = ({
@@ -108,7 +108,7 @@ const DataForm = ({
           <SelectField
             {...fieldItem}
             {...register(fieldName, roles)}
-            defaultValue={defaultValue[fieldName]}
+            defaultValue={(defaultValue && defaultValue[fieldName]) || ''}
             error={!!errors[fieldName]?.message}
           />
         </Grid>
@@ -148,6 +148,7 @@ const DataForm = ({
             size="large"
             type="submit"
             variant="contained"
+            color='success'
             classes={{ root: '!mt-5' }}
             disabled={progressing}
             onClick={handleSubmit(onSubmit)}

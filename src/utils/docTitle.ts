@@ -33,6 +33,10 @@ const metaMap: MetaMap = {
   '/users': {
     title: t('users'),
     description: t('users')
+  },
+  '/users/create': {
+    title: t('createUser'),
+    description: t('createUser')
   }
 }
 

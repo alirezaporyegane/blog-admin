@@ -1,19 +1,15 @@
 import { HeaderNameContext } from '@/context/HeaderNameContext'
-import { Add } from '@mui/icons-material'
-import { Button, Grid, Typography } from '@mui/material'
-import { t } from 'i18next'
-import { useContext } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Grid, Typography } from '@mui/material'
+import { lazy, useContext } from 'react'
+import { useLocation } from 'react-router-dom'
+const CreateComponent = lazy(
+  () => import('@/components/shared/CreateComponent')
+)
 
 const Header = () => {
   const { name } = useContext(HeaderNameContext)
-  const navigation = useNavigate()
   const location = useLocation()
-
-  const handleSubmit = () => {
-    const url = `${location.pathname}/create`
-    navigation(url)
-  }
+  const showButtonLocations = ['/users', '/post-categories']
 
   return (
     <>
@@ -29,12 +25,10 @@ const Header = () => {
           </Typography>
         </Grid>
 
-        <Grid item>
-          <Button variant="contained" color="success" onClick={handleSubmit}>
-            {t('add')}
-
-            <Add sx={{ marginLeft: 1 }} />
-          </Button>
+        <Grid id="navigation" item>
+          {showButtonLocations.includes(location.pathname) ? (
+            <CreateComponent />
+          ) : null}
         </Grid>
       </Grid>
     </>
