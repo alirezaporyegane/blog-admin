@@ -1,6 +1,7 @@
 import { IAccountRegisterDtoOut } from '@/@types/Account/Dto/out'
 import { AccountContext } from '@/context/AccountContext'
 import { Account } from '@/services/api'
+import { errorHandler } from '@/services/api/ErrorHandler'
 import { success } from '@/utils/Notify'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {
@@ -53,7 +54,7 @@ const RegisterView = () => {
       navigate('/dashboard')
       success(t('loginSuccess'))
     } catch (err) {
-      console.log(err)
+      errorHandler(err)
     } finally {
       setLoading(false)
     }
@@ -136,7 +137,7 @@ const RegisterView = () => {
               </Typography>
 
               <Typography variant="body2" sx={{ mt: 2, mb: 5 }}>
-                {t('haveAccount')}
+                {t('youHaveAlreadyRegistered')}
 
                 <Link
                   to="/login"

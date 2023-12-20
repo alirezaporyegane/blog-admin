@@ -6,6 +6,8 @@ import {
   createQueryParamsForGetCount
 } from '@/utils/helpers'
 import CreateView from '@/views/Users/Create'
+import EditView from '@/views/Users/Edit'
+import EditPassword from '@/views/Users/EditPassword'
 import UsersView from '@/views/Users/index'
 import { RouteObject } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
@@ -38,6 +40,32 @@ export default {
       element: (
         <ProtectedRoute roles={[Role.ADMIN, Role.WRITER]}>
           <CreateView />
+        </ProtectedRoute>
+      )
+    },
+    {
+      loader: async ({ request: { signal }, params }) => {
+        try {
+          return await UserService.getById(
+            (params as { id: string }).id,
+            signal
+          )
+        } catch (err) {
+          errorHandler(err)
+        }
+      },
+      path: 'edit/:id',
+      element: (
+        <ProtectedRoute roles={[Role.ADMIN, Role.WRITER]}>
+          <EditView />
+        </ProtectedRoute>
+      )
+    },
+    {
+      path: 'edit-password/:id',
+      element: (
+        <ProtectedRoute roles={[Role.ADMIN, Role.WRITER]}>
+          <EditPassword />
         </ProtectedRoute>
       )
     }

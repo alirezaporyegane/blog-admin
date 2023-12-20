@@ -12,7 +12,7 @@ const errorClass = {
 export default [
   {
     id: 1,
-    type: 'TextField',
+    typeField: 'TextField',
     fieldName: 'firstName',
     dir: 'auto',
     variant: 'outlined',
@@ -23,7 +23,7 @@ export default [
   },
   {
     id: 2,
-    type: 'TextField',
+    typeField: 'TextField',
     fieldName: 'lastName',
     dir: 'auto',
     variant: 'outlined',
@@ -34,7 +34,7 @@ export default [
   },
   {
     id: 3,
-    type: 'TextField',
+    typeField: 'TextField',
     fieldName: 'email',
     dir: 'auto',
     variant: 'outlined',
@@ -51,7 +51,7 @@ export default [
   },
   {
     id: 4,
-    type: 'TextField',
+    typeField: 'TextField',
     fieldName: 'phoneNumber',
     dir: 'auto',
     variant: 'outlined',
@@ -68,7 +68,7 @@ export default [
   },
   {
     id: 5,
-    type: 'TextField',
+    typeField: 'TextField',
     fieldName: 'job',
     dir: 'auto',
     variant: 'outlined',
@@ -79,7 +79,7 @@ export default [
   },
   {
     id: 6,
-    type: 'SelectField',
+    typeField: 'SelectField',
     fieldName: 'legality',
     labelId: 'selectLegality',
     fullWidth: true,
@@ -93,7 +93,7 @@ export default [
   },
   {
     id: 7,
-    type: 'SelectField',
+    typeField: 'SelectField',
     fieldName: 'gender',
     labelId: 'selectGender',
     fullWidth: true,
@@ -107,7 +107,7 @@ export default [
   },
   {
     id: 8,
-    type: 'DateField',
+    typeField: 'DateField',
     fieldName: 'birthDate',
     className: 'w-full',
     fullWidth: true,

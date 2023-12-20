@@ -3,14 +3,14 @@ import { PaletteOptions, createTheme } from '@mui/material'
 import { prefixer } from 'stylis'
 import rtlPlugin from 'stylis-plugin-rtl'
 
-const palette: PaletteOptions = {
+export const palette: PaletteOptions = {
   background: {
-    default: '#F9F9FC',
+    default: '#FAFAFF'
   },
   primary: {
     main: '#006495',
     light: '#006495',
-    dark: '#8FCDFF',
+    dark: '#003450',
     50: '#E7F2FF',
     100: '#CBE6FF',
     200: '#8FCDFF',
@@ -55,7 +55,7 @@ const palette: PaletteOptions = {
   success: {
     main: '#006E22',
     light: '#006E22',
-    dark: '#54E166',
+    dark: '#005317',
     50: '#C7FFC2',
     100: '#72FE7F',
     200: '#54E166',
@@ -112,7 +112,7 @@ export const theme = createTheme({
         },
         sx: {
           '& .MuiOutlinedInput-notchedOutline': {
-            borderColor: palette.grey[100],
+            borderColor: palette.grey?.[100],
             borderRadius: 2
           },
           '& .MuiFormHelperText-root': {

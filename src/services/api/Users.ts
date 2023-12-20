@@ -1,5 +1,6 @@
 import { RequestMethod } from '@/@types/Services'
-import { UserDtoIn } from '@/@types/User/Dto/user.dto.in'
+import { UserDtoIn } from '@/components/Users'
+import { EditPasswordDto } from '@/components/Users/EditPasswordView'
 import { axiosHandler } from './Core'
 
 const BASE_URL = 'admin/users'
@@ -21,6 +22,37 @@ const getCount = async (params: unknown, signal: AbortSignal) => {
   })
 }
 
+const getById = async (id: string, signal: AbortSignal) => {
+  return await axiosHandler<number>(BASE_URL, {
+    action: `${id}`,
+    method: RequestMethod.GET,
+    signal
+  })
+}
+
+const create = async (body: UserDtoIn) => {
+  return await axiosHandler<string>(BASE_URL, {
+    method: RequestMethod.POST,
+    body
+  })
+}
+
+const update = async (id: string, body: UserDtoIn) => {
+  return await axiosHandler<string>(BASE_URL, {
+    action: `${id}`,
+    method: RequestMethod.PUT,
+    body
+  })
+}
+
+const updatePassword = async (id: string, body: EditPasswordDto) => {
+  return await axiosHandler<string>(BASE_URL, {
+    action: `${id}/password`,
+    method: RequestMethod.PUT,
+    body
+  })
+}
+
 const remove = async (id: string) => {
   return await axiosHandler<string>(BASE_URL, {
     action: `${id}`,
@@ -28,4 +60,12 @@ const remove = async (id: string) => {
   })
 }
 
-export default { getAll, getCount, remove }
+export default {
+  getAll,
+  getCount,
+  getById,
+  create,
+  update,
+  updatePassword,
+  remove
+}

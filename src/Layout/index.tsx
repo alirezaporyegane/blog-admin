@@ -1,60 +1,56 @@
-import { HeaderNameContext } from '@/context/HeaderNameContext'
 import { Status } from '@/services/api'
+import { palette } from '@/theme/MatrialConfig'
 import { getDescriptionFromRoute, getTitleFromRoute } from '@/utils/docTitle'
 import { Box } from '@mui/material'
-import { lazy, useContext, useEffect, useLayoutEffect, useState } from 'react'
+import { lazy, useLayoutEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Toaster } from 'react-hot-toast'
 import { Outlet, useLocation } from 'react-router-dom'
 const LoadingComponent = lazy(() => import('./Components/LoadingComponent'))
 const ErrorComponent = lazy(() => import('./Components/ErrorComponent'))
-const Header = lazy(() => import('./Components/HeaderComponent'))
 const Sidebar = lazy(() => import('./Components/SidebarComponent'))
+
+type Status = 'loading' | 'success' | 'error'
 
 const Layout = () => {
   const location = useLocation()
-  const [loading, setLoading] = useState<boolean>(true)
-  const [error, setError] = useState<boolean>(false)
+  const [status, setStatus] = useState<Status>('loading')
   const excludeLinks = ['/login', '/register']
   const drawerWidth = excludeLinks.includes(location.pathname) ? 0 : 300
   const mobileDrawerWidth = excludeLinks.includes(location.pathname) ? 0 : 90
-  const { setName } = useContext(HeaderNameContext)
 
   useLayoutEffect(() => {
     const checkServerStatus = async () => {
       try {
         await Status.checkStatusHandler(true)
       } catch (err) {
-        setError(true)
+        setStatus('error')
       } finally {
-        setLoading(false)
+        setStatus('success')
       }
     }
 
     checkServerStatus()
   }, [])
 
-  useEffect(
-    () => setName(getTitleFromRoute(location.pathname, true)),
-    [location.pathname, setName]
-  )
+  if (status === 'loading') return <LoadingComponent />
 
-  if (loading) return <LoadingComponent />
-
-  if (error) return <ErrorComponent />
+  if (status == 'error') return <ErrorComponent />
 
   return (
     <>
       <Helmet>
         <title>{getTitleFromRoute(location.pathname)}</title>
+
         <meta
           name="description"
           content={getDescriptionFromRoute(location.pathname)}
         />
+
         <base target="_blank" href="/localhost:8080" />
       </Helmet>
 
-      <Box sx={{ height: '100vh' }}>
+      <Box sx={{ height: '100vh', backgroundColor: palette.background?.default }}>
         {!excludeLinks.includes(location.pathname) && (
           <Sidebar
             drawerWidth={drawerWidth}
@@ -74,8 +70,6 @@ const Layout = () => {
             }
           }}
         >
-          {!excludeLinks.includes(location.pathname) && <Header />}
-
           <Outlet />
 
           <Toaster />

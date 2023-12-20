@@ -5,11 +5,16 @@ export type UserDtoIn = {
   lastName: string
   email: string
   phoneNumber: string
-  emailConfirmed: boolean
+  confirmEmail: boolean
   confirmedProfile: boolean
-  phoneNumberConfirmed: boolean
-  suspended: boolean
+  password: string
+  confirmPassword: string
+  job: string
+  legality: number
+  gender: string
   birthDate: string
   nationalId: string
-  job: string
+  confirmPhoneNumber: boolean
+  suspended: boolean
+  role: string[]
 }

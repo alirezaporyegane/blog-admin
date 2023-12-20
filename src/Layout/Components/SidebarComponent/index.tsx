@@ -1,5 +1,5 @@
 import { AccountContext, Role } from '@/context/AccountContext'
-import { Category, Home, PostAdd, Settings, Group } from '@mui/icons-material'
+import { Category, Group, Home, PostAdd, Settings } from '@mui/icons-material'
 import {
   Drawer,
   List,
@@ -42,12 +42,17 @@ const MobileSlider = ({
       open
       variant="permanent"
       classes={{
-        paper: '!border-gray-300 !border-dashed'
+        paper: '!border-white !border-dashed'
       }}
       sx={{
         display: { xs: 'block', md: 'none' },
+        backgroundColor: 'white',
+        '& .MuiDrawer-modal': {
+          backgroundColor: 'white'
+        },
         '& .MuiDrawer-paper': {
           boxSizing: 'border-box',
+          backgroundColor: 'white',
           width: mobileDrawerWidth
         }
       }}
@@ -147,7 +152,7 @@ const Sidebar = ({ drawerWidth, mobileDrawerWidth }: Props) => {
         open
         variant="permanent"
         classes={{
-          paper: '!border-gray-300 !border-dashed !bg-transparent'
+          paper: '!border-gray-300 !border-dashed'
         }}
         sx={{
           display: { xs: 'none', md: 'block' },

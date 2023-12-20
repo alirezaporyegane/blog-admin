@@ -6,5 +6,7 @@ export default {
   delete: 'حذف',
   perPage: 'تعداد',
   from: 'از',
+  filters: 'فیلتر ها',
+  filter: 'فیلتر',
   thereAreNoItemsToDisplay: 'موردی برای نمایش وجود ندارد'
 }

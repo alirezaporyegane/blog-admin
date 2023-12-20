@@ -1,6 +1,6 @@
 import { UserDtoIn } from '@/@types/User/Dto/user.dto.in'
 import { lazy } from 'react'
-import { useLoaderData,  } from 'react-router-dom'
+import { useLoaderData } from 'react-router-dom'
 
 const UserView = lazy(() => import('@/components/Users'))
 
@@ -9,8 +9,6 @@ const Users = () => {
     items: UserDtoIn[]
     count: number
   }
-
-
 
   return <UserView data={items} count={count} />
 }

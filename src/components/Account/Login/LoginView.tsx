@@ -1,7 +1,7 @@
 import { IAccountLoginDtoOut } from '@/@types/Account/Dto/out'
 import { AccountContext } from '@/context/AccountContext'
-import { Account } from '@/services'
-import { errorHandler } from '@/services/errorHandler'
+import { Account } from '@/services/api'
+import { errorHandler } from '@/services/api/ErrorHandler'
 import { success } from '@/utils/Notify'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {
@@ -115,7 +115,7 @@ const LoginView = () => {
               </Typography>
 
               <Typography variant="body2" sx={{ mt: 2, mb: 5 }}>
-                {t('doNotHaveAccount')}
+                {t('youDoNotHaveAnAccount')}
 
                 <Link
                   to="/register"

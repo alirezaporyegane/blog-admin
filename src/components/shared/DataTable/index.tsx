@@ -1,27 +1,34 @@
+import { AddOutlined, CheckOutlined } from '@mui/icons-material'
 import { Button, Card, FormControl, Grid, Skeleton } from '@mui/material'
 import { t } from 'i18next'
 import { lazy } from 'react'
 import { Controller, RegisterOptions, useForm } from 'react-hook-form'
 import { Props as DateFieldProps } from './components/DateField'
 import { Props as SelectFieldProps } from './components/SelectField'
+import { Props as SwitchFieldTable } from './components/SwitchField'
 import { Props as TextFieldProps } from './components/TextField'
 
 // Components
 const DateField = lazy(() => import('./components/DateField'))
 const SelectField = lazy(() => import('./components/SelectField'))
 const TextField = lazy(() => import('./components/TextField'))
+const SwitchField = lazy(() => import('./components/SwitchField'))
 
 type TextType = {
-  type: 'TextField'
+  typeField: 'TextField'
 } & TextFieldProps
 
 type DateType = {
-  type: 'DateField'
+  typeField: 'DateField'
 } & DateFieldProps
 
 type SelectType = {
-  type: 'SelectField'
+  typeField: 'SelectField'
 } & SelectFieldProps
+
+type SwitchType = {
+  typeField: 'SwitchField'
+} & SwitchFieldTable
 
 export type Field = {
   id: number
@@ -32,7 +39,7 @@ export type Field = {
   md?: number
   lg?: number
   xl?: number
-} & (TextType | DateType | SelectType)
+} & (TextType | DateType | SelectType | SwitchType)
 
 type ButtonGrids = {
   xl?: number
@@ -76,7 +83,7 @@ const DataForm = ({
 
   const handleTypeField = ({
     id,
-    type,
+    typeField,
     fieldName,
     roles,
     xs = 12,
@@ -86,7 +93,7 @@ const DataForm = ({
     xl = 6,
     ...fieldItem
   }: Field) => {
-    if (type === 'DateField')
+    if (typeField === 'DateField')
       return (
         <Grid key={id} item xs={xs} sm={sm} md={md} lg={lg} xl={xl}>
           <Controller
@@ -94,6 +101,7 @@ const DataForm = ({
             control={control}
             render={({ field }) => (
               <DateField
+                label={fieldItem.label}
                 fullWidth={fieldItem.fullWidth}
                 value={field.value}
                 onChange={field.onChange}
@@ -102,7 +110,7 @@ const DataForm = ({
           />
         </Grid>
       )
-    else if (type === 'SelectField')
+    else if (typeField === 'SelectField')
       return (
         <Grid key={id} item xs={xs} sm={sm} md={md} lg={lg} xl={xl}>
           <SelectField
@@ -113,13 +121,39 @@ const DataForm = ({
           />
         </Grid>
       )
-    else if (type === 'TextField')
+    else if (typeField === 'TextField')
       return (
         <Grid key={id} item xs={xs} sm={sm} md={md} lg={lg} xl={xl}>
           <TextField
             {...fieldItem}
             {...register(fieldName, roles)}
             error={!!errors[fieldName]?.message}
+          />
+        </Grid>
+      )
+    else if (typeField === 'SwitchField')
+      return (
+        <Grid
+          key={id}
+          item
+          xs={xs}
+          sm={sm}
+          md={md}
+          lg={lg}
+          xl={xl}
+          display={'flex'}
+          alignItems={'center'}
+        >
+          <Controller
+            name={fieldName}
+            control={control}
+            render={({ field }) => (
+              <SwitchField
+                label={fieldItem.label}
+                checked={field.value}
+                onChange={field.onChange}
+              />
+            )}
           />
         </Grid>
       )
@@ -148,12 +182,24 @@ const DataForm = ({
             size="large"
             type="submit"
             variant="contained"
-            color='success'
+            color="success"
             classes={{ root: '!mt-5' }}
             disabled={progressing}
             onClick={handleSubmit(onSubmit)}
           >
-            {idEdit ? t('edit') : t('save')}
+            {idEdit ? (
+              <>
+                {t('edit')}
+
+                <CheckOutlined sx={{ ml: 1 }} />
+              </>
+            ) : (
+              <>
+                {t('save')}
+
+                <AddOutlined sx={{ ml: 1 }} />
+              </>
+            )}
           </Button>
         )}
       </Grid>
@@ -198,9 +244,12 @@ const DataTable = (props: Props) => {
   return (
     <Card
       variant="elevation"
-      sx={{ p: 3, width: 1, borderRadius: 3 }}
-      classes={{
-        root: '!shadow-sm'
+      sx={{
+        p: 3,
+        width: 1,
+        borderRadius: 3,
+        boxShadow:
+          'rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;'
       }}
     >
       {props.initializing ? (

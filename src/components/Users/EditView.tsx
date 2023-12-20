@@ -2,22 +2,31 @@ import DataTable from '@/components/shared/DataTable'
 import { Users } from '@/services/api'
 import { errorHandler } from '@/services/api/ErrorHandler'
 import { success } from '@/utils/Notify'
-import { GroupAddOutlined } from '@mui/icons-material'
+import { GroupOutlined } from '@mui/icons-material'
 import { t } from 'i18next'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { UserDtoIn } from '.'
 import TitleSection from '../shared/TitleSection'
-import CreateForms from './Forms/CreateForms'
+import DataFields from './Forms/EditForms'
 
-const CreateView = () => {
+type Props = {
+  data: UserDtoIn
+  loading: boolean
+}
+
+type Params = {
+  id: string
+}
+
+const CreateView = ({ data, loading }: Props) => {
   const navigate = useNavigate()
+  const { id } = useParams() as Params
   const [progressing, setProgressing] = useState(false)
 
   async function onSubmit(data: UserDtoIn) {
     try {
-      setProgressing(true)
-      await Users.create(data)
+      await Users.update(id, data)
       success(t('userCreated'))
       navigate('/users')
     } catch (err) {
@@ -32,36 +41,17 @@ const CreateView = () => {
     lg: 12
   }
 
-  const defaultValue: UserDtoIn = {
-    _id: '',
-    userName: '',
-    birthDate: '',
-    confirmedProfile: false,
-    confirmEmail: false,
-    confirmPassword: '',
-    email: '',
-    firstName: '',
-    gender: '',
-    job: '',
-    lastName: '',
-    legality: 0,
-    nationalId: '',
-    password: '',
-    phoneNumber: '',
-    confirmPhoneNumber: false,
-    suspended: false,
-    role: []
-  }
-
   return (
     <>
-      <TitleSection title={t('createUser')} icon={<GroupAddOutlined />} />
+      <TitleSection title={t('editUser')} icon={<GroupOutlined />} />
 
       <DataTable
+        idEdit
         onSubmit={onSubmit}
         progressing={progressing}
-        fields={CreateForms}
-        defaultValue={defaultValue}
+        defaultValue={data}
+        initializing={loading}
+        fields={DataFields}
         gridSpacing={3}
         buttonGrids={buttonGrids}
       />

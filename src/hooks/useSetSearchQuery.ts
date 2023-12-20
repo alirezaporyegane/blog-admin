@@ -8,21 +8,21 @@ const useSetSearchQuery = () => {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const setQuery = (query: SearchQuery) => {
-    const params: SearchQuery = {}
+    const map = new Map()
     if (query && Object.keys(query).length) {
       Object.entries(query).forEach(([key, value]) => {
         if (value) {
           searchParams.delete(key)
-          params[key] = value
-        }
+          map.set(key, value)
+        } else if (value === '') map.delete(key)
       })
     }
 
     for (const [key, value] of searchParams.entries()) {
-      params[key] = value
+      if (!!map.get(key) && map.get(key) !== '') map.set(key, value)
     }
 
-    setSearchParams({ ...searchParams, ...params })
+    setSearchParams({ ...searchParams, ...Object.fromEntries(map.entries()) })
   }
 
   return [searchParams, setQuery] as const

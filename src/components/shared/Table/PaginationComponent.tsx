@@ -50,6 +50,7 @@ const PaginationComponent = ({ size, count, rowsPerPageOptions }: Props) => {
   const pageSize = Math.ceil(count / rowsPerPage)
   const fromPage = Math.round((page - 1) * rowsPerPage + 1 || 1)
   const toPage = Math.round(isLastPage ? count : page * rowsPerPage)
+  const rows = Number(rowsPerPage)
 
   return (
     <Grid
@@ -100,7 +101,8 @@ const PaginationComponent = ({ size, count, rowsPerPageOptions }: Props) => {
         <Select
           size="small"
           variant="standard"
-          defaultValue={rowsPerPage}
+          defaultValue={rows}
+          value={rowsPerPage}
           sx={{ marginLeft: 1 }}
           onChange={handleChangeRowsPerPage}
         >
