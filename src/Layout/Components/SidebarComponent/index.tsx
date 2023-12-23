@@ -1,4 +1,4 @@
-import { AccountContext, Role } from '@/context/AccountContext'
+import { Role, useAuthStore } from '@/store/authStore'
 import { Category, Group, Home, PostAdd, Settings } from '@mui/icons-material'
 import {
   Drawer,
@@ -8,7 +8,7 @@ import {
   ListItemIcon,
   ListItemText
 } from '@mui/material'
-import { ReactNode, useContext } from 'react'
+import { ReactNode } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Account from './Account'
 
@@ -93,8 +93,7 @@ const MobileSlider = ({
 const Sidebar = ({ drawerWidth, mobileDrawerWidth }: Props) => {
   const path = useLocation()
   const navigate = useNavigate()
-  const { getAccount } = useContext(AccountContext)
-  const account = getAccount()
+  const account = useAuthStore((store) => store.account)
 
   const handleRedirect = (url: string) => navigate(url)
 

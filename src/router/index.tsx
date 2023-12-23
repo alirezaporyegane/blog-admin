@@ -1,6 +1,5 @@
-/* eslint-disable react-refresh/only-export-components */
 import Layout from '@/Layout'
-import { Role } from '@/context/AccountContext'
+import { Role } from '@/store/authStore'
 import Blog from '@/views/Blog'
 import Dashboard from '@/views/Dashboard'
 import Login from '@/views/Login'

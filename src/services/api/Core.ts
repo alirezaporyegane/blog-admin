@@ -1,9 +1,9 @@
-import configuration from '@/config'
-import { AccountKey, IAccount } from '@/context/AccountContext'
-import axios, { AxiosError, type AxiosRequestConfig } from 'axios'
-import { stringify } from 'qs'
 import type { ErrorExceptions, RequestOption } from '@/@types/Services'
 import { ErrorException } from '@/@types/Services'
+import configuration from '@/config'
+import { useAuthStore } from '@/store/authStore'
+import axios, { AxiosError, type AxiosRequestConfig } from 'axios'
+import { stringify } from 'qs'
 const config = configuration()
 
 function requestConfig(
@@ -14,9 +14,7 @@ function requestConfig(
     .filter((item) => !!item)
     .join('/')
   const baseURL = config.apiServerUrl
-  const account = JSON.parse(
-    localStorage.getItem(AccountKey.ACCOUNT_KEY) || '{}'
-  ) as IAccount
+  const account = useAuthStore.getState().account
 
   const axiosRequestConfig: AxiosRequestConfig = {
     baseURL,

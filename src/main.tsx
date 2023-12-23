@@ -1,4 +1,3 @@
-import { AccountProvider } from '@/context/AccountContext.tsx'
 import '@/services/i18n'
 import { cacheRtl, theme } from '@/theme/MatrialConfig.ts'
 import { CacheProvider } from '@emotion/react'
@@ -13,14 +12,12 @@ import { router } from './router/index.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <ErrorBoundary fallback={<ErrorComponents />}>
-    <AccountProvider>
-      <HelmetProvider>
-        <CacheProvider value={cacheRtl}>
-          <ThemeProvider theme={theme}>
-            <RouterProvider router={router} />
-          </ThemeProvider>
-        </CacheProvider>
-      </HelmetProvider>
-    </AccountProvider>
+    <HelmetProvider>
+      <CacheProvider value={cacheRtl}>
+        <ThemeProvider theme={theme}>
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </CacheProvider>
+    </HelmetProvider>
   </ErrorBoundary>
 )

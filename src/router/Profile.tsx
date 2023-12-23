@@ -1,4 +1,4 @@
-import { Role } from '@/context/AccountContext'
+import { Role } from '@/store/authStore'
 import { Account } from '@/services/api'
 import { errorHandler } from '@/services/api/ErrorHandler'
 import Profile from '@/views/Profile'

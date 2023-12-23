@@ -1,6 +1,6 @@
-import { Role } from '@/context/AccountContext'
 import { Users as UserService } from '@/services/api'
 import { errorHandler } from '@/services/api/ErrorHandler'
+import { Role } from '@/store/authStore'
 import {
   createQueryParams,
   createQueryParamsForGetCount

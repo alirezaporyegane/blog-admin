@@ -1,7 +1,7 @@
 import { IAccountLoginDtoOut } from '@/@types/Account/Dto/out'
-import { AccountContext } from '@/context/AccountContext'
 import { Account } from '@/services/api'
 import { errorHandler } from '@/services/api/ErrorHandler'
+import { useAuthStore } from '@/store/authStore'
 import { success } from '@/utils/Notify'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {
@@ -15,7 +15,7 @@ import {
   TextField,
   Typography
 } from '@mui/material'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
@@ -24,7 +24,7 @@ const LoginView = () => {
   const { t } = useTranslation()
   const [loading, setLoading] = useState(false)
   const [type, setType] = useState(false)
-  const { setAccount } = useContext(AccountContext)
+  const setAccount = useAuthStore((store) => store.setAccount)
   const {
     register,
     handleSubmit,

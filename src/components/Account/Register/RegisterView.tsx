@@ -1,7 +1,7 @@
 import { IAccountRegisterDtoOut } from '@/@types/Account/Dto/out'
-import { AccountContext } from '@/context/AccountContext'
 import { Account } from '@/services/api'
 import { errorHandler } from '@/services/api/ErrorHandler'
+import { useAuthStore } from '@/store/authStore'
 import { success } from '@/utils/Notify'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {
@@ -15,7 +15,7 @@ import {
   TextField,
   Typography
 } from '@mui/material'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
@@ -24,6 +24,8 @@ const RegisterView = () => {
   const [loading, setLoading] = useState(false)
   const [passwordType, setPasswordType] = useState(false)
   const [confirmPasswordType, setConfirmPasswordType] = useState(false)
+  const setAccount = useAuthStore((store) => store.setAccount)
+
   const { t } = useTranslation()
   const {
     register,
@@ -43,7 +45,6 @@ const RegisterView = () => {
     }
   })
 
-  const { setAccount } = useContext(AccountContext)
   const navigate = useNavigate()
 
   async function onSubmit(data: IAccountRegisterDtoOut) {

@@ -1,9 +1,9 @@
-import { AccountContext } from '@/context/AccountContext'
 import { Router } from '@/router'
 import { Account as AccountService } from '@/services/api'
+import { useAuthStore } from '@/store/authStore'
 import { success } from '@/utils/Notify'
 import { Box, IconButton, Menu, MenuItem } from '@mui/material'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MdExpandMore, MdLogout, MdPerson } from 'react-icons/md'
 import { Link, useNavigate } from 'react-router-dom'
@@ -12,9 +12,9 @@ const Account = () => {
   const [loading, setLoading] = useState(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
-  const { getAccount, clearAccount } = useContext(AccountContext)
   const { t } = useTranslation()
-  const account = getAccount()
+  const account = useAuthStore((store) => store.account)
+  const clearAccount = useAuthStore((store) => store.clearAccount)
   const navigate = useNavigate()
 
   async function logout() {

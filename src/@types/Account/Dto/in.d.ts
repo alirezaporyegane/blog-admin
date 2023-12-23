@@ -1,4 +1,4 @@
-import { Role } from '@/context/AccountContext'
+import { Role } from '@/store/authStore'
 
 export interface ILoginIn {
   _id: string

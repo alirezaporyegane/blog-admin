@@ -1,6 +1,6 @@
-import { AccountContext, Role } from '@/context/AccountContext'
 import { Router } from '@/router'
-import { ReactNode, useContext } from 'react'
+import { Role, useAuthStore } from '@/store/authStore'
+import { ReactNode } from 'react'
 import { Navigate } from 'react-router-dom'
 
 type Props = {
@@ -9,8 +9,7 @@ type Props = {
 }
 
 const ProtectedRoute = ({ children, roles }: Props) => {
-  const { getAccount } = useContext(AccountContext)
-  const account = getAccount()
+  const account = useAuthStore((store) => store.account)
   const isLogin = account && Object.keys(account).length
   const isAdmittedRole =
     isLogin && roles.find((role) => account.role.includes(role))
