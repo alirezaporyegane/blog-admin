@@ -3,12 +3,10 @@ import { Suspense, lazy } from 'react'
 
 const CreateView = lazy(() => import('@/components/Users/CreateView'))
 
-const Create = () => {
+export const Create = () => {
   return (
-    <Suspense fallback={<Loading boxHeight={700}/>}>
+    <Suspense fallback={<Loading boxHeight={700} />}>
       <CreateView />
     </Suspense>
   )
 }
-
-export default Create

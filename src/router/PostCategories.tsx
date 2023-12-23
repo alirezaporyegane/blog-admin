@@ -1,12 +1,17 @@
 import { Account } from '@/services/api'
 import { errorHandler } from '@/services/api/ErrorHandler'
 import { Role } from '@/store/authStore'
-import { Profile } from '@/views/Profile'
+import { PostCategories } from '@/views/PostCategories'
 import { RouteObject } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 
 export default {
-  path: '/profile',
+  path: '/post-categories',
+  element: (
+    <ProtectedRoute roles={[Role.ADMIN]}>
+      <PostCategories />
+    </ProtectedRoute>
+  ),
   loader: ({ request: { signal } }) => {
     try {
       return Account.getProfileHandler(signal)
@@ -14,10 +19,5 @@ export default {
       errorHandler(err)
       return null
     }
-  },
-  element: (
-    <ProtectedRoute roles={[Role.ADMIN, Role.WRITER]}>
-      <Profile />
-    </ProtectedRoute>
-  )
+  }
 } as RouteObject

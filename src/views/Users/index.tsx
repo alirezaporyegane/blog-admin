@@ -4,7 +4,7 @@ import { useLoaderData } from 'react-router-dom'
 
 const UserView = lazy(() => import('@/components/Users'))
 
-const Users = () => {
+export const Users = () => {
   const { items, count } = useLoaderData() as {
     items: UserDtoIn[]
     count: number
@@ -12,5 +12,3 @@ const Users = () => {
 
   return <UserView data={items} count={count} />
 }
-
-export default Users

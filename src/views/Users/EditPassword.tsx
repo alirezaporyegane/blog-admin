@@ -5,12 +5,10 @@ const EditPasswordView = lazy(
   () => import('@/components/Users/EditPasswordView')
 )
 
-const EditPassword = () => {
+export const EditPassword = () => {
   return (
-    <Suspense fallback={<Loading boxHeight={200}/>}>
+    <Suspense fallback={<Loading boxHeight={200} />}>
       <EditPasswordView />
     </Suspense>
   )
 }
-
-export default EditPassword

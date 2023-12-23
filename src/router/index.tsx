@@ -1,12 +1,12 @@
 import Layout from '@/Layout'
 import { Role } from '@/store/authStore'
-import Blog from '@/views/Blog'
-import Dashboard from '@/views/Dashboard'
-import Login from '@/views/Login'
-import PostCategories from '@/views/PostCategories'
-import Register from '@/views/Register'
-import Settings from '@/views/Settings'
+import { Blog } from '@/views/Blog'
+import { Dashboard } from '@/views/Dashboard'
+import { Login } from '@/views/Login'
+import { Register } from '@/views/Register'
+import { Settings } from '@/views/Settings'
 import { Navigate, createBrowserRouter } from 'react-router-dom'
+import PostCategories from './PostCategories'
 import ProfileRoute from './Profile'
 import ProtectedRoute from './ProtectedRoute'
 import UserRoute from './User'
@@ -53,14 +53,7 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
-      {
-        path: Router.POST_CATEGORIES,
-        element: (
-          <ProtectedRoute roles={[Role.ADMIN]}>
-            <PostCategories />
-          </ProtectedRoute>
-        )
-      },
+      PostCategories,
       UserRoute,
       {
         path: Router.SETTINGS,

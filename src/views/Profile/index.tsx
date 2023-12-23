@@ -6,7 +6,7 @@ const ProfileView = lazy(
   () => import('@/components/Account/Profile/ProfileView')
 )
 
-const Profile = () => {
+export const Profile = () => {
   const profile = useLoaderData() as IAccountIn
   const { state } = useNavigation()
 
@@ -18,5 +18,3 @@ const Profile = () => {
     </Suspense>
   )
 }
-
-export default Profile

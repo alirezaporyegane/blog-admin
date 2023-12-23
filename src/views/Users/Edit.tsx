@@ -5,7 +5,7 @@ import { useLoaderData, useNavigation } from 'react-router-dom'
 
 const EditView = lazy(() => import('@/components/Users/EditView'))
 
-const Edit = () => {
+export const Edit = () => {
   const data = useLoaderData() as UserDtoIn
   const { state } = useNavigation()
 
@@ -17,5 +17,3 @@ const Edit = () => {
     </Suspense>
   )
 }
-
-export default Edit

@@ -1,7 +1,7 @@
 import { PostCategories as PostCategoriesService } from '@/services/api'
 import { useEffect } from 'react'
 
-const PostCategories = () => {
+export const PostCategories = () => {
   useEffect(() => {
     PostCategoriesService.getAllItem()
       .then((res) => console.log(res))
@@ -10,5 +10,3 @@ const PostCategories = () => {
 
   return <>hi</>
 }
-
-export default PostCategories

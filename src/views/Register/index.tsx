@@ -4,12 +4,10 @@ const RegisterView = lazy(
   () => import('@/components/Account/Register/RegisterView')
 )
 
-const Register = () => {
+export const Register = () => {
   return (
     <Suspense fallback={<AccountLoading />}>
       <RegisterView />
     </Suspense>
   )
 }
-
-export default Register
