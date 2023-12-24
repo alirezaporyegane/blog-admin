@@ -1,12 +1,20 @@
 export default {
-  weHaveAProblem: 'مشکلی پیش آمده است',
-  reload: 'تلاش مجدد',
+  active: 'فعال',
   add: 'افزودن',
-  edit: 'ویرایش',
+  altName: 'عنوان دوم',
   delete: 'حذف',
-  perPage: 'تعداد',
-  from: 'از',
-  filters: 'فیلتر ها',
+  edit: 'ویرایش',
   filter: 'فیلتر',
-  thereAreNoItemsToDisplay: 'موردی برای نمایش وجود ندارد'
+  filters: 'فیلتر ها',
+  from: 'از',
+  metaDescription: 'جزئیات سئو',
+  metaTitle: 'عنوان سئو',
+  name: 'نام',
+  perPage: 'تعداد',
+  published: 'انتشار',
+  reload: 'تلاش مجدد',
+  slug: 'نام صفحه',
+  thereAreNoItemsToDisplay: 'موردی برای نمایش وجود ندارد',
+  title: 'عنوان',
+  weHaveAProblem: 'مشکلی پیش آمده است'
 }

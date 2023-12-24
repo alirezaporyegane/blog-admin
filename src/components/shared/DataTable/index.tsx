@@ -15,19 +15,19 @@ const TextField = lazy(() => import('./components/TextField'))
 const SwitchField = lazy(() => import('./components/SwitchField'))
 
 type TextType = {
-  typeField: 'TextField'
+  typeField?: 'TextField'
 } & TextFieldProps
 
 type DateType = {
-  typeField: 'DateField'
+  typeField?: 'DateField'
 } & DateFieldProps
 
 type SelectType = {
-  typeField: 'SelectField'
+  typeField?: 'SelectField'
 } & SelectFieldProps
 
 type SwitchType = {
-  typeField: 'SwitchField'
+  typeField?: 'SwitchField'
 } & SwitchFieldTable
 
 export type Field = {

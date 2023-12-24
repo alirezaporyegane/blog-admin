@@ -2,7 +2,7 @@ import useSetSearchQuery from '@/hooks/useSetSearchQuery'
 import { Add, SearchOutlined } from '@mui/icons-material'
 import { Box, Button, Card, Collapse, Grid, Typography } from '@mui/material'
 import { t } from 'i18next'
-import { ReactNode, useState } from 'react'
+import { ReactNode, memo, useState } from 'react'
 import { FieldValues, UseFormHandleSubmit } from 'react-hook-form'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -90,70 +90,75 @@ const Filters = ({ expanded, children, handleSubmit }: FilterProps) => {
   )
 }
 
-const TitleSection = ({
-  title,
-  icon,
-  children,
-  showCreateButton = false,
-  showFilterButton = false,
-  handleSubmit
-}: Props) => {
-  const [expanded, setExpanded] = useState<boolean>(false)
-  function toggleFilter() {
-    setExpanded((prev) => {
-      prev = !expanded
-      return prev
-    })
-  }
-  return (
-    <Grid
-      container
-      justifyContent={'space-between'}
-      alignContent={'center'}
-      sx={{ marginBottom: 3, marginTop: 3 }}
-    >
+const TitleSection = memo(
+  ({
+    title,
+    icon,
+    children,
+    showCreateButton = false,
+    showFilterButton = false,
+    handleSubmit
+  }: Props) => {
+    const [expanded, setExpanded] = useState<boolean>(false)
+    function toggleFilter() {
+      setExpanded((prev) => {
+        prev = !expanded
+        return prev
+      })
+    }
+    return (
       <Grid
-        item
-        xs={12}
-        md={6}
-        display={'flex'}
-        alignItems={'center'}
-        justifyContent={{ xs: 'center', md: 'start' }}
-        sx={{ mb: { xs: 3, md: 0 } }}
+        container
+        justifyContent={'space-between'}
+        alignContent={'center'}
+        sx={{ marginBottom: 3, marginTop: 3 }}
       >
-        <Typography fontSize={25} fontWeight={600} sx={{ display: 'flex' }}>
-          <span style={{ marginLeft: 12 }}>{icon}</span>
+        <Grid
+          item
+          xs={12}
+          md={6}
+          display={'flex'}
+          alignItems={'center'}
+          justifyContent={{ xs: 'center', md: 'start' }}
+          sx={{ mb: { xs: 3, md: 0 } }}
+        >
+          <Typography fontSize={25} fontWeight={600} sx={{ display: 'flex' }}>
+            <span style={{ marginLeft: 12 }}>{icon}</span>
 
-          {title}
-        </Typography>
-      </Grid>
-
-      <Grid
-        item
-        xs={12}
-        md={6}
-        display={'flex'}
-        alignItems={'center'}
-        justifyContent={{ xs: 'center', md: 'end' }}
-      >
-        <Box sx={{ mr: 2 }}>
-          {showFilterButton ? (
-            <FilterButtonComponent toggleFilter={toggleFilter} />
-          ) : null}
-        </Box>
-
-        {showCreateButton ? <CreateButtonComponent /> : null}
-      </Grid>
-
-      {showFilterButton ? (
-        <Grid item lg={12}>
-          <Filters expanded={expanded} handleSubmit={handleSubmit}>
-            {children}
-          </Filters>
+            {title}
+          </Typography>
         </Grid>
-      ) : null}
-    </Grid>
-  )
-}
+
+        <Grid
+          item
+          xs={12}
+          md={6}
+          display={'flex'}
+          alignItems={'center'}
+          justifyContent={{ xs: 'center', md: 'end' }}
+        >
+          <Box sx={{ mr: 2 }}>
+            {showFilterButton ? (
+              <FilterButtonComponent toggleFilter={toggleFilter} />
+            ) : null}
+          </Box>
+
+          {showCreateButton ? <CreateButtonComponent /> : null}
+        </Grid>
+
+        {showFilterButton ? (
+          <Grid item lg={12}>
+            <Filters expanded={expanded} handleSubmit={handleSubmit}>
+              {children}
+            </Filters>
+          </Grid>
+        ) : null}
+      </Grid>
+    )
+  },
+  (prevProps, newProps) => {
+    return prevProps.title === newProps.title
+  }
+)
 
 export default TitleSection

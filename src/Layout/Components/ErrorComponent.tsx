@@ -16,6 +16,7 @@ const ErrorComponent = () => {
 
         <base target="_blank" href="/localhost:8080" />
       </Helmet>
+      
       <div className="w-full">
         <div className="grid justify-center items-center min-h-screen text-center">
           <div>

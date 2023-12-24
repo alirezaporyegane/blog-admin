@@ -17,6 +17,11 @@ export default {
   children: [
     {
       index: true,
+      element: (
+        <ProtectedRoute roles={[Role.ADMIN, Role.WRITER]}>
+          <Users />
+        </ProtectedRoute>
+      ),
       loader: async ({ request: { signal, url } }) => {
         try {
           const params = createQueryParams(url)
@@ -29,12 +34,7 @@ export default {
           errorHandler(err)
           return null
         }
-      },
-      element: (
-        <ProtectedRoute roles={[Role.ADMIN, Role.WRITER]}>
-          <Users />
-        </ProtectedRoute>
-      )
+      }
     },
     {
       path: 'create',
@@ -45,6 +45,12 @@ export default {
       )
     },
     {
+      path: 'edit/:id',
+      element: (
+        <ProtectedRoute roles={[Role.ADMIN, Role.WRITER]}>
+          <Edit />
+        </ProtectedRoute>
+      ),
       loader: async ({ request: { signal }, params }) => {
         try {
           return await UserService.getById(
@@ -53,14 +59,9 @@ export default {
           )
         } catch (err) {
           errorHandler(err)
+          return null
         }
-      },
-      path: 'edit/:id',
-      element: (
-        <ProtectedRoute roles={[Role.ADMIN, Role.WRITER]}>
-          <Edit />
-        </ProtectedRoute>
-      )
+      }
     },
     {
       path: 'edit-password/:id',

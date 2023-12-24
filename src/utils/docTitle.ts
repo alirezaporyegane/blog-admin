@@ -41,6 +41,14 @@ const metaMap: MetaMap = {
   '/users/edit/:id': {
     title: t('editUser'),
     description: t('editUser')
+  },
+  '/post-categories': {
+    title: t('postCategories'),
+    description: t('postCategories')
+  },
+  '/post-categories/edit/:id': {
+    title: t('editPostCategories'),
+    description: t('editPostCategories')
   }
 }
 

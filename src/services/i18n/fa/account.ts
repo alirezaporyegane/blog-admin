@@ -1,13 +1,11 @@
 export default {
   birthDate: 'تاریخ تولد',
   confirmPassword: 'تکرار رمز عبور',
-  youDoNotHaveAnAccount: 'حساب کاربری ندارید؟',
   email: 'ایمیل',
   emailIsRequired: 'ایمیل الزامی است',
   firstName: 'نام',
   forgetPassword: 'فراموشی رمز عبور؟',
   gender: 'جنسیت',
-  youHaveAlreadyRegistered: 'قبلا ثبت نام کرده‌اید؟',
   job: 'شغل',
   lastName: 'نام خانوادگی',
   legal: 'حقوقی',
@@ -30,4 +28,6 @@ export default {
   userName: 'نام کاربری',
   userNameIsRequired: 'نام کاربری الزامی است',
   woman: 'زن',
+  youDoNotHaveAnAccount: 'حساب کاربری ندارید؟',
+  youHaveAlreadyRegistered: 'قبلا ثبت نام کرده‌اید؟'
 }
