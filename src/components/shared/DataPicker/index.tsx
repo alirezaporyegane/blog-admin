@@ -1,4 +1,4 @@
-import { CalendarMonth } from '@mui/icons-material'
+import { CalendarMonth, CloseOutlined } from '@mui/icons-material'
 import {
   Dialog,
   DialogContent,
@@ -26,8 +26,16 @@ const DatePicker = ({ onChange, ...props }: Props) => {
     setAnchorEl(event.currentTarget)
   const handleClose = () => setAnchorEl(null)
 
+  const handleClear = () => onChange('')
+
   const endAdornmentDate = (
     <InputAdornment position="end">
+      {props.value ? (
+        <IconButton edge="end" sx={{ mr: '1px' }} onClick={handleClear}>
+          <CloseOutlined />
+        </IconButton>
+      ) : null}
+
       <IconButton edge="end" onClick={handleClick}>
         <CalendarMonth />
       </IconButton>

@@ -25,7 +25,6 @@ export default [
     id: 2,
     typeField: 'TextField',
     fieldName: 'slug',
-    dir: 'auto',
     variant: 'outlined',
     label: t('slug'),
     fullWidth: true,

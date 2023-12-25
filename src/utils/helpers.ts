@@ -1,3 +1,5 @@
+import { Role, useAuthStore } from '@/store/authStore'
+
 type Params = {
   [key: string]: unknown
 }
@@ -21,4 +23,10 @@ export function createQueryParamsForGetCount(url: string) {
   }
 
   return params
+}
+
+export function isValidRole(roles: Role[]) {
+  return roles.find((role) =>
+    useAuthStore.getState().account?.role.includes(role)
+  )
 }

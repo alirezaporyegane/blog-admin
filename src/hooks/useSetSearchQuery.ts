@@ -15,6 +15,10 @@ const useSetSearchQuery = () => {
           searchParams.delete(key)
           map.set(key, value)
         } else if (value === '') map.delete(key)
+        else if (value === false) {
+          searchParams.delete(key)
+          map.set(key, value)
+        }
       })
     }
 

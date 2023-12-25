@@ -1,5 +1,11 @@
 import { Role, useAuthStore } from '@/store/authStore'
-import { Category, Group, Home, PostAdd, Settings } from '@mui/icons-material'
+import {
+  Category,
+  Group,
+  Home,
+  Settings,
+  StickyNote2Outlined
+} from '@mui/icons-material'
 import {
   Drawer,
   List,
@@ -8,6 +14,7 @@ import {
   ListItemIcon,
   ListItemText
 } from '@mui/material'
+import { t } from 'i18next'
 import { ReactNode } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Account from './Account'
@@ -107,9 +114,9 @@ const Sidebar = ({ drawerWidth, mobileDrawerWidth }: Props) => {
     },
     {
       id: 2,
-      name: 'وبلاگ',
-      icon: <PostAdd fontSize="medium" />,
-      url: '/blog',
+      name: t('posts'),
+      icon: <StickyNote2Outlined fontSize="medium" />,
+      url: '/posts',
       roles: [Role.ADMIN, Role.WRITER]
     },
     {

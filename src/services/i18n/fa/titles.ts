@@ -1,4 +1,4 @@
 export default {
-  blog: 'وبلاگ',
+  posts: 'نوشته ها',
   blogAdminPanel: 'سایت مقالات علمی',
 }
