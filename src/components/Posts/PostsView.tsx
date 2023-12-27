@@ -1,5 +1,6 @@
 import { PostsType } from '@/@types/Posts'
 import { TableHeader } from '@/components/shared/Table'
+import useConfirm from '@/hooks/useConfirm'
 import { Posts as PostsServices } from '@/services/api'
 import { errorHandler } from '@/services/api/ErrorHandler'
 import { Role } from '@/store/authStore'
@@ -129,10 +130,14 @@ function FilterSection() {
         </Grid>
 
         <Grid item xs={12} lg={3}>
-          <FormControl size='small' fullWidth>
+          <FormControl size="small" fullWidth>
             <InputLabel id="active-select">{t('active')}</InputLabel>
 
-            <Select labelId='active-select' label={t('active')} {...register('active')}>
+            <Select
+              labelId="active-select"
+              label={t('active')}
+              {...register('active')}
+            >
               {activeOptions.map((item) => {
                 return (
                   <MenuItem key={item.id} value={item.value}>
@@ -150,6 +155,7 @@ function FilterSection() {
 
 export default function PostsView({ data, count }: Props) {
   const [loading, setLoading] = useState<boolean>(false)
+  const { confirm } = useConfirm()
   const submit = useSubmit()
   const navigate = useNavigate()
   const columns: TableHeader[] = [
@@ -191,21 +197,19 @@ export default function PostsView({ data, count }: Props) {
 
   const remove = async (id: string) => {
     try {
+      await confirm(t('areYouSureYouWantDeleteThisPost'))
       setLoading(true)
       await PostsServices.remove(id)
-      submit(location.search, {
-        unstable_viewTransition: true,
-        preventScrollReset: true
-      })
+      submit(location.search)
       success(t('postDeletedSuccessFully'))
     } catch (err) {
-      errorHandler(err)
+      if (err) errorHandler(err)
     } finally {
       setLoading(false)
     }
   }
 
-  const handleChangeRoute = async (id: string) => {
+  const handleChangeRoute = async (id?: string) => {
     navigate(`/posts/edit/${id}`)
   }
 
@@ -243,7 +247,7 @@ export default function PostsView({ data, count }: Props) {
             <IconButton
               size="small"
               color="info"
-              onClick={() => handleChangeRoute((item as PostsType)._id)}
+              onClick={() => handleChangeRoute((item as PostsType)?._id)}
             >
               <EditNoteOutlined />
             </IconButton>

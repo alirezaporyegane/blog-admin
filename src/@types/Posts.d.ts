@@ -1,5 +1,5 @@
 export type PostsType = {
-  _id: string
+  _id?: string
   name: string
   image: string
   header: string
@@ -11,7 +11,7 @@ export type PostsType = {
   metaDescription: string
   active: boolean
   categoryId: string
-  publish: Date
-  createdAt: Date
-  updatedAt: Date
+  publish: string
+  createdAt?: Date
+  updatedAt?: Date
 }

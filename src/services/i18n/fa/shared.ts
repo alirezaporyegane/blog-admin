@@ -13,6 +13,8 @@ export default {
   perPage: 'تعداد',
   published: 'تاریخ انتشار',
   createdAt: 'تاریخ ایجاد',
+  cancel: 'انصراف',
+  confirm: 'تایید',
   reload: 'تلاش مجدد',
   slug: 'slug',
   yes: 'بله',

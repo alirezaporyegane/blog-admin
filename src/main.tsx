@@ -2,6 +2,7 @@ import '@/services/i18n'
 import { cacheRtl, theme } from '@/theme/MatrialConfig.ts'
 import { CacheProvider } from '@emotion/react'
 import { ThemeProvider } from '@mui/material'
+import { ConfirmProvider } from 'material-ui-confirm'
 import ReactDOM from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
 import { RouterProvider } from 'react-router-dom'
@@ -15,7 +16,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <HelmetProvider>
       <CacheProvider value={cacheRtl}>
         <ThemeProvider theme={theme}>
-          <RouterProvider router={router} />
+          <ConfirmProvider>
+            <RouterProvider router={router} />
+          </ConfirmProvider>
         </ThemeProvider>
       </CacheProvider>
     </HelmetProvider>
