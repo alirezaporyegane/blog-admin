@@ -36,6 +36,10 @@ export default function CreateView() {
     }
   }
 
+  const handleOnChange = (files: string | string[]) => {
+    console.log(files)
+  }
+
   return (
     <>
       <TitleSection title={t('addPosts')} icon={<PostAddOutlined />} />
@@ -49,7 +53,7 @@ export default function CreateView() {
         buttonGrids={buttonGrids}
       />
 
-      <Uploader/>
+      <Uploader onChange={handleOnChange} />
     </>
   )
 }
