@@ -1,4 +1,5 @@
 import { Props as AutoCompleteProps } from '@/components/shared/AutoComplete'
+import { Props as UploaderProps } from '@/components/shared/Uploader'
 import { AddOutlined, CheckOutlined } from '@mui/icons-material'
 import { Button, Card, FormControl, Grid, Skeleton } from '@mui/material'
 import { t } from 'i18next'
@@ -8,7 +9,6 @@ import { Props as DateFieldProps } from './components/DateField'
 import { Props as SelectFieldProps } from './components/SelectField'
 import { Props as SwitchFieldTable } from './components/SwitchField'
 import { Props as TextFieldProps } from './components/TextField'
-import { Props as UploaderProps } from '@/components/shared/Uploader'
 
 // Components
 const DateField = lazy(() => import('./components/DateField'))
@@ -43,7 +43,7 @@ type AutoCompleteType = {
 } & AutoCompleteProps
 
 export type Field = {
-  id: number
+  id: string
   fieldName: string
   roles?: RegisterOptions<any, string> | undefined
   xs?: number
@@ -51,6 +51,7 @@ export type Field = {
   md?: number
   lg?: number
   xl?: number
+  allowed?: boolean
 } & (
   | TextType
   | DateType
@@ -109,9 +110,11 @@ const DataForm = ({
       xl = 6,
       fieldName,
       id,
-      roles
+      roles,
+      typeField,
+      allowed = true
     } = fieldItem
-    if (fieldItem.typeField === 'DateField')
+    if (typeField === 'DateField' && allowed)
       return (
         <Grid key={id} item xs={xs} sm={sm} md={md} lg={lg} xl={xl}>
           <Controller
@@ -128,28 +131,33 @@ const DataForm = ({
           />
         </Grid>
       )
-    else if (fieldItem.typeField === 'SelectField')
+    else if (typeField === 'SelectField' && allowed)
       return (
         <Grid key={id} item xs={xs} sm={sm} md={md} lg={lg} xl={xl}>
           <SelectField
-            {...fieldItem}
+            label={fieldItem.label}
+            fullWidth={fieldItem.fullWidth}
+            options={fieldItem.options}
+            multiple={fieldItem.multiple}
+            labelId={fieldItem.labelId}
             {...register(fieldName, roles)}
             defaultValue={(defaultValue && defaultValue[fieldName]) || ''}
             error={!!errors[fieldName]?.message}
           />
         </Grid>
       )
-    else if (fieldItem.typeField === 'TextField')
+    else if (typeField === 'TextField' && allowed)
       return (
         <Grid key={id} item xs={xs} sm={sm} md={md} lg={lg} xl={xl}>
           <TextField
-            {...fieldItem}
+            label={fieldItem.label}
+            fullWidth={fieldItem.fullWidth}
             {...register(fieldName, roles)}
             error={!!errors[fieldName]?.message}
           />
         </Grid>
       )
-    else if (fieldItem.typeField === 'SwitchField')
+    else if (typeField === 'SwitchField' && allowed)
       return (
         <Grid
           key={id}
@@ -175,7 +183,7 @@ const DataForm = ({
           />
         </Grid>
       )
-    else if (fieldItem.typeField === 'UploaderField') {
+    else if (typeField === 'UploaderField' && allowed) {
       return (
         <Grid
           key={id}
@@ -204,23 +212,35 @@ const DataForm = ({
           />
         </Grid>
       )
-    } else if (fieldItem.typeField === 'AutoCompleteField') {
+    } else if (typeField === 'AutoCompleteField') {
       return (
-        <Controller
-          name={fieldItem.fieldName}
-          control={control}
-          render={({ field }) => (
-            <AutoComplete
-              value={field.value}
-              fullWidth={fieldItem.fullWidth}
-              apiServer={fieldItem.apiServer}
-              onChange={field.onChange}
-              defaultOptions={fieldItem.defaultOptions}
-              label={fieldItem.label}
-              sx={fieldItem.sx}
-            />
-          )}
-        />
+        <Grid
+          key={id}
+          item
+          xs={xs}
+          sm={sm}
+          md={md}
+          lg={lg}
+          xl={xl}
+          display={'flex'}
+          alignItems={'center'}
+        >
+          <Controller
+            name={fieldItem.fieldName}
+            control={control}
+            render={({ field }) => (
+              <AutoComplete
+                value={field.value || { value: '', text: '' }}
+                fullWidth={fieldItem.fullWidth}
+                apiServer={fieldItem.apiServer}
+                onChange={field.onChange}
+                defaultOptions={fieldItem.defaultOptions}
+                label={fieldItem.label}
+                sx={fieldItem.sx}
+              />
+            )}
+          />
+        </Grid>
       )
     }
   }

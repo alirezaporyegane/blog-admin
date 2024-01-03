@@ -37,7 +37,7 @@ export default {
           }
         } catch (err: any) {
           errorHandler(err)
-          return null
+          return []
         }
       }
     },

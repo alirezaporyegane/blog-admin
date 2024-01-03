@@ -14,6 +14,7 @@ export default {
   loading: 'در حال پردازش',
   header: 'سربرگ',
   image: 'عکس',
+  category: 'دسته بندی',
   metaDescription: 'جزئیات سئو',
   metaTitle: 'عنوان سئو',
   name: 'نام',

@@ -41,7 +41,7 @@ const SelectField = forwardRef<HTMLSelectElement, Props>(
                         (item) => item.value === value
                       )
 
-                      return <Chip key={value} label={option?.text} />
+                      return <Chip key={value} label={option?.text} size='small' />
                     })}
                 </Box>
               ) : (

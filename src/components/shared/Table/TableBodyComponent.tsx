@@ -2,6 +2,7 @@ import { Skeleton, TableBody, TableCell, TableRow } from '@mui/material'
 import { t } from 'i18next'
 import { ReactNode } from 'react'
 import { Item, TableHeader } from '.'
+import {palette} from '@/theme/MatrialConfig'
 
 type Props = {
   bodyClass?: string
@@ -26,7 +27,7 @@ const TdComponent = ({ tableHeader, item, cellContentProps }: TdProps) => {
   return (
     <TableCell
       component="td"
-      sx={{ borderColor: 'ActiveCaption', color: 'InactiveCaptionText' }}
+      sx={{ borderColor: palette.grey?.[100], color: palette.text?.primary }}
     >
       {cellContentProps
         ? cellContentProps(tableHeader.key, item)

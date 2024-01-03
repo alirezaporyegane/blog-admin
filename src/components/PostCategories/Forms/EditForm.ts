@@ -11,7 +11,7 @@ const errorClass = {
 
 export default [
   {
-    id: 1,
+    id: '1',
     typeField: 'TextField',
     fieldName: 'name',
     dir: 'auto',
@@ -22,7 +22,7 @@ export default [
     sx: { errorClass }
   },
   {
-    id: 2,
+    id: '2',
     typeField: 'TextField',
     fieldName: 'slug',
     variant: 'outlined',
@@ -32,7 +32,7 @@ export default [
     sx: { errorClass }
   },
   {
-    id: 3,
+    id: '3',
     typeField: 'TextField',
     fieldName: 'altName',
     dir: 'auto',
@@ -43,7 +43,7 @@ export default [
     sx: { errorClass }
   },
   {
-    id: 4,
+    id: '4',
     typeField: 'TextField',
     fieldName: 'metaTitle',
     dir: 'auto',
@@ -54,7 +54,7 @@ export default [
     sx: { errorClass }
   },
   {
-    id: 5,
+    id: '5',
     typeField: 'TextField',
     fieldName: 'metaDescription',
     dir: 'auto',
@@ -67,7 +67,7 @@ export default [
     sx: { errorClass }
   },
   {
-    id: 6,
+    id: '6',
     typeField: 'DateField',
     fieldName: 'published',
     dir: 'auto',
@@ -78,7 +78,7 @@ export default [
     sx: { errorClass }
   },
   {
-    id: 7,
+    id: '7',
     typeField: 'SwitchField',
     fieldName: 'active',
     xl: 3,
@@ -88,7 +88,7 @@ export default [
     label: t('active')
   },
   {
-    id: 8,
+    id: '8',
     typeField: 'UploaderField',
     fieldName: 'image',
     label: t('image'),

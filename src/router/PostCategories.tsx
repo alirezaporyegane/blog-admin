@@ -21,7 +21,7 @@ export default {
           return PostCategoriesService.getAllItem(signal)
         } catch (err) {
           errorHandler(err)
-          return null
+          return []
         }
       }
     },

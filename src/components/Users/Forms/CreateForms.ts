@@ -19,7 +19,7 @@ const roles = {
 
 export default [
   {
-    id: 1,
+    id: '1',
     typeField: 'TextField',
     fieldName: 'firstName',
     dir: 'auto',
@@ -30,7 +30,7 @@ export default [
     sx: { errorClass }
   },
   {
-    id: 2,
+    id: '2',
     typeField: 'TextField',
     fieldName: 'lastName',
     dir: 'auto',
@@ -41,7 +41,7 @@ export default [
     sx: { errorClass }
   },
   {
-    id: 3,
+    id: '3',
     typeField: 'TextField',
     fieldName: 'userName',
     dir: 'auto',
@@ -52,7 +52,7 @@ export default [
     sx: { errorClass }
   },
   {
-    id: 4,
+    id: '4',
     typeField: 'TextField',
     fieldName: 'email',
     dir: 'auto',
@@ -69,7 +69,7 @@ export default [
     }
   },
   {
-    id: 5,
+    id: '5',
     typeField: 'TextField',
     fieldName: 'phoneNumber',
     dir: 'auto',
@@ -86,7 +86,7 @@ export default [
     }
   },
   {
-    id: 6,
+    id: '6',
     typeField: 'TextField',
     fieldName: 'password',
     dir: 'auto',
@@ -98,7 +98,7 @@ export default [
     roles
   },
   {
-    id: 7,
+    id: '7',
     typeField: 'TextField',
     fieldName: 'confirmPassword',
     dir: 'auto',
@@ -110,7 +110,7 @@ export default [
     roles
   },
   {
-    id: 8,
+    id: '8',
     typeField: 'TextField',
     fieldName: 'job',
     dir: 'auto',
@@ -121,7 +121,7 @@ export default [
     sx: { errorClass }
   },
   {
-    id: 9,
+    id: '9',
     typeField: 'TextField',
     fieldName: 'nationalId',
     dir: 'auto',
@@ -132,7 +132,7 @@ export default [
     sx: { errorClass }
   },
   {
-    id: 10,
+    id: '10',
     typeField: 'SelectField',
     fieldName: 'legality',
     labelId: 'selectLegality',
@@ -146,7 +146,7 @@ export default [
     ]
   },
   {
-    id: 11,
+    id: '11',
     typeField: 'SelectField',
     fieldName: 'role',
     labelId: 'role',
@@ -168,7 +168,7 @@ export default [
     }
   },
   {
-    id: 12,
+    id: '12',
     typeField: 'SelectField',
     fieldName: 'gender',
     labelId: 'selectGender',
@@ -182,7 +182,7 @@ export default [
     ]
   },
   {
-    id: 13,
+    id: '13',
     typeField: 'DateField',
     fieldName: 'birthDate',
     className: 'w-full',
@@ -191,7 +191,7 @@ export default [
     label: t('birthDate')
   },
   {
-    id: 14,
+    id: '14',
     typeField: 'SwitchField',
     fieldName: 'confirmEmail',
     xl: 3,
@@ -201,7 +201,7 @@ export default [
     label: t('emailConfirmed')
   },
   {
-    id: 15,
+    id: '15',
     typeField: 'SwitchField',
     fieldName: 'confirmPhoneNumber',
     xl: 3,
@@ -211,7 +211,7 @@ export default [
     label: t('phoneNumberConfirmed')
   },
   {
-    id: 16,
+    id: '16',
     typeField: 'SwitchField',
     fieldName: 'confirmedProfile',
     xl: 3,
@@ -221,7 +221,7 @@ export default [
     label: t('confirmedProfile')
   },
   {
-    id: 17,
+    id: '17',
     typeField: 'SwitchField',
     fieldName: 'suspended',
     xl: 3,

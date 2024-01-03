@@ -11,6 +11,7 @@ export type PostsType = {
   metaDescription: string
   active: boolean
   categoryId: string
+  category: { value: string; text: string }
   publish: string
   createdAt?: Date
   updatedAt?: Date

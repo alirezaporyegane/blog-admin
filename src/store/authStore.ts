@@ -31,8 +31,7 @@ type AuthStore = {
 }
 
 export const useAuthStore = create<AuthStore>((set) => ({
-  account:
-    JSON.parse(localStorage.getItem(AccountKey.ACCOUNT_KEY) || '') || null,
+  account: localStorage.getItem(AccountKey.ACCOUNT_KEY) ? JSON.parse(localStorage.getItem(AccountKey.ACCOUNT_KEY) || '') : null,
   setAccount: (value) => {
     set({ account: value })
     setLocaleStorage(AccountKey.ACCOUNT_KEY, value)

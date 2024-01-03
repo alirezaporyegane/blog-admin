@@ -11,7 +11,7 @@ const errorClass = {
 
 export default [
   {
-    id: 1,
+    id: '1',
     typeField: 'TextField',
     fieldName: 'firstName',
     dir: 'auto',
@@ -22,7 +22,7 @@ export default [
     sx: { errorClass }
   },
   {
-    id: 2,
+    id: '2',
     typeField: 'TextField',
     fieldName: 'lastName',
     dir: 'auto',
@@ -33,7 +33,7 @@ export default [
     sx: { errorClass }
   },
   {
-    id: 3,
+    id: '3',
     typeField: 'TextField',
     fieldName: 'email',
     dir: 'auto',
@@ -50,7 +50,7 @@ export default [
     }
   },
   {
-    id: 4,
+    id: '4',
     typeField: 'TextField',
     fieldName: 'phoneNumber',
     dir: 'auto',
@@ -67,7 +67,7 @@ export default [
     }
   },
   {
-    id: 5,
+    id: '5',
     typeField: 'TextField',
     fieldName: 'job',
     dir: 'auto',
@@ -78,7 +78,7 @@ export default [
     sx: { errorClass }
   },
   {
-    id: 6,
+    id: '6',
     typeField: 'SelectField',
     fieldName: 'legality',
     labelId: 'selectLegality',
@@ -92,7 +92,7 @@ export default [
     ]
   },
   {
-    id: 7,
+    id: '7',
     typeField: 'SelectField',
     fieldName: 'gender',
     labelId: 'selectGender',
@@ -106,7 +106,7 @@ export default [
     ]
   },
   {
-    id: 8,
+    id: '8',
     typeField: 'DateField',
     fieldName: 'birthDate',
     className: 'w-full',

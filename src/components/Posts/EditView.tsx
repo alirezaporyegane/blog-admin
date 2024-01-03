@@ -28,6 +28,7 @@ export default function EditView({ defaultValue }: Props) {
   const onSubmit = async (data: PostsType) => {
     try {
       setProgressing(true)
+      if (data.category?.value) data.categoryId = data.category?.value
       await postServices.update(id, data)
       success(t('userCreated'))
       navigate('/posts')

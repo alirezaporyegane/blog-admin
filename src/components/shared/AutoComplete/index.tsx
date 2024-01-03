@@ -32,7 +32,7 @@ export type Props = {
   value?: Option
   defaultOptions?: Option[]
   apiServer: (filter: Filter) => Promise<ApiServer>
-  onChange: (value: string) => void
+  onChange: (value: Option) => void
 }
 
 export default function AutoComplete({
@@ -79,7 +79,7 @@ export default function AutoComplete({
   }
 
   const handleOnChange = (_: unknown, value: Option | null) => {
-    if (typeof value === 'object' && value?.value) onChange(value?.value || '')
+    if (typeof value === 'object' && value) onChange(value)
   }
 
   const filterOptions = createFilterOptions({
@@ -93,7 +93,7 @@ export default function AutoComplete({
     <Autocomplete
       sx={sx}
       open={open}
-      value={value}
+      value={value || { value: '', text: '' }}
       loading={loading}
       options={options}
       fullWidth={fullWidth}
