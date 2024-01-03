@@ -48,8 +48,10 @@ export default function PostCategoriesView({ data }: Props) {
       _id: -Math.round(Math.random() * 99999),
       sortOrder: items.length + 1
     }
-    setItems((prev) => [...prev, newItem])
-    itemsComponentRef.current?.setItemsFromParent([...items, newItem])
+    setItems((prev) => {
+      itemsComponentRef.current?.setItemsFromParent([...prev, newItem])
+      return [...prev, newItem]
+    })
   }
 
   const reInit = (newData: PostCategoryType[]) => {

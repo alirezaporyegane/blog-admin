@@ -7,6 +7,7 @@ import {
 } from '@/utils/helpers'
 import { Posts } from '@/views/Posts'
 import { Create } from '@/views/Posts/Create'
+import { Edit } from '@/views/Posts/Edit'
 import { RouteObject } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 
@@ -47,6 +48,22 @@ export default {
           <Create />
         </ProtectedRoute>
       )
+    },
+    {
+      path: Router.EDIT,
+      element: (
+        <ProtectedRoute roles={[Role.ADMIN, Role.WRITER]}>
+          <Edit />
+        </ProtectedRoute>
+      ),
+      loader: async ({ request: { signal }, params }) => {
+        try {
+          return PostsServices.getById((params as { id: string }).id, signal)
+        } catch (err: any) {
+          errorHandler(err)
+          return null
+        }
+      }
     }
   ]
 } as RouteObject

@@ -3,6 +3,7 @@ import production from './production'
 
 export type IConfig = {
   apiServer: string
+  thumbServer: string
   ssl: boolean
 }
 
@@ -14,6 +15,8 @@ type Config = {
 export type IAppConfig = IConfig & {
   protocol: string
   apiServerUrl: string
+  staticUrl: string
+  thumbnailUrl: string
 }
 
 const envConfig: Config = {
@@ -32,6 +35,12 @@ export default function useAppConfig(): IAppConfig {
     },
     get apiServerUrl(): string {
       return `${this.protocol}${this.apiServer}/api`
-    }
+    },
+    get staticUrl(): string  {
+      return `${this.protocol}${this.apiServer}`
+    },
+    get thumbnailUrl(): string {
+      return `${this.protocol}${this.thumbServer}`
+    },
   }
 }

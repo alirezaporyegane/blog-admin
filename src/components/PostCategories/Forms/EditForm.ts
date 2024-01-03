@@ -86,5 +86,12 @@ export default [
     md: 6,
     xs: 12,
     label: t('active')
-  }
+  },
+  {
+    id: 8,
+    typeField: 'UploaderField',
+    fieldName: 'image',
+    label: t('image'),
+    xl: 6
+  },
 ] as Field[]

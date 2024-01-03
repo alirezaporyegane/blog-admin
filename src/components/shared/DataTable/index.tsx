@@ -1,3 +1,4 @@
+import { Props as AutoCompleteProps } from '@/components/shared/AutoComplete'
 import { AddOutlined, CheckOutlined } from '@mui/icons-material'
 import { Button, Card, FormControl, Grid, Skeleton } from '@mui/material'
 import { t } from 'i18next'
@@ -7,28 +8,39 @@ import { Props as DateFieldProps } from './components/DateField'
 import { Props as SelectFieldProps } from './components/SelectField'
 import { Props as SwitchFieldTable } from './components/SwitchField'
 import { Props as TextFieldProps } from './components/TextField'
+import { Props as UploaderProps } from '@/components/shared/Uploader'
 
 // Components
 const DateField = lazy(() => import('./components/DateField'))
 const SelectField = lazy(() => import('./components/SelectField'))
 const TextField = lazy(() => import('./components/TextField'))
 const SwitchField = lazy(() => import('./components/SwitchField'))
+const Uploader = lazy(() => import('@/components/shared/Uploader'))
+const AutoComplete = lazy(() => import('@/components/shared/AutoComplete'))
 
 type TextType = {
-  typeField?: 'TextField'
+  typeField: 'TextField'
 } & TextFieldProps
 
 type DateType = {
-  typeField?: 'DateField'
+  typeField: 'DateField'
 } & DateFieldProps
 
 type SelectType = {
-  typeField?: 'SelectField'
+  typeField: 'SelectField'
 } & SelectFieldProps
 
 type SwitchType = {
-  typeField?: 'SwitchField'
+  typeField: 'SwitchField'
 } & SwitchFieldTable
+
+type UploaderType = {
+  typeField: 'UploaderField'
+} & UploaderProps
+
+type AutoCompleteType = {
+  typeField: 'AutoCompleteField'
+} & AutoCompleteProps
 
 export type Field = {
   id: number
@@ -39,7 +51,14 @@ export type Field = {
   md?: number
   lg?: number
   xl?: number
-} & (TextType | DateType | SelectType | SwitchType)
+} & (
+  | TextType
+  | DateType
+  | SelectType
+  | SwitchType
+  | UploaderType
+  | AutoCompleteType
+)
 
 type ButtonGrids = {
   xl?: number
@@ -81,19 +100,18 @@ const DataForm = ({
     defaultValues: defaultValue || {}
   })
 
-  const handleTypeField = ({
-    id,
-    typeField,
-    fieldName,
-    roles,
-    xs = 12,
-    sm = 12,
-    md = 12,
-    lg = 6,
-    xl = 6,
-    ...fieldItem
-  }: Field) => {
-    if (typeField === 'DateField')
+  const handleTypeField = (fieldItem: Field) => {
+    const {
+      xs = 12,
+      sm = 12,
+      md = 12,
+      lg = 6,
+      xl = 6,
+      fieldName,
+      id,
+      roles
+    } = fieldItem
+    if (fieldItem.typeField === 'DateField')
       return (
         <Grid key={id} item xs={xs} sm={sm} md={md} lg={lg} xl={xl}>
           <Controller
@@ -110,7 +128,7 @@ const DataForm = ({
           />
         </Grid>
       )
-    else if (typeField === 'SelectField')
+    else if (fieldItem.typeField === 'SelectField')
       return (
         <Grid key={id} item xs={xs} sm={sm} md={md} lg={lg} xl={xl}>
           <SelectField
@@ -121,7 +139,7 @@ const DataForm = ({
           />
         </Grid>
       )
-    else if (typeField === 'TextField')
+    else if (fieldItem.typeField === 'TextField')
       return (
         <Grid key={id} item xs={xs} sm={sm} md={md} lg={lg} xl={xl}>
           <TextField
@@ -131,7 +149,7 @@ const DataForm = ({
           />
         </Grid>
       )
-    else if (typeField === 'SwitchField')
+    else if (fieldItem.typeField === 'SwitchField')
       return (
         <Grid
           key={id}
@@ -157,6 +175,54 @@ const DataForm = ({
           />
         </Grid>
       )
+    else if (fieldItem.typeField === 'UploaderField') {
+      return (
+        <Grid
+          key={id}
+          item
+          xs={xs}
+          sm={sm}
+          md={md}
+          lg={lg}
+          xl={xl}
+          display={'flex'}
+          alignItems={'center'}
+        >
+          <Controller
+            name={fieldName}
+            control={control}
+            render={({ field }) => (
+              <Uploader
+                label={fieldItem.label}
+                multiple={fieldItem.multiple}
+                image={fieldItem.image}
+                accept={fieldItem.accept}
+                value={field.value}
+                onChange={field.onChange}
+              />
+            )}
+          />
+        </Grid>
+      )
+    } else if (fieldItem.typeField === 'AutoCompleteField') {
+      return (
+        <Controller
+          name={fieldItem.fieldName}
+          control={control}
+          render={({ field }) => (
+            <AutoComplete
+              value={field.value}
+              fullWidth={fieldItem.fullWidth}
+              apiServer={fieldItem.apiServer}
+              onChange={field.onChange}
+              defaultOptions={fieldItem.defaultOptions}
+              label={fieldItem.label}
+              sx={fieldItem.sx}
+            />
+          )}
+        />
+      )
+    }
   }
 
   return (

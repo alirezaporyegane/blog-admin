@@ -21,4 +21,11 @@ const uploadFileHandler = async (
   })
 }
 
-export default { uploadFileHandler }
+const removeFileHandler = async (fileName: string) => {
+  return await axiosHandler<string>(BASE_URL, {
+    method: RequestMethod.DELETE,
+    params: { fileName }
+  })
+}
+
+export default { uploadFileHandler, removeFileHandler }

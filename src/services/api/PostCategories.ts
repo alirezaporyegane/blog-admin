@@ -11,6 +11,17 @@ const getAllItem = async (signal?: AbortSignal) => {
   })
 }
 
+const getInfo = async <T>(filter: T) => {
+  return await axiosHandler<{
+    items: { value: string; text: string }[]
+    count: number
+  }>(BASE_URL, {
+    action: 'info',
+    method: RequestMethod.GET,
+    params: filter
+  })
+}
+
 const getById = async (id: string, signal?: AbortSignal) => {
   return await axiosHandler<PostCategoryType>(BASE_URL, {
     action: `${id}`,
@@ -34,4 +45,4 @@ const patchItem = async (body: PostCategoryType[]) => {
   })
 }
 
-export default { getAllItem, getById, update, patchItem }
+export default { getAllItem, getById, update, patchItem, getInfo }
