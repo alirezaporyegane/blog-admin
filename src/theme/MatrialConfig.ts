@@ -100,7 +100,7 @@ export const palette: PaletteOptions = {
   text: {
     primary: '#1A1C19',
     secondary: '#5A6057'
-  }, 
+  },
   grey: {
     '100': '#F0F0F3'
   }
