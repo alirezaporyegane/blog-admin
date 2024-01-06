@@ -13,6 +13,7 @@ const Sidebar = lazy(() => import('./Components/SidebarComponent'))
 type Status = 'loading' | 'success' | 'error'
 
 const Layout = () => {
+  console.log(process.env.NODE_ENV);
   const location = useLocation()
   const [status, setStatus] = useState<Status>('loading')
   const excludeLinks = ['/login', '/register']
