@@ -50,8 +50,6 @@ const DatePickerModal = ({ value, onChange, closeDatePicker }: Props) => {
     start: new Date(`${visibleMonth.getFullYear()}-03-21`),
     end: new Date(`${visibleMonth.getFullYear() + 1}-03-19`)
   })
-  console.log(visibleIntervalMonth);
-  console.log(visibleMonth.getFullYear());
 
   const showPreviousMonth = () =>
     setVisibleMonth((currentMonth) => addMonths(currentMonth, -1))
@@ -120,58 +118,40 @@ const DatePickerModal = ({ value, onChange, closeDatePicker }: Props) => {
     )
   else if (isShowingMonth)
     visibleDate = (
-      <>
-        <Box
-          display={'grid'}
-          justifyContent={'center'}
-          alignItems={'center'}
-          gap={{ xs: '0.25rem', md: '1rem' }}
-          gridTemplateColumns={{
-            xs: 'repeat(2, minmax(0, 1fr))',
-            md: 'repeat(3, minmax(0, 1fr))'
-          }}
-          gridAutoRows={'2rem'}
-        >
-          {visibleIntervalMonth.map((month) => {
-            console.log(isSameMonth(month, visibleMonth), month, visibleMonth)
-            return (
-              <Button
-                key={month.toDateString()}
-                sx={{
-                  color: isSameMonth(month, visibleMonth) ? 'white' : '#050404',
+      <Box
+        display={'grid'}
+        justifyContent={'center'}
+        alignItems={'center'}
+        gap={{ xs: '0.25rem', md: '1rem' }}
+        gridTemplateColumns={{
+          xs: 'repeat(2, minmax(0, 1fr))',
+          md: 'repeat(3, minmax(0, 1fr))'
+        }}
+        gridAutoRows={'2rem'}
+      >
+        {visibleIntervalMonth.map((month) => {
+          return (
+            <Button
+              key={month.toDateString()}
+              sx={{
+                color: isSameMonth(month, visibleMonth) ? 'white' : '#050404',
+                backgroundColor: isSameMonth(month, visibleMonth)
+                  ? '#009EB9'
+                  : '',
+                border: isThisMonth(month) ? '1px dashed #009EB9' : '',
+                '&:hover': {
                   backgroundColor: isSameMonth(month, visibleMonth)
-                    ? '#009EB9'
-                    : '',
-                  border: isThisMonth(month) ? '1px dashed #009EB9' : '',
-                  '&:hover': {
-                    backgroundColor: isSameMonth(month, visibleMonth)
-                      ? '#008399'
-                      : '#D8F6FF'
-                  }
-                }}
-                onClick={() => selectedMonth(month)}
-              >
-                {format(month, 'MMMM')}
-              </Button>
-            )
-          })}
-        </Box>
-        {/* <div className="month-picker-grid date-picker-grid-dates">
-          {visibleIntervalMonth.map((month) => {
-            return (
-              <button
-                className={`date${
-                  isSameMonth(month, visibleMonth) ? ' selected' : ''
-                } ${isThisMonth(month) ? ' today' : ''}`}
-                key={month.toDateString()}
-                onClick={() => selectedMonth(month)}
-              >
-                {format(month, 'MMMM')}
-              </button>
-            )
-          })}
-        </div> */}
-      </>
+                    ? '#008399'
+                    : '#D8F6FF'
+                }
+              }}
+              onClick={() => selectedMonth(month)}
+            >
+              {format(month, 'MMMM')}
+            </Button>
+          )
+        })}
+      </Box>
     )
   else
     visibleDate = (
@@ -300,45 +280,27 @@ const DatePickerModal = ({ value, onChange, closeDatePicker }: Props) => {
   }
 
   return (
-    <>
-      {/* <Box bgcolor={'white'} overflow={'hidden'} minWidth={350}>
-        <Box padding={'1rem'} bgcolor={'#D8F6FF'} textAlign={'start'}>
-          <Typography marginBottom={'0.25rem'}>روز انتخابی</Typography>
+    <Box bgcolor={'white'} overflow={'hidden'} minWidth={350}>
+      <Box padding={'1rem'} bgcolor={'#D8F6FF'} textAlign={'start'}>
+        <Typography marginBottom={'0.25rem'}>روز انتخابی</Typography>
 
-          <Typography fontWeight={600}>
-            {value ? (
-              format(new Date(value), 'dd MMMM yyyy')
-            ) : (
-              <Remove fontSize="small" />
-            )}
-          </Typography>
-        </Box>
+        <Typography fontWeight={600}>
+          {value ? (
+            format(new Date(value), 'dd MMMM yyyy')
+          ) : (
+            <Remove fontSize="small" />
+          )}
+        </Typography>
+      </Box>
 
-        <Box padding={'1.5rem'}></Box>
-      </Box> */}
+      <Box padding={'1.5rem'}>
+        {dateHeader}
 
-      <div className="date-picker min-w-[350px]">
-        <Box padding={'1rem'} bgcolor={'#D8F6FF'} textAlign={'start'}>
-          <Typography marginBottom={'0.25rem'}>روز انتخابی</Typography>
+        {dateDays}
 
-          <Typography fontWeight={600}>
-            {value ? (
-              format(new Date(value), 'dd MMMM yyyy')
-            ) : (
-              <Remove fontSize="small" />
-            )}
-          </Typography>
-        </Box>
-
-        <Box padding={'1.5rem'}>
-          {dateHeader}
-
-          {dateDays}
-
-          {visibleDate}
-        </Box>
-      </div>
-    </>
+        {visibleDate}
+      </Box>
+    </Box>
   )
 }
 

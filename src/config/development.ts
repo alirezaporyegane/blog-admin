@@ -1,7 +1,7 @@
 import { IConfig } from '.'
 
 export default {
-  apiServer: 'blog-api-orcin-five.vercel.app',
+  apiServer: 'localhost:6565',
   thumbServer: 'localhost:8007/unsafe',
-  ssl: true
+  ssl: false
 } as IConfig

@@ -7,21 +7,23 @@ import {
   StickyNote2Outlined
 } from '@mui/icons-material'
 import {
+  BottomNavigation,
+  BottomNavigationAction,
   Drawer,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
-  ListItemText
+  ListItemText,
+  Paper
 } from '@mui/material'
 import { t } from 'i18next'
-import { ReactNode } from 'react'
+import { ReactNode, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Account from './Account'
 
 type Props = {
   drawerWidth: number
-  mobileDrawerWidth: number
 }
 
 export type TNavItem = {
@@ -32,72 +34,44 @@ export type TNavItem = {
   roles: Role[]
 }
 
-type MobileProps = Pick<Props, 'mobileDrawerWidth'> & {
+type MobileProps = {
   navItems: TNavItem[]
-  pathname: string
   handleRedirect: (url: string) => void
 }
 
-const MobileSlider = ({
-  mobileDrawerWidth,
-  handleRedirect,
-  navItems,
-  pathname
-}: MobileProps) => {
-  return (
-    <Drawer
-      open
-      variant="permanent"
-      classes={{
-        paper: '!border-white !border-dashed'
-      }}
-      sx={{
-        display: { xs: 'block', md: 'none' },
-        backgroundColor: 'white',
-        '& .MuiDrawer-modal': {
-          backgroundColor: 'white'
-        },
-        '& .MuiDrawer-paper': {
-          boxSizing: 'border-box',
-          backgroundColor: 'white',
-          width: mobileDrawerWidth
-        }
-      }}
-    >
-      <Account />
+const MobileBottomNavigation = ({ navItems, handleRedirect }: MobileProps) => {
+  const [value, setValue] = useState(0)
 
-      <List>
-        {navItems.map((navItem) => {
-          return (
-            <ListItem
-              key={navItem.id}
-              classes={{ selected: '!rounded-xl' }}
-              onClick={() => handleRedirect(navItem.url)}
-            >
-              <ListItemButton
-                alignItems="flex-start"
-                className="border-gray-300 border-dashed"
-                classes={{ root: '!rounded-md' }}
-                selected={navItem.url === pathname}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 'auto',
-                    marginTop: '4px'
-                  }}
-                >
-                  {navItem.icon}
-                </ListItemIcon>
-              </ListItemButton>
-            </ListItem>
-          )
-        })}
-      </List>
-    </Drawer>
+  return (
+    <Paper
+      sx={{
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        zIndex: 2,
+        display: { md: 'none' }
+      }}
+      elevation={3}
+    >
+      <BottomNavigation
+        showLabels
+        value={value}
+        onChange={(_, newValue) => setValue(newValue)}
+      >
+        {navItems.map((item) => (
+          <BottomNavigationAction
+            key={item.id}
+            icon={item.icon}
+            onClick={() => handleRedirect(item.url)}
+          />
+        ))}
+      </BottomNavigation>
+    </Paper>
   )
 }
 
-const Sidebar = ({ drawerWidth, mobileDrawerWidth }: Props) => {
+const Sidebar = ({ drawerWidth }: Props) => {
   const path = useLocation()
   const navigate = useNavigate()
   const account = useAuthStore((store) => store.account)
@@ -147,11 +121,9 @@ const Sidebar = ({ drawerWidth, mobileDrawerWidth }: Props) => {
 
   return (
     <>
-      <MobileSlider
+      <MobileBottomNavigation
         handleRedirect={handleRedirect}
-        mobileDrawerWidth={mobileDrawerWidth}
         navItems={navItems}
-        pathname={path.pathname}
       />
 
       <Drawer

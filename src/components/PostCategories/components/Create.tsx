@@ -49,7 +49,7 @@ function Component({ onSubmit, progressing }: Props) {
     >
       <FormControl fullWidth onSubmit={handleSubmit(handleOnSubmit)}>
         <Grid container spacing={3}>
-          <Grid item xl={6}>
+          <Grid item xs={12} xl={6}>
             <TextField
               size="small"
               fullWidth
@@ -59,7 +59,7 @@ function Component({ onSubmit, progressing }: Props) {
             />
           </Grid>
 
-          <Grid item xl={6}>
+          <Grid item xs={12} xl={6}>
             <TextField
               size="small"
               fullWidth

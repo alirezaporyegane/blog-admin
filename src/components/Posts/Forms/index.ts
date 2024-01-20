@@ -62,7 +62,16 @@ export default [
     xl: 6
   },
   {
-    id: '5',
+    id: '6',
+    typeField: 'TextField',
+    fieldName: 'readTime',
+    variant: 'outlined',
+    label: t('readTime'),
+    fullWidth: true,
+    xl: 6
+  },
+  {
+    id: '7',
     typeField: 'TextField',
     fieldName: 'metaTitle',
     variant: 'outlined',
@@ -71,7 +80,7 @@ export default [
     xl: 6
   },
   {
-    id: '6',
+    id: '8',
     typeField: 'DateField',
     fieldName: 'publish',
     label: t('published'),
@@ -80,7 +89,7 @@ export default [
     roles: publishRole
   },
   {
-    id: '7',
+    id: '9',
     typeField: 'AutoCompleteField',
     fieldName: 'category',
     xl: 6,
@@ -93,21 +102,32 @@ export default [
       await postCategoriesService.getInfo(filter)
   },
   {
-    id: '8',
+    id: '10',
+    typeField: 'SwitchField',
+    fieldName: 'active',
+    xl: 6,
+    lg: 6,
+    md: 12,
+    xs: 12,
+    label: t('active'),
+    allowed: useAuthStore.getState().account?.role.includes(Role.ADMIN)
+  },
+  {
+    id: '11',
     typeField: 'UploaderField',
     fieldName: 'image',
     label: t('image'),
     xl: 6
   },
   {
-    id: '9',
+    id: '12',
     typeField: 'UploaderField',
     fieldName: 'header',
     label: t('header'),
     xl: 6
   },
   {
-    id: '10',
+    id: '13',
     typeField: 'TextField',
     fieldName: 'metaDescription',
     variant: 'outlined',
@@ -117,7 +137,7 @@ export default [
     xl: 12
   },
   {
-    id: '11',
+    id: '14',
     typeField: 'TextField',
     fieldName: 'body',
     variant: 'outlined',
@@ -125,17 +145,6 @@ export default [
     label: t('text'),
     fullWidth: true,
     xl: 12
-  },
-  {
-    id: '12',
-    typeField: 'SwitchField',
-    fieldName: 'active',
-    xl: 6,
-    lg: 6,
-    md: 12,
-    xs: 12,
-    label: t('active'),
-    allowed: useAuthStore.getState().account?.role.includes(Role.ADMIN)
   }
 ] as Field[]
 

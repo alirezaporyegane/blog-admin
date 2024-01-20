@@ -13,12 +13,10 @@ const Sidebar = lazy(() => import('./Components/SidebarComponent'))
 type Status = 'loading' | 'success' | 'error'
 
 const Layout = () => {
-  console.log(process.env.NODE_ENV);
   const location = useLocation()
   const [status, setStatus] = useState<Status>('loading')
   const excludeLinks = ['/login', '/register']
   const drawerWidth = excludeLinks.includes(location.pathname) ? 0 : 300
-  const mobileDrawerWidth = excludeLinks.includes(location.pathname) ? 0 : 90
 
   useLayoutEffect(() => {
     const checkServerStatus = async () => {
@@ -55,10 +53,7 @@ const Layout = () => {
         sx={{ height: '100vh', backgroundColor: palette.background?.default }}
       >
         {!excludeLinks.includes(location.pathname) && (
-          <Sidebar
-            drawerWidth={drawerWidth}
-            mobileDrawerWidth={mobileDrawerWidth}
-          />
+          <Sidebar drawerWidth={drawerWidth} />
         )}
 
         <Box
@@ -68,7 +63,6 @@ const Layout = () => {
             marginLeft: 'auto',
             p: excludeLinks.includes(location.pathname) ? 0 : 3,
             width: {
-              xs: `calc(100% - ${mobileDrawerWidth}px)`,
               md: `calc(100% - ${drawerWidth}px)`
             }
           }}
